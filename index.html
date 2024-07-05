@@ -1,9 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>My Website</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gabungan Google dan X</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
-    <h1>Hello, World!</h1>
+  <body class="theme1">
+    <nav>
+      <div class="nav-left">
+        <div class="logo">Gabungan</div>
+        <div class="search-bar">
+          <input type="text" placeholder="Search..." />
+        </div>
+      </div>
+      <div class="nav-right">
+        <button id="themeSwitcher">Switch Theme</button>
+      </div>
+    </nav>
+    <main>
+      <div class="theme-options">
+        <button class="theme-button theme1" data-theme="theme1">Theme 1</button>
+        <button class="theme-button theme2" data-theme="theme2">Theme 2</button>
+        <button class="theme-button theme3" data-theme="theme3">Theme 3</button>
+        <button class="theme-button theme4" data-theme="theme4">Theme 4</button>
+        <button class="theme-button theme5" data-theme="theme5">Theme 5</button>
+      </div>
+      <div class="post">
+        <div class="post-header">
+          <img src="user_avatar.png" alt="User Avatar" />
+          <div>
+            <h3>Anies Baswedan</h3>
+            <p>@aniesbaswedan</p>
+          </div>
+        </div>
+        <div class="post-content">
+          <p>Bismillah, dengan menyebut nama Allah. Insya Allah Jakarta AMAN!</p>
+        </div>
+      </div>
+    </main>
+    <script src="script.js"></script>
   </body>
 </html>
