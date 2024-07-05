@@ -1,131 +1,68 @@
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    color: #fff;
 }
 
-nav {
-  display: flex;
-  justify-content: space-between;
-  background-color: #f4f4f4;
-  padding: 1rem;
+header {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    text-align: center;
 }
 
-.nav-left {
-  display: flex;
-  align-items: center;
+header h1 {
+    margin: 0;
+    font-size: 3em;
 }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-right: 2rem;
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
 }
 
-.search-bar input {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+nav ul li {
+    margin: 0 15px;
 }
 
-.nav-right button {
-  padding: 0.5rem 1rem;
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    transition: color 0.3s;
 }
 
-.theme-options {
-  display: flex;
-  justify-content: center;
-  margin: 1rem 0;
-}
-
-.theme-button {
-  padding: 0.5rem 1rem;
-  margin: 0 0.5rem;
-  border: none;
-  cursor: pointer;
-}
-
-.theme1 {
-  background-color: #ffffff;
-  color: #000000;
-}
-
-.theme2 {
-  background-color: #000000;
-  color: #ffffff;
-}
-
-.theme3 {
-  background-color: #f4f4f4;
-  color: #333333;
-}
-
-.theme4 {
-  background-color: #333333;
-  color: #f4f4f4;
-}
-
-.theme5 {
-  background-color: #009688;
-  color: #ffffff;
+nav ul li a:hover {
+    color: #00d1b2;
 }
 
 main {
-  padding: 2rem;
+    padding: 20px;
+}
+
+#blog-posts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .post {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 1rem;
-  margin-bottom: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
 }
 
-.post-header {
-  display: flex;
-  align-items: center;
+.post h2 {
+    margin-top: 0;
 }
 
-.post-header img {
-  border-radius: 50%;
-  margin-right: 1rem;
-}
-
-.post-content p {
-  margin: 0;
-}
-
-body.theme1,
-nav.theme1,
-.theme-button.theme1 {
-  background-color: #ffffff;
-  color: #000000;
-}
-
-body.theme2,
-nav.theme2,
-.theme-button.theme2 {
-  background-color: #000000;
-  color: #ffffff;
-}
-
-body.theme3,
-nav.theme3,
-.theme-button.theme3 {
-  background-color: #f4f4f4;
-  color: #333333;
-}
-
-body.theme4,
-nav.theme4,
-.theme-button.theme4 {
-  background-color: #333333;
-  color: #f4f4f4;
-}
-
-body.theme5,
-nav.theme5,
-.theme-button.theme5 {
-  background-color: #009688;
-  color: #ffffff;
+footer {
+    text-align: center;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    bottom: 0;
 }
