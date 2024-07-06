@@ -1,3 +1,4 @@
+/* General Styles */
 body {
     margin: 0;
     font-family: 'Arial', sans-serif;
@@ -42,16 +43,54 @@ nav ul li a:hover {
 
 main {
     padding: 20px;
-    display: flex;
-    justify-content: center;
 }
 
+footer {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Specific Page Styles */
+h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+article {
+    margin-bottom: 20px;
+}
+
+article h3 {
+    font-size: 1.5em;
+}
+
+article p {
+    line-height: 1.6;
+}
+
+article a {
+    color: #ff9a9e;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+article a:hover {
+    color: #fad0c4;
+}
+
+/* Calculator Styles */
 .calculator {
     width: 300px;
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
 }
 
 .screen {
