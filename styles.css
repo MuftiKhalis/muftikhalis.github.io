@@ -1,57 +1,107 @@
+/* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
     margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #ff9a9e, #fad0c4, #fad0c4);
+    color: #333;
 }
 
 header {
-    text-align: center;
+    background: rgba(255, 255, 255, 0.8);
     padding: 20px;
-    background-color: #333;
-    color: white;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 3em;
+    color: #333;
 }
 
 nav ul {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
+    display: flex;
+    justify-content: center;
 }
 
 nav ul li {
-    display: inline;
-    margin-right: 10px;
+    margin: 0 15px;
 }
 
 nav ul li a {
-    color: white;
     text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    transition: color 0.3s;
 }
 
 nav ul li a:hover {
-    text-decoration: underline;
+    color: #ff9a9e;
 }
 
-.calculator {
-    background-color: #fff;
+main {
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
 }
 
-.calculator .screen {
+footer {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Specific Page Styles */
+h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+article {
+    margin-bottom: 20px;
+}
+
+article h3 {
+    font-size: 1.5em;
+}
+
+article p {
+    line-height: 1.6;
+}
+
+article a {
+    color: #ff9a9e;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+article a:hover {
+    color: #fad0c4;
+}
+
+/* Calculator Styles */
+.calculator {
+    width: 300px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+}
+
+.screen {
     background-color: #f0f0f0;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-bottom: 10px;
     padding: 10px;
+    margin-bottom: 10px;
 }
 
-.calculator .screen input[type="text"] {
+.screen input[type="text"] {
     width: 100%;
     padding: 10px;
     font-size: 1.5em;
@@ -78,19 +128,15 @@ nav ul li a:hover {
 }
 
 .calculator .buttons button:hover {
-    background-color: #e0e0e0;
-}
-
-.calculator .buttons .operator {
-    background-color: #ff9800;
-    color: white;
+    background-color: #ffd1dc;
+    color: #333;
 }
 
 .calculator .buttons #clear-btn {
-    grid-column: span 2;
+    grid-column: span 2; /* Menggunakan 2 kolom */
 }
 
 .calculator .buttons #equals-btn {
-    background-color: #4caf50;
+    background-color: #ff9a9e; /* Warna yang berbeda untuk tombol equals */
     color: white;
 }
