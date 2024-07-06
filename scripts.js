@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// JavaScript for Calculator functionality
+// JavaScript for Complex Calculator functionality
 const calcDisplay = document.getElementById('calc-display');
 
 function appendToDisplay(value) {
@@ -23,7 +23,8 @@ function clearDisplay() {
 
 function calculateResult() {
     try {
-        calcDisplay.value = eval(calcDisplay.value);
+        let result = eval(calcDisplay.value);
+        calcDisplay.value = result;
     } catch (error) {
         calcDisplay.value = 'Error';
     }
