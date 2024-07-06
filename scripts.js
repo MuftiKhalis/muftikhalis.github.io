@@ -9,3 +9,29 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+// JavaScript for Calculator functionality
+const calcDisplay = document.getElementById('calc-display');
+
+function appendToDisplay(value) {
+    calcDisplay.value += value;
+}
+
+function clearDisplay() {
+    calcDisplay.value = '';
+}
+
+function calculateResult() {
+    try {
+        calcDisplay.value = eval(calcDisplay.value);
+    } catch (error) {
+        calcDisplay.value = 'Error';
+    }
+}
+
+// Listen for Enter key press to calculate result
+calcDisplay.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        calculateResult();
+    }
+});
