@@ -92,3 +92,12 @@ main {
     background-color: #ffd1dc;
     color: #333;
 }
+
+.calculator .buttons #clear-btn {
+    grid-column: span 2; /* Menggunakan 2 kolom */
+}
+
+.calculator .buttons #equals-btn {
+    background-color: #ff9a9e; /* Warna yang berbeda untuk tombol equals */
+    color: white;
+}
