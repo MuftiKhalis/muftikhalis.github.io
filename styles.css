@@ -1,161 +1,130 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(to right, #f3c6e6, #f7e2f3);
+    background: linear-gradient(to right, #ffccff, #ffb3ff);
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 header {
-    background-color: #f3c6e6;
-    color: #333;
-    padding: 1rem;
-    text-align: center;
-    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ff99cc;
+    color: #fff;
+    padding: 10px 20px;
 }
 
 .hamburger {
-    position: absolute;
-    left: 1rem;
-    top: 1rem;
+    display: flex;
+    flex-direction: column;
     cursor: pointer;
 }
 
-.hamburger .bar1, .hamburger .bar2, .hamburger .bar3 {
-    width: 35px;
-    height: 5px;
-    background-color: #333;
-    margin: 6px 0;
+.hamburger div {
+    width: 25px;
+    height: 3px;
+    background: #fff;
+    margin: 4px 0;
     transition: 0.4s;
 }
 
-#sidebar {
-    height: 100%;
-    width: 0;
+nav {
     position: fixed;
-    z-index: 1;
+    height: 100%;
+    width: 250px;
     top: 0;
-    left: 0;
-    background-color: #f7e2f3;
+    left: -250px;
+    background: #ff99cc;
+    color: #fff;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
 }
 
-#sidebar a {
-    padding: 8px 8px 8px 32px;
+nav a {
+    padding: 10px 15px;
     text-decoration: none;
-    font-size: 25px;
-    color: #333;
+    color: #fff;
     display: block;
     transition: 0.3s;
 }
 
-#sidebar a:hover {
-    color: #f3c6e6;
+nav a:hover {
+    background: #ff66b2;
 }
 
-#sidebar .closebtn {
+nav .closebtn {
     position: absolute;
     top: 0;
     right: 25px;
     font-size: 36px;
-    margin-left: 50px;
 }
 
 main {
-    margin: 20px;
+    flex: 1;
+    padding: 20px;
+    margin-left: 250px;
+    transition: margin-left 0.5s;
 }
 
 footer {
-    background-color: #f3c6e6;
-    color: #333;
+    background: #ff99cc;
+    color: #fff;
     text-align: center;
-    padding: 1rem;
-    position: fixed;
+    padding: 10px;
+    position: relative;
     bottom: 0;
     width: 100%;
 }
 
-#calculator {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+#sidebar.open {
+    left: 0;
 }
 
-#calc-display {
-    width: 100%;
-    max-width: 300px;
-    padding: 10px;
-    margin-bottom: 10px;
-    font-size: 1.5rem;
-    text-align: right;
-}
-
-.buttons {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    max-width: 300px;
-    width: 100%;
-}
-
-.buttons button {
-    padding: 20px;
-    font-size: 1.5rem;
-    border: none;
-    background-color: #e3b4d4;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.buttons button:hover {
-    background-color: #c191b2;
+main.shift {
+    margin-left: 250px;
 }
 
 #calendar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 #calendar .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    max-width: 300px;
-    padding: 10px;
-    background-color: #f3c6e6;
-    color: #333;
+    margin-bottom: 10px;
 }
 
-#calendar #weekdays, #calendar #days {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 10px;
-    max-width: 300px;
-    width: 100%;
-}
-
-#calendar #weekdays div, #calendar #days div {
+#calendar #monthYear {
+    font-size: 1.5em;
     text-align: center;
-    padding: 10px;
-    background-color: #e3b4d4;
-    color: white;
 }
 
-@media (max-width: 600px) {
-    .buttons button {
-        padding: 15px;
-        font-size: 1rem;
-    }
+#calendar #weekdays {
+    display: flex;
+    justify-content: space-between;
+    background: #ff99cc;
+    color: #fff;
+    padding: 10px 0;
+}
 
-    #calc-display {
-        font-size: 1rem;
-    }
+#calendar #days {
+    display: flex;
+    flex-wrap: wrap;
+}
 
-    #calendar .header, #calendar #weekdays div, #calendar #days div {
-        font-size: 0.8rem;
-    }
+#calendar #days div {
+    width: calc(100% / 7);
+    height: 100px;
+    border: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
 }
