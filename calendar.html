@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendar - Mufti Khalis</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        /* General styling */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -15,277 +13,120 @@
             background: linear-gradient(to right, #ffccff, #ffb3ff);
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-        }
-        header {
-            background-color: #ffd1dc;
-            color: #333;
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .hamburger {
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            width: 30px;
-            height: 25px;
-        }
-        .bar1, .bar2, .bar3 {
-            width: 100%;
-            height: 3px;
-            background-color: #333;
-            transition: 0.4s;
-        }
-        #sidebar {
-            height: 100%;
-            width: 0;
-            position: fixed;
-            z-index: 1;
-            top: 0;
-            left: 0;
-            background-color: #ffd1dc;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
-        }
-        #sidebar a {
-            padding: 8px 8px 8px 32px;
-            text-decoration: none;
-            font-size: 18px;
-            color: #333;
-            display: block;
-            transition: 0.3s;
-        }
-        #sidebar a:hover {
-            color: #f1f1f1;
-        }
-        #sidebar .closebtn {
-            position: absolute;
-            top: 0;
-            right: 25px;
-            font-size: 36px;
-            margin-left: 50px;
-        }
-        main {
-            flex-grow: 1;
-            display: flex;
             justify-content: center;
             align-items: center;
-            padding: 2rem;
-            transition: margin-left 0.5s;
-            margin-left: 0;
         }
-        .calendar {
-            width: 100%;
-            max-width: 800px; /* Perbesar ukuran kalender */
+        .container {
             background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
             padding: 20px;
+            border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            overflow: hidden; /* Hindari scroll untuk akses bagian bawah */
+            max-width: 800px;
+            width: 100%;
+            overflow: hidden;
         }
-        .month-nav {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding: 0 20px;
+        /* Calendar styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
         }
-        .month-nav button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1em;
+        th {
+            background-color: #ffd1dc;
             color: #333;
-            transition: color 0.3s;
+            font-weight: normal;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ccc;
         }
-        .month-nav button:hover {
-            color: #ff66a3;
+        td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ccc;
         }
         .month {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 1.5em;
-            color: #333;
-        }
-        .weekdays, .days {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
-        }
-        .weekdays {
             background-color: #ffd1dc;
+            color: #333;
+            font-size: 1.2em;
             padding: 10px;
-            border-radius: 5px;
-        }
-        .weekday, .day {
             text-align: center;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        .weekday {
-            color: #333;
-        }
-        .day {
-            background-color: #ffffff;
-            color: #333;
-            cursor: pointer;
-            position: relative;
-        }
-        .day:hover {
-            background-color: #ffd1dc;
         }
         .today {
             background-color: #ffccff;
-            color: #333;
         }
-        .day-info {
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 5px 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            display: none;
-        }
-        .day:hover .day-info {
-            display: block;
-        }
-        footer {
-            background-color: #ffd1dc;
-            color: #333;
-            text-align: center;
-            padding: 1rem;
-        }
+        /* Responsive design */
         @media screen and (max-width: 600px) {
-            .calendar {
-                width: 100%;
-                max-width: 100%;
+            .container {
+                padding: 10px;
             }
-            .weekday, .day {
-                font-size: 0.8em;
-            }
-            .hamburger {
-                width: 25px;
-                height: 20px;
+            table {
+                font-size: 14px;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="hamburger" onclick="toggleSidebar()">
-            <div class="bar1"></div>
-            <div class="bar2"></div>
-            <div class="bar3"></div>
-        </div>
-        <h1>Mufti Khalis</h1>
-    </header>
-    <nav id="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="toggleSidebar()">&times;</a>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="blog.html">Blog</a>
-        <a href="contact.html">Contact</a>
-        <a href="calculator.html">Calculator</a>
-        <a href="calendar.html">Calendar</a>
-    </nav>
-    <main>
-        <div class="calendar">
-            <div class="month-nav">
-                <button onclick="prevMonth()">&#10094;</button>
-                <div class="month">July 2024</div>
-                <button onclick="nextMonth()">&#10095;</button>
-            </div>
-            <div class="weekdays">
-                <div class="weekday">Mon</div>
-                <div class="weekday">Tue</div>
-                <div class="weekday">Wed</div>
-                <div class="weekday">Thu</div>
-                <div class="weekday">Fri</div>
-                <div class="weekday">Sat</div>
-                <div class="weekday">Sun</div>
-            </div>
-            <div class="days" id="calendar-days">
-                <!-- Days will be dynamically generated here -->
-            </div>
-        </div>
-    </main>
-    <footer>
-        <p>&copy; 2024 Mufti Khalis</p>
-    </footer>
-
-    <script>
-        let currentMonth = new Date().getMonth();
-        let currentYear = new Date().getFullYear();
-
-        document.addEventListener('DOMContentLoaded', function() {
-            showCalendar(currentMonth, currentYear);
-        });
-
-        function showCalendar(month, year) {
-            const firstDay = new Date(year, month).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-            const monthName = new Date(year, month).toLocaleDateString('en-us', { month: 'long' });
-            document.querySelector('.month').textContent = `${monthName} ${year}`;
-
-            const calendarDays = document.getElementById('calendar-days');
-            calendarDays.innerHTML = '';
-
-            // Add empty days for spacing
-            for (let i = 0; i < (firstDay + 6) % 7; i++) {
-                const emptyDay = document.createElement('div');
-                emptyDay.classList.add('day');
-                calendarDays.appendChild(emptyDay);
-            }
-
-            // Add days of the month
-            for (let day = 1; day <= daysInMonth; day++) {
-                const calendarDay = document.createElement('div');
-                calendarDay.textContent = day;
-                calendarDay.classList.add('day');
-                if (day === new Date().getDate() && year === new Date().getFullYear() && month === new Date().getMonth()) {
-                    calendarDay.classList.add('today');
-                }
-                calendarDays.appendChild(calendarDay);
-            }
-        }
-
-        function nextMonth() {
-            currentMonth++;
-            if (currentMonth > 11) {
-                currentMonth = 0;
-                currentYear++;
-            }
-            showCalendar(currentMonth, currentYear);
-        }
-
-        function prevMonth() {
-            currentMonth--;
-            if (currentMonth < 0) {
-                currentMonth = 11;
-                currentYear--;
-            }
-            showCalendar(currentMonth, currentYear);
-        }
-
-        function toggleSidebar() {
-            const sidebar = document.getElementById("sidebar");
-            const mainContent = document.querySelector("main");
-            if (sidebar.style.width === "250px") {
-                sidebar.style.width = "0";
-                mainContent.style.marginLeft = "0";
-            } else {
-                sidebar.style.width = "250px";
-                mainContent.style.marginLeft = "250px";
-            }
-        }
-    </script>
+    <div class="container">
+        <h2 class="month">July 2024</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                    <th>Sun</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>9</td>
+                    <td>10</td>
+                    <td>11</td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td>13</td>
+                    <td>14</td>
+                    <td>15</td>
+                    <td>16</td>
+                    <td>17</td>
+                    <td>18</td>
+                </tr>
+                <tr>
+                    <td>19</td>
+                    <td>20</td>
+                    <td>21</td>
+                    <td>22</td>
+                    <td>23</td>
+                    <td>24</td>
+                    <td>25</td>
+                </tr>
+                <tr>
+                    <td>26</td>
+                    <td>27</td>
+                    <td>28</td>
+                    <td>29</td>
+                    <td>30</td>
+                    <td>31</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
