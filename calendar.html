@@ -42,6 +42,7 @@
             padding: 10px;
             text-align: center;
             border: 1px solid #ccc;
+            cursor: pointer;
         }
         .month {
             background-color: #ffd1dc;
@@ -52,6 +53,9 @@
         }
         .today {
             background-color: #ffccff;
+        }
+        .selected {
+            background-color: #ffb3b3;
         }
         /* Responsive design */
         @media screen and (max-width: 600px) {
@@ -67,7 +71,7 @@
 <body>
     <div class="container">
         <h2 class="month">July 2024</h2>
-        <table>
+        <table id="calendar">
             <thead>
                 <tr>
                     <th>Mon</th>
@@ -80,53 +84,62 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>4</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>6</td>
-                    <td>7</td>
-                    <td>8</td>
-                    <td>9</td>
-                    <td>10</td>
-                    <td>11</td>
-                </tr>
-                <tr>
-                    <td>12</td>
-                    <td>13</td>
-                    <td>14</td>
-                    <td>15</td>
-                    <td>16</td>
-                    <td>17</td>
-                    <td>18</td>
-                </tr>
-                <tr>
-                    <td>19</td>
-                    <td>20</td>
-                    <td>21</td>
-                    <td>22</td>
-                    <td>23</td>
-                    <td>24</td>
-                    <td>25</td>
-                </tr>
-                <tr>
-                    <td>26</td>
-                    <td>27</td>
-                    <td>28</td>
-                    <td>29</td>
-                    <td>30</td>
-                    <td>31</td>
-                    <td></td>
-                </tr>
+                <!-- Dates are dynamically generated with JavaScript -->
             </tbody>
         </table>
     </div>
+
+    <script>
+        // Function to generate calendar
+        function generateCalendar(year, month) {
+            const today = new Date();
+            const calendarBody = document.querySelector("#calendar tbody");
+            const daysInMonth = new Date(year, month + 1, 0).getDate(); // Total days in the month
+            const firstDay = new Date(year, month, 1).getDay(); // Day of the week of the first day
+
+            calendarBody.innerHTML = ""; // Clear previous calendar
+
+            let date = 1;
+            // Create rows and cells for the calendar
+            for (let i = 0; i < 6; i++) {
+                const row = document.createElement("tr");
+
+                for (let j = 0; j < 7; j++) {
+                    const cell = document.createElement("td");
+                    if ((i === 0 && j < firstDay) || date > daysInMonth) {
+                        // Empty cells before the first day and after the last day
+                        cell.textContent = "";
+                    } else {
+                        cell.textContent = date;
+                        if (year === today.getFullYear() && month === today.getMonth() && date === today.getDate()) {
+                            cell.classList.add("today");
+                        }
+                        // Add click event listener to highlight selected date
+                        cell.addEventListener("click", function() {
+                            const selectedDate = new Date(year, month, date);
+                            const diffDays = Math.ceil((selectedDate - today) / (1000 * 60 * 60 * 24));
+                            highlightSelectedDate(this, diffDays);
+                        });
+                        date++;
+                    }
+                    row.appendChild(cell);
+                }
+
+                calendarBody.appendChild(row);
+            }
+        }
+
+        // Function to highlight selected date and display days difference
+        function highlightSelectedDate(cell, diffDays) {
+            const cells = document.querySelectorAll("#calendar td");
+            cells.forEach(cell => cell.classList.remove("selected"));
+            cell.classList.add("selected");
+            alert(diffDays + " days difference from today.");
+        }
+
+        // Initial generation of calendar for current month
+        const currentDate = new Date();
+        generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+    </script>
 </body>
 </html>
