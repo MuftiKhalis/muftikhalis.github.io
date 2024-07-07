@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendar - Mufti Khalis</title>
     <style>
-        /* General styling */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -13,57 +12,44 @@
             background: linear-gradient(to right, #ffccff, #ffb3ff);
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
         }
-        .container {
+        .calendar {
             background-color: rgba(255, 255, 255, 0.9);
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             max-width: 800px;
             width: 100%;
-            overflow: hidden;
-            margin-top: 20px;
-        }
-        /* Calendar styling */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: rgba(255, 255, 255, 0.7); /* Transparan */
-        }
-        th {
-            background-color: #ffd1dc;
-            color: #333;
-            font-weight: normal;
-            padding: 10px;
             text-align: center;
-            border: 1px solid #ccc;
-        }
-        td {
-            padding: 10px;
-            text-align: center;
-            border: 1px solid #ccc;
-            cursor: pointer;
         }
         .month {
-            background-color: #ffd1dc;
-            color: #333;
-            font-size: 1.2em;
-            padding: 10px;
-            text-align: center;
-            position: relative;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 20px;
         }
         .month-nav button {
             background: none;
             border: none;
             cursor: pointer;
             padding: 5px;
-            font-size: 1em;
+            font-size: 1.2em;
             color: #333;
+        }
+        .days {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .day {
+            width: calc(100% / 7);
+            padding: 10px;
+            box-sizing: border-box;
+            font-size: 1.2em;
+            border: 1px solid #ccc;
+            background-color: #fff;
         }
         .today {
             background-color: #ffccff;
@@ -131,11 +117,11 @@
         }
         /* Responsive design */
         @media screen and (max-width: 600px) {
-            .container {
+            .calendar {
                 padding: 10px;
             }
-            table {
-                font-size: 14px;
+            .day {
+                font-size: 1em;
             }
             .sidebar {
                 width: 200px;
@@ -166,29 +152,15 @@
         </ul>
     </div>
 
-    <div class="container">
-        <h2 class="month" id="monthYearDisplay">July 2024
-            <div class="month-nav">
-                <button onclick="prevMonth()">&#8249;</button>
-                <button onclick="nextMonth()">&#8250;</button>
-            </div>
-        </h2>
-        <table id="calendar">
-            <thead>
-                <tr>
-                    <th>Mon</th>
-                    <th>Tue</th>
-                    <th>Wed</th>
-                    <th>Thu</th>
-                    <th>Fri</th>
-                    <th>Sat</th>
-                    <th>Sun</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Dates are dynamically generated with JavaScript -->
-            </tbody>
-        </table>
+    <div class="calendar" id="calendar">
+        <div class="month">
+            <button onclick="prevMonth()">&#8249;</button>
+            <h2 id="monthYearDisplay">July 2024</h2>
+            <button onclick="nextMonth()">&#8250;</button>
+        </div>
+        <div class="days" id="daysContainer">
+            <!-- Days will be dynamically generated with JavaScript -->
+        </div>
     </div>
 
     <script>
@@ -201,41 +173,36 @@
         // Function to generate calendar
         function generateCalendar(year, month) {
             const today = new Date();
-            const calendarBody = document.querySelector("#calendar tbody");
             const daysInMonth = new Date(year, month + 1, 0).getDate(); // Total days in the month
             const firstDay = new Date(year, month, 1).getDay(); // Day of the week of the first day
 
-            document.getElementById("monthYearDisplay").textContent = getMonthName(month) + " " + year;
+            const monthYearDisplay = document.getElementById("monthYearDisplay");
+            monthYearDisplay.textContent = getMonthName(month) + " " + year;
 
-            calendarBody.innerHTML = ""; // Clear previous calendar
+            const daysContainer = document.getElementById("daysContainer");
+            daysContainer.innerHTML = ""; // Clear previous days
 
-            let date = 1;
-            // Create rows and cells for the calendar
-            for (let i = 0; i < 6; i++) {
-                const row = document.createElement("tr");
+            // Create days for the calendar
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement("div");
+                emptyDay.classList.add("day");
+                daysContainer.appendChild(emptyDay);
+            }
 
-                for (let j = 0; j < 7; j++) {
-                    const cell = document.createElement("td");
-                    if ((i === 0 && j < firstDay) || date > daysInMonth) {
-                        // Empty cells before the first day and after the last day
-                        cell.textContent = "";
-                    } else {
-                        cell.textContent = date;
-                        if (year === today.getFullYear() && month === today.getMonth() && date === today.getDate()) {
-                            cell.classList.add("today");
-                        }
-                        // Add click event listener to highlight selected date
-                        cell.addEventListener("click", function() {
-                            const selectedDate = new Date(year, month, date);
-                            const diffDays = getDifferenceInDays(selectedDate, today);
-                            highlightSelectedDate(this, diffDays);
-                        });
-                        date++;
-                    }
-                    row.appendChild(cell);
+            for (let date = 1; date <= daysInMonth; date++) {
+                const day = document.createElement("div");
+                day.textContent = date;
+                day.classList.add("day");
+                if (year === today.getFullYear() && month === today.getMonth() && date === today.getDate()) {
+                    day.classList.add("today");
                 }
-
-                calendarBody.appendChild(row);
+                // Add click event listener to highlight selected date
+                day.addEventListener("click", function() {
+                    const selectedDate = new Date(year, month, date);
+                    const diffDays = getDifferenceInDays(selectedDate, today);
+                    highlightSelectedDate(this, diffDays);
+                });
+                daysContainer.appendChild(day);
             }
         }
 
@@ -247,10 +214,10 @@
         }
 
         // Function to highlight selected date and display days difference
-        function highlightSelectedDate(cell, diffDays) {
-            const cells = document.querySelectorAll("#calendar td");
-            cells.forEach(cell => cell.classList.remove("selected"));
-            cell.classList.add("selected");
+        function highlightSelectedDate(day, diffDays) {
+            const days = document.querySelectorAll(".day");
+            days.forEach(day => day.classList.remove("selected"));
+            day.classList.add("selected");
             alert(Math.abs(diffDays) + " days " + (diffDays >= 0 ? "ahead" : "ago") + " from today.");
         }
 
