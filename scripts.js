@@ -51,3 +51,30 @@ function nextMonth() {
 }
 
 document.addEventListener('DOMContentLoaded', renderCalendar);
+
+// JavaScript for Complex Calculator functionality
+const calcDisplay = document.getElementById('calc-display');
+
+function appendToDisplay(value) {
+    calcDisplay.value += value;
+}
+
+function clearDisplay() {
+    calcDisplay.value = '';
+}
+
+function calculateResult() {
+    try {
+        let result = eval(calcDisplay.value);
+        calcDisplay.value = result;
+    } catch (error) {
+        calcDisplay.value = 'Error';
+    }
+}
+
+// Listen for Enter key press to calculate result
+calcDisplay.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        calculateResult();
+    }
+});
