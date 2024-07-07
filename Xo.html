@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe Game</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: #f3f4f6;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #edf2f7;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 1000;
+            transform: translateX(-250px);
+            transition: transform 0.3s ease-in-out;
+        }
+        .sidebar.open {
+            transform: translateX(0);
+        }
+        .sidebar a {
+            display: block;
+            padding: 10px 0;
+            text-decoration: none;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #cbd5e0;
+            color: #fff;
+        }
+        .content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 4px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 4px;
+        }
+        .cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 2rem;
+            color: #333;
+            background-color: #edf2f7;
+            transition: background-color 0.3s;
+        }
+        .cell:hover {
+            background-color: #cbd5e0;
+        }
+        .message {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 1.2rem;
+            color: #333;
+        }
+        .button {
+            display: inline-block;
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .hamburger {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            z-index: 1100;
+            display: none;
+        }
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background-color: #333;
+            margin-bottom: 5px;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+        .hamburger.open span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.open span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body class="flex">
+    <div class="sidebar">
+        <div class="hamburger" onclick="toggleSidebar()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <a href="xo.html">Tic-Tac-Toe Game</a>
+        <a href="about.html">About</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+        <a href="calculator.html">Calculator</a>
+        <a href="calendar.html">Calendar</a>
+    </div>
+    <div class="content">
+        <div id="app" class="text-center">
+            <h1 class="text-3xl font-bold mb-4">Tic-Tac-Toe Game</h1>
+            <div class="board mx-auto">
+                <div class="cell" onclick="handleClick(0)"></div>
+                <div class="cell" onclick="handleClick(1)"></div>
+                <div class="cell" onclick="handleClick(2)"></div>
+                <div class="cell" onclick="handleClick(3)"></div>
+                <div class="cell" onclick="handleClick(4)"></div>
+                <div class="cell" onclick="handleClick(5)"></div>
+                <div class="cell" onclick="handleClick(6)"></div>
+                <div class="cell" onclick="handleClick(7)"></div>
+                <div class="cell" onclick="handleClick(8)"></div>
+            </div>
+            <div class="message mt-4"></div>
+            <button class="button mt-4 hidden" onclick="restartGame()">Restart Game</button>
+        </div>
+    </div>
+
+    <script>
+        let board = ['', '', '', '', '', '', '', '', ''];
+        let currentPlayer = 'X';
+        let gameActive = true;
+        let cells = document.querySelectorAll('.cell');
+        let message = document.querySelector('.message');
+        let restartButton = document.querySelector('.button');
+        let sidebar = document.querySelector('.sidebar');
+
+        function handleClick(index) {
+            if (gameActive && board[index] === '') {
+                board[index] = currentPlayer;
+                cells[index].textContent = currentPlayer;
+                if (checkWin() || checkDraw()) {
+                    gameActive = false;
+                    showGameResult();
+                } else {
+                    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                }
+            }
+        }
+
+        function checkWin() {
+            const winConditions = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6]
+            ];
+
+            return winConditions.some(condition => {
+                const [a, b, c] = condition;
+                return board[a] !== '' && board[a] === board[b] && board[b] === board[c];
+            });
+        }
+
+        function checkDraw() {
+            return board.every(cell => cell !== '');
+        }
+
+        function showGameResult() {
+            if (checkWin()) {
+                message.textContent = `${currentPlayer} wins!`;
+            } else if (checkDraw()) {
+                message.textContent = `It's a draw!`;
+            }
+            restartButton.classList.remove('hidden');
+        }
+
+        function restartGame() {
+            board = ['', '', '', '', '', '', '', '', ''];
+            currentPlayer = 'X';
+            gameActive = true;
+            cells.forEach(cell => cell.textContent = '');
+            message.textContent = '';
+            restartButton.classList.add('hidden');
+        }
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
