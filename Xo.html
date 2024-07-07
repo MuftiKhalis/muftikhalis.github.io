@@ -146,6 +146,13 @@
                         <option value="impossible">Impossible</option>
                     </select>
                 </div>
+                <div>
+                    <label for="firstMove">First Move:</label>
+                    <select id="firstMove" class="ml-2 px-2 py-1 border border-gray-300 rounded">
+                        <option value="player">Player</option>
+                        <option value="computer">Computer</option>
+                    </select>
+                </div>
             </div>
             <div class="board">
                 <div class="cell" onclick="cellClick(0)"></div>
@@ -162,6 +169,10 @@
                 <p id="result-text"></p>
                 <button class="btn" onclick="resetGame()">Play Again</button>
             </div>
+            <div class="flex justify-between">
+                <button class="btn" onclick="resetGame()">Reset</button>
+                <button class="btn" onclick="startPvP()">PvP</button>
+            </div>
         </div>
     </div>
 
@@ -175,6 +186,8 @@
         let currentPlayer = 'X';
         let gameOver = false;
         let difficulty = 'easy'; // Default difficulty
+        let firstMove = 'player'; // Default first move
+        let isPvP = false;
 
         // Function to toggle sidebar
         function toggleSidebar() {
@@ -201,8 +214,8 @@
                     gameOver = true;
                 } else {
                     currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-                    if (currentPlayer === 'O') {
-                        computerMove();
+                    if (!isPvP && currentPlayer === 'O') {
+                        setTimeout(computerMove, 500); // Delay computer move for better UX
                     }
                 }
             }
@@ -278,7 +291,7 @@
         function minimax(player) {
             const emptyCells = board.map((cell, index) => cell === '' ? index : null).filter(val => val !== null);
             if (checkWin()) {
-                return { score: (currentPlayer === 'O' ? 10 : -10) };
+                return { score: (currentPlayer === 'O' ? 100000 : -100000) };
             } else if (checkDraw()) {
                 return { score: 0 };
             }
@@ -365,12 +378,30 @@
                 cell.classList.remove('X', 'O', 'win', 'draw');
             });
             document.getElementById('result').classList.add('hidden');
+            if (firstMove === 'computer') {
+                setTimeout(computerMove, 500);
+            }
+        }
+
+        // Function to start PvP mode
+        function startPvP() {
+            isPvP = true;
+            resetGame();
         }
 
         // Event listener to update difficulty
         document.getElementById('level').addEventListener('change', function() {
             difficulty = this.value;
         });
+
+        // Event listener to update first move
+        document.getElementById('firstMove').addEventListener('change', function() {
+            firstMove = this.value;
+            resetGame();
+        });
+
+        // Initialize the game
+        resetGame();
     </script>
 </body>
 </html>
