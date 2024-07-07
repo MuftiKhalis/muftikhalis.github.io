@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator</title>
+    <title>Calculator - Mufti Khalis</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="images/favicon.ico">
+    <link rel="icon" href="favicon.ico">
 </head>
 <body>
     <header>
@@ -17,6 +17,7 @@
         <h1>Mufti Khalis</h1>
     </header>
     <nav id="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="toggleSidebar()">&times;</a>
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
@@ -26,27 +27,26 @@
             <li><a href="calendar.html">Calendar</a></li>
         </ul>
     </nav>
-    <main>
-        <div id="calculator">
-            <input type="text" id="calc-display" disabled>
-            <div class="buttons">
-                <button onclick="appendToDisplay('1')">1</button>
-                <button onclick="appendToDisplay('2')">2</button>
-                <button onclick="appendToDisplay('3')">3</button>
-                <button onclick="appendToDisplay('+')">+</button>
-                <button onclick="appendToDisplay('4')">4</button>
-                <button onclick="appendToDisplay('5')">5</button>
-                <button onclick="appendToDisplay('6')">6</button>
-                <button onclick="appendToDisplay('-')">-</button>
-                <button onclick="appendToDisplay('7')">7</button>
-                <button onclick="appendToDisplay('8')">8</button>
-                <button onclick="appendToDisplay('9')">9</button>
-                <button onclick="appendToDisplay('*')">*</button>
-                <button onclick="appendToDisplay('0')">0</button>
-                <button onclick="clearDisplay()">C</button>
-                <button onclick="appendToDisplay('/')">/</button>
-                <button onclick="calculateResult()">=</button>
-            </div>
+    <main id="calculator">
+        <input type="text" id="calc-display" readonly>
+        <div class="buttons">
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button onclick="appendToDisplay('/')">/</button>
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button onclick="appendToDisplay('*')">*</button>
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button onclick="appendToDisplay('-')">-</button>
+            <button onclick="appendToDisplay('0')">0</button>
+            <button onclick="appendToDisplay('.')">.</button>
+            <button onclick="clearDisplay()">C</button>
+            <button onclick="appendToDisplay('+')">+</button>
+            <button onclick="calculateResult()" style="grid-column: span 4;">=</button>
         </div>
     </main>
     <footer>
