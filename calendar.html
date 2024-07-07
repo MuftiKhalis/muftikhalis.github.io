@@ -13,7 +13,7 @@
             background: linear-gradient(to right, #ffccff, #ffb3ff);
             min-height: 100vh;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
         }
         .container {
@@ -24,6 +24,7 @@
             max-width: 800px;
             width: 100%;
             overflow: hidden;
+            margin-top: 20px;
         }
         /* Calendar styling */
         table {
@@ -57,6 +58,64 @@
         .selected {
             background-color: #ffb3b3;
         }
+        /* Sidebar styling */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #ffd1dc;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            transform: translateX(-250px);
+            transition: transform 0.3s ease-in-out;
+        }
+        .sidebar.open {
+            transform: translateX(0);
+        }
+        .sidebar .close-btn {
+            cursor: pointer;
+            text-align: right;
+            font-size: 20px;
+        }
+        /* Hamburger menu styling */
+        .hamburger {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 999;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+        }
+        .bar {
+            width: 100%;
+            height: 3px;
+            background-color: #333;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+        .bar.middle {
+            transform: scaleX(0);
+        }
+        .bar.bottom {
+            transform-origin: bottom;
+        }
+        .bar.top {
+            transform-origin: top;
+        }
+        .open .top {
+            transform: translateY(12px) rotate(45deg);
+        }
+        .open .middle {
+            transform: scaleX(0);
+        }
+        .open .bottom {
+            transform: translateY(-12px) rotate(-45deg);
+        }
         /* Responsive design */
         @media screen and (max-width: 600px) {
             .container {
@@ -65,10 +124,35 @@
             table {
                 font-size: 14px;
             }
+            .sidebar {
+                width: 200px;
+            }
+            .hamburger {
+                top: 10px;
+                left: 10px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="hamburger" onclick="toggleSidebar()">
+        <div class="bar top"></div>
+        <div class="bar middle"></div>
+        <div class="bar bottom"></div>
+    </div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="close-btn" onclick="toggleSidebar()">X</div>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Calculator</a></li>
+            <li><a href="#">Calendar</a></li>
+        </ul>
+    </div>
+
     <div class="container">
         <h2 class="month">July 2024</h2>
         <table id="calendar">
@@ -90,6 +174,12 @@
     </div>
 
     <script>
+        // Function to toggle sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("open");
+        }
+
         // Function to generate calendar
         function generateCalendar(year, month) {
             const today = new Date();
@@ -117,7 +207,7 @@
                         // Add click event listener to highlight selected date
                         cell.addEventListener("click", function() {
                             const selectedDate = new Date(year, month, date);
-                            const diffDays = Math.ceil((selectedDate - today) / (1000 * 60 * 60 * 24));
+                            const diffDays = Math.ceil((selectedDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
                             highlightSelectedDate(this, diffDays);
                         });
                         date++;
