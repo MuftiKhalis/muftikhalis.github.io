@@ -1,39 +1,181 @@
-/* Theme styles */
-body.light-theme {
+body {
+    font-family: Arial, sans-serif;
     background-color: #f0f0f0;
-    color: #000;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
-body.dark-theme {
-    background-color: #1a1a1a;
-    color: #fff;
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
 }
 
-header.light-theme,
-footer.light-theme,
-#sidebar.light-theme {
+nav {
+    width: 250px;
+    height: 100%;
     background-color: #333;
+    position: fixed;
+    left: -250px;
+    transition: 0.3s;
 }
 
-header.dark-theme,
-footer.dark-theme,
-#sidebar.dark-theme {
-    background-color: #000;
+nav ul {
+    list-style-type: none;
+    padding: 0;
 }
 
-button.theme-toggle {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background-color: #ff9800;
-    border: none;
+nav ul li {
+    padding: 15px;
+    text-align: center;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+nav ul li a:hover {
+    background-color: #575757;
+}
+
+#sidebar.open {
+    left: 0;
+}
+
+.hamburger {
+    cursor: pointer;
+}
+
+.hamburger .bar1,
+.hamburger .bar2,
+.hamburger .bar3 {
+    width: 35px;
+    height: 5px;
+    background-color: white;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+.hamburger.change .bar1 {
+    transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+.hamburger.change .bar2 {
+    opacity: 0;
+}
+
+.hamburger.change .bar3 {
+    transform: rotate(45deg) translate(-8px, -8px);
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    margin-left: 260px;
+}
+
+footer {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
     padding: 10px;
+}
+
+#calculator {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+#calc-display {
+    width: 100%;
+    padding: 20px;
+    font-size: 2em;
+    border: none;
+    background-color: #f0f0f0;
+    text-align: right;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.buttons button {
+    padding: 20px;
+    font-size: 1.5em;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
     border-radius: 5px;
     cursor: pointer;
-    color: white;
-    font-size: 16px;
 }
 
-button.theme-toggle:hover {
-    background-color: #e68900;
+.buttons button:hover {
+    background-color: #45a049;
+}
+
+#calendar {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+#calendar .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#calendar .header button {
+    padding: 10px;
+    font-size: 1.2em;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#calendar .header button:hover {
+    background-color: #45a049;
+}
+
+#calendar #weekdays, #calendar #days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+#calendar #weekdays div, #calendar #days div {
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#calendar #weekdays div {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#calendar #days div {
+    background-color: #f0f0f0;
 }
