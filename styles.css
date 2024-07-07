@@ -1,220 +1,161 @@
-/* General Styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f7f7f7;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    color: #333;
+    background: linear-gradient(to right, #f3c6e6, #f7e2f3);
 }
 
 header {
-    background: linear-gradient(to right, #ffcccb, #ffaec9); /* gradient pastel pink */
-    color: white;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-nav {
-    width: 250px;
-    background-color: #333;
-    position: fixed;
-    left: -250px;
-    height: 100%;
-    top: 0;
-    transition: 0.3s;
-}
-
-nav ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-nav ul li {
-    padding: 15px;
+    background-color: #f3c6e6;
+    color: #333;
+    padding: 1rem;
     text-align: center;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    display: block;
-}
-
-nav ul li a:hover {
-    background-color: #575757;
-}
-
-#sidebar.open {
-    left: 0;
+    position: relative;
 }
 
 .hamburger {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
     cursor: pointer;
-    display: none;
 }
 
-.hamburger .bar1,
-.hamburger .bar2,
-.hamburger .bar3 {
-    width: 30px;
-    height: 4px;
-    background-color: white;
-    margin: 5px 0;
+.hamburger .bar1, .hamburger .bar2, .hamburger .bar3 {
+    width: 35px;
+    height: 5px;
+    background-color: #333;
+    margin: 6px 0;
     transition: 0.4s;
 }
 
-.hamburger.change .bar1 {
-    transform: rotate(-45deg) translate(-5px, 6px);
+#sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #f7e2f3;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
 }
 
-.hamburger.change .bar2 {
-    opacity: 0;
+#sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #333;
+    display: block;
+    transition: 0.3s;
 }
 
-.hamburger.change .bar3 {
-    transform: rotate(45deg) translate(-5px, -6px);
+#sidebar a:hover {
+    color: #f3c6e6;
+}
+
+#sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
 }
 
 main {
-    flex: 1;
-    padding: 20px;
-    margin-left: 260px;
+    margin: 20px;
 }
 
 footer {
-    background: linear-gradient(to right, #ffcccb, #ffaec9); /* gradient pastel pink */
-    color: white;
+    background-color: #f3c6e6;
+    color: #333;
     text-align: center;
-    padding: 10px;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
-/* Calculator Styles */
 #calculator {
-    max-width: 320px;
-    margin: 20px auto;
-    background-color: white;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #calc-display {
     width: 100%;
-    padding: 15px;
-    font-size: 1.5em;
-    border: none;
-    background-color: #f0f0f0;
-    text-align: right;
+    max-width: 300px;
+    padding: 10px;
     margin-bottom: 10px;
-    border-radius: 5px;
+    font-size: 1.5rem;
+    text-align: right;
 }
 
 .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
+    max-width: 300px;
+    width: 100%;
 }
 
 .buttons button {
-    padding: 15px;
-    font-size: 1.2em;
+    padding: 20px;
+    font-size: 1.5rem;
     border: none;
-    background-color: #ffcccb; /* pastel pink */
+    background-color: #e3b4d4;
     color: white;
-    border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .buttons button:hover {
-    background-color: #ffaec9;
+    background-color: #c191b2;
 }
 
-/* Calendar Styles */
 #calendar {
-    max-width: 600px;
-    margin: 20px auto;
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #calendar .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-#calendar .header button {
+    width: 100%;
+    max-width: 300px;
     padding: 10px;
-    font-size: 1.2em;
-    border: none;
-    background-color: #ffcccb; /* pastel pink */
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#calendar .header button:hover {
-    background-color: #ffaec9;
+    background-color: #f3c6e6;
+    color: #333;
 }
 
 #calendar #weekdays, #calendar #days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
+    gap: 10px;
+    max-width: 300px;
+    width: 100%;
 }
 
 #calendar #weekdays div, #calendar #days div {
     text-align: center;
     padding: 10px;
-    border-radius: 5px;
-}
-
-#calendar #weekdays div {
-    background-color: #ffcccb; /* pastel pink */
+    background-color: #e3b4d4;
     color: white;
 }
 
-#calendar #days div {
-    background-color: #f0f0f0;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    nav {
-        width: 100%;
-        height: auto;
-        position: relative;
-        left: 0;
-    }
-    nav ul {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    main {
-        margin-left: 0;
-    }
-    .hamburger {
-        display: block;
-    }
-}
-
-@media (max-width: 480px) {
-    header {
-        padding: 10px;
-    }
+@media (max-width: 600px) {
     .buttons button {
-        padding: 10px;
-        font-size: 1em;
+        padding: 15px;
+        font-size: 1rem;
     }
+
     #calc-display {
-        font-size: 1.2em;
+        font-size: 1rem;
+    }
+
+    #calendar .header, #calendar #weekdays div, #calendar #days div {
+        font-size: 0.8rem;
     }
 }
