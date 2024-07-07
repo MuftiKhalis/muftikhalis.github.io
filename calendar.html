@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendar - Mufti Khalis</title>
+    <title>Calendar</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="images/favicon.ico">
 </head>
 <body>
     <header>
-        <h1>Calendar</h1>
         <div class="hamburger" onclick="toggleSidebar()">
             <div class="bar1"></div>
             <div class="bar2"></div>
             <div class="bar3"></div>
         </div>
+        <h1>Mufti Khalis</h1>
     </header>
     <nav id="sidebar">
         <ul>
@@ -29,9 +29,9 @@
     <main>
         <div id="calendar">
             <div class="header">
-                <button onclick="prevMonth()">&lt;</button>
+                <button onclick="prevMonth()">&#9664;</button>
                 <div id="monthYear"></div>
-                <button onclick="nextMonth()">&gt;</button>
+                <button onclick="nextMonth()">&#9654;</button>
             </div>
             <div id="weekdays">
                 <div>Sun</div>
@@ -46,7 +46,7 @@
         </div>
     </main>
     <footer>
-        <p>&copy; 2024 Mufti Khalis. All rights reserved.</p>
+        <p>&copy; 2024 Mufti Khalis</p>
     </footer>
     <script src="scripts.js"></script>
 </body>
