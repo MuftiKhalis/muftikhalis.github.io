@@ -207,7 +207,7 @@
                         // Add click event listener to highlight selected date
                         cell.addEventListener("click", function() {
                             const selectedDate = new Date(year, month, date);
-                            const diffDays = Math.ceil((selectedDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+                            const diffDays = Math.floor((selectedDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
                             highlightSelectedDate(this, diffDays);
                         });
                         date++;
