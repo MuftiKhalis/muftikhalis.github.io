@@ -81,11 +81,12 @@
         }
         .calendar {
             width: 100%;
-            max-width: 600px;
+            max-width: 800px; /* Perbesar ukuran kalender */
             background-color: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden; /* Hindari scroll untuk akses bagian bawah */
         }
         .month-nav {
             display: flex;
@@ -132,6 +133,7 @@
             background-color: #ffffff;
             color: #333;
             cursor: pointer;
+            position: relative;
         }
         .day:hover {
             background-color: #ffd1dc;
@@ -139,6 +141,20 @@
         .today {
             background-color: #ffccff;
             color: #333;
+        }
+        .day-info {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 5px 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        .day:hover .day-info {
+            display: block;
         }
         footer {
             background-color: #ffd1dc;
