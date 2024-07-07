@@ -179,3 +179,32 @@ footer {
 #calendar #days div {
     background-color: #f0f0f0;
 }
+
+@media (max-width: 768px) {
+    nav {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    nav ul {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    main {
+        margin-left: 0;
+    }
+    .hamburger {
+        display: block;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 10px;
+    }
+    .buttons button {
+        padding: 15px;
+        font-size: 1.2em;
+    }
+}
