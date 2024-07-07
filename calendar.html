@@ -19,6 +19,7 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            transition: filter 0.3s ease;
         }
         .hidden {
             display: none;
@@ -42,6 +43,9 @@
         .sidebar-open {
             transform: translateX(0);
             opacity: 0.8;
+        }
+        .blur {
+            filter: blur(5px);
         }
     </style>
 </head>
@@ -117,9 +121,11 @@
         function toggleSidebar() {
             const sidebar = document.getElementById("sidebar");
             const hamburger = document.querySelector(".hamburger");
+            const content = document.getElementById("content");
             sidebar.classList.toggle("-translate-x-full");
             sidebar.classList.toggle("sidebar-open");
             hamburger.classList.toggle("change");
+            content.classList.toggle("blur");
         }
 
         // Function to generate calendar
@@ -184,8 +190,8 @@
 
         // Function to calculate difference in days between two dates
         function getDifferenceInDays(date1, date2) {
-            const timeDiff = date1.setHours(0,0,0,0) - date2.setHours(0,0,0,0);
-            return Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            const diffTime = date1 - date2;
+            return Math.floor(diffTime / (1000 * 60 * 60 * 24));
         }
 
         // Function to navigate to the previous month
