@@ -83,12 +83,6 @@
             padding: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .month {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 1.5em;
-            color: #333;
-        }
         .month-nav {
             display: flex;
             justify-content: space-between;
@@ -106,30 +100,37 @@
         .month-nav button:hover {
             color: #ff66a3;
         }
+        .month {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            color: #333;
+        }
+        .weekdays, .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
         .weekdays {
-            display: flex;
-            justify-content: space-around;
             background-color: #ffd1dc;
             padding: 10px;
             border-radius: 5px;
-            margin-bottom: 10px;
+        }
+        .weekday, .day {
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
         }
         .weekday {
-            width: 14%;
-            text-align: center;
             color: #333;
         }
-        .days {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
         .day {
-            width: 14%;
-            text-align: center;
-            padding: 10px 0;
-            margin-bottom: 10px;
-            border-radius: 5px;
+            background-color: #ffffff;
+            color: #333;
+            cursor: pointer;
+        }
+        .day:hover {
+            background-color: #ffd1dc;
         }
         .today {
             background-color: #ffccff;
@@ -214,7 +215,6 @@
             const monthName = new Date(year, month).toLocaleDateString('en-us', { month: 'long' });
             document.querySelector('.month').textContent = `${monthName} ${year}`;
 
-            const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             const calendarDays = document.getElementById('calendar-days');
             calendarDays.innerHTML = '';
 
