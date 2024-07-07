@@ -4,166 +4,108 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Mufti Khalis</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        /* Styling for body and layout */
         body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #fff;
-            color: #333;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            background: linear-gradient(to right, #ffccff, #ffb3ff);
         }
-        .container {
+        #content {
+            flex: 1;
             display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
-        /* Styling for sidebar */
-        #sidebar {
-            width: 250px;
-            background-color: #ffd1dc;
-            transition: all 0.3s ease;
-            z-index: 1;
-            padding-top: 60px;
-            position: fixed;
-            left: 0;
-            top: 0;
-            height: 100%;
-            overflow-x: hidden;
-            border-right: 1px solid #ccc;
-        }
-        #sidebar .closebtn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 30px;
-            cursor: pointer;
-        }
-        #sidebar ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        #sidebar ul li {
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-        }
-        #sidebar ul li:last-child {
-            border-bottom: none;
-        }
-        #sidebar ul li a {
-            text-decoration: none;
-            color: #333;
-            font-size: 18px;
-            display: block;
-            padding: 10px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        #sidebar ul li a:hover {
-            background-color: #ffccff;
-            color: #333;
-        }
-        /* Styling for main content */
-        main {
-            flex: 1;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
-            transition: margin-left 0.3s ease;
         }
-        main h1 {
-            margin-top: 0;
+        .hidden {
+            display: none;
         }
-        /* Styling for hamburger menu */
-        .hamburger {
-            position: fixed;
-            left: 20px;
-            top: 20px;
-            cursor: pointer;
-            z-index: 2;
-            display: block;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .bar {
-            width: 100%;
+        .hamburger div {
+            width: 25px;
             height: 3px;
             background-color: #333;
+            margin: 4px 0;
             transition: 0.4s;
         }
-        .change .bar:nth-child(1) {
-            transform: rotate(-45deg) translate(-5px, 6px);
+        .change .bar1 {
+            transform: rotate(-45deg) translate(-5px, 5px);
         }
-        .change .bar:nth-child(2) {
+        .change .bar2 {
             opacity: 0;
         }
-        .change .bar:nth-child(3) {
-            transform: rotate(45deg) translate(-5px, -6px);
+        .change .bar3 {
+            transform: rotate(45deg) translate(-5px, -5px);
         }
-        /* Media query for responsive design */
-        @media screen and (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-            #sidebar {
-                width: 0;
-            }
-            main {
-                margin-left: 0;
-            }
-            .hamburger {
-                display: block;
-            }
+        .sidebar-open {
+            transform: translateX(0);
+            opacity: 0.8;
+        }
+        .section {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        footer {
+            background-color: #ffd1dc;
+            color: #333;
+            text-align: center;
+            padding: 1rem;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Sidebar -->
-        <nav id="sidebar">
-            <div class="closebtn" onclick="toggleSidebar()">
-                &times;
-            </div>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="calculator.html">Calculator</a></li>
-                <li><a href="calendar.html">Calendar</a></li>
-            </ul>
-        </nav>
-        <!-- Main content -->
-        <main>
-            <div class="hamburger" onclick="toggleSidebar()">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-            </div>
-            <h1>Welcome to Mufti Khalis's Website</h1>
-            <p>This is the home page of Mufti Khalis's website. Feel free to explore!</p>
-        </main>
+    <!-- Sidebar -->
+    <div class="fixed left-0 top-0 w-64 h-full bg-pink-100 shadow-lg p-4 transform -translate-x-full opacity-0 ease-in-out transition-all duration-300" id="sidebar">
+        <button class="text-2xl text-gray-700 absolute top-2 right-2" onclick="toggleSidebar()">&times;</button>
+        <ul class="mt-10">
+            <li><a href="index.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Home</a></li>
+            <li><a href="about.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">About</a></li>
+            <li><a href="blog.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Blog</a></li>
+            <li><a href="contact.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Contact</a></li>
+            <li><a href="calendar.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calendar</a></li>
+        </ul>
     </div>
 
+    <!-- Hamburger Menu -->
+    <div class="fixed left-4 top-4 z-50 cursor-pointer hamburger" onclick="toggleSidebar()">
+        <div class="bar1 bg-gray-700 rounded-full"></div>
+        <div class="bar2 bg-gray-700 rounded-full"></div>
+        <div class="bar3 bg-gray-700 rounded-full"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-pink-100 w-full py-4 text-center">
+        <h1 class="text-2xl font-bold text-gray-700">Home</h1>
+    </header>
+
+    <!-- Content -->
+    <div id="content">
+        <div class="section">
+            <p class="text-lg text-gray-700">Welcome to Mufti Khalis' website!</p>
+            <p class="mt-4 text-gray-700">Explore the different sections using the sidebar.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-pink-100 w-full py-4 text-center">
+        <p class="text-gray-700">&copy; 2024 Mufti Khalis</p>
+    </footer>
+
     <script>
+        // Function to toggle sidebar
         function toggleSidebar() {
             const sidebar = document.getElementById("sidebar");
-            const main = document.querySelector("main");
             const hamburger = document.querySelector(".hamburger");
-
-            sidebar.classList.toggle('active');
-            hamburger.classList.toggle('change');
-
-            if (sidebar.classList.contains('active')) {
-                sidebar.style.width = "250px";
-                main.style.marginLeft = "250px";
-            } else {
-                sidebar.style.width = "0";
-                main.style.marginLeft = "0";
-            }
+            sidebar.classList.toggle("-translate-x-full");
+            sidebar.classList.toggle("sidebar-open");
+            hamburger.classList.toggle("change");
         }
     </script>
 </body>
