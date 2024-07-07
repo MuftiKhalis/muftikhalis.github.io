@@ -1,65 +1,66 @@
 function toggleSidebar() {
     var sidebar = document.getElementById("sidebar");
-    if (sidebar.style.width === "250px") {
-        sidebar.style.width = "0";
-    } else {
-        sidebar.style.width = "250px";
-    }
+    var main = document.querySelector("main");
+    sidebar.classList.toggle("open");
+    main.classList.toggle("shift");
 }
 
+// Calculator Script
+let display = document.getElementById('calc-display');
+
 function appendToDisplay(value) {
-    document.getElementById('calc-display').value += value;
+    display.value += value;
 }
 
 function clearDisplay() {
-    document.getElementById('calc-display').value = '';
+    display.value = '';
 }
 
 function calculateResult() {
     try {
-        document.getElementById('calc-display').value = eval(document.getElementById('calc-display').value);
-    } catch {
-        document.getElementById('calc-display').value = 'Error';
+        display.value = eval(display.value);
+    } catch (e) {
+        display.value = 'Error';
     }
 }
 
-let currentMonth = new Date().getMonth();
-let currentYear = new Date().getFullYear();
+// Calendar Script
+const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+let currentDate = new Date();
 
-function showCalendar(month, year) {
-    const firstDay = (new Date(year, month)).getDay();
-    const daysInMonth = 32 - new Date(year, month, 32).getDate();
+function renderCalendar() {
+    const daysElement = document.getElementById('days');
+    const monthYearElement = document.getElementById('monthYear');
+    daysElement.innerHTML = '';
 
-    const monthYear = document.getElementById("monthYear");
-    monthYear.innerHTML = `${year} ${month + 1}`;
+    const month = currentDate.getMonth();
+    const year = currentDate.getFullYear();
 
-    const daysElement = document.getElementById("days");
-    daysElement.innerHTML = "";
+    monthYearElement.innerHTML = `${monthNames[month]} ${year}`;
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
 
     for (let i = 0; i < firstDay; i++) {
-        const cell = document.createElement("div");
-        daysElement.appendChild(cell);
+        const emptyDiv = document.createElement('div');
+        daysElement.appendChild(emptyDiv);
     }
 
     for (let day = 1; day <= daysInMonth; day++) {
-        const cell = document.createElement("div");
-        cell.innerHTML = day;
-        daysElement.appendChild(cell);
+        const dayDiv = document.createElement('div');
+        dayDiv.innerHTML = day;
+        daysElement.appendChild(dayDiv);
     }
 }
 
 function prevMonth() {
-    currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
-    currentYear = (currentMonth === 11) ? currentYear - 1 : currentYear;
-    showCalendar(currentMonth, currentYear);
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar();
 }
 
 function nextMonth() {
-    currentMonth = (currentMonth === 11) ? 0 : currentMonth + 1;
-    currentYear = (currentMonth === 0) ? currentYear + 1 : currentYear;
-    showCalendar(currentMonth, currentYear);
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar();
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    showCalendar(currentMonth, currentYear);
-});
+document.addEventListener('DOMContentLoaded', renderCalendar);
