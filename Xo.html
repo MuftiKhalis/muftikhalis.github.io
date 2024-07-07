@@ -202,13 +202,13 @@
                 } else {
                     currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
                     if (currentPlayer === 'O') {
-                        setTimeout(computerMove, 500); // Computer's move delay for realism
+                        computerMove();
                     }
                 }
             }
         }
 
-        // Function to handle computer's move
+        // Function to handle computer move
         function computerMove() {
             if (!gameOver) {
                 let index;
@@ -254,25 +254,88 @@
             return emptyCells[Math.floor(Math.random() * emptyCells.length)];
         }
 
-        // Placeholder functions for other difficulty levels
+        // Function to get a medium difficulty move
         function getMediumComputerMove() {
-            // Add medium difficulty logic here
-            return getRandomEmptyCell(); // Placeholder
+            return getSmartMove() || getRandomEmptyCell();
         }
 
+        // Function to get a hard difficulty move
         function getHardComputerMove() {
-            // Add hard difficulty logic here
-            return getRandomEmptyCell(); // Placeholder
+            return minimax('O').index;
         }
 
+        // Function to get an expert difficulty move
         function getExpertComputerMove() {
-            // Add expert difficulty logic here
-            return getRandomEmptyCell(); // Placeholder
+            return minimax('O').index;
         }
 
+        // Function to get an impossible difficulty move
         function getImpossibleComputerMove() {
-            // Add impossible difficulty logic here
-            return getRandomEmptyCell(); // Placeholder
+            return minimax('O').index;
+        }
+
+        // Minimax algorithm implementation
+        function minimax(player) {
+            const emptyCells = board.map((cell, index) => cell === '' ? index : null).filter(val => val !== null);
+            if (checkWin()) {
+                return { score: (currentPlayer === 'O' ? 10 : -10) };
+            } else if (checkDraw()) {
+                return { score: 0 };
+            }
+            const moves = [];
+            for (let i = 0; i < emptyCells.length; i++) {
+                const move = {};
+                move.index = emptyCells[i];
+                board[emptyCells[i]] = player;
+                const result = minimax(player === 'O' ? 'X' : 'O');
+                move.score = result.score;
+                board[emptyCells[i]] = '';
+                moves.push(move);
+            }
+            let bestMove;
+            if (player === 'O') {
+                let bestScore = -Infinity;
+                for (let i = 0; i < moves.length; i++) {
+                    if (moves[i].score > bestScore) {
+                        bestScore = moves[i].score;
+                        bestMove = moves[i];
+                    }
+                }
+            } else {
+                let bestScore = Infinity;
+                for (let i = 0; i < moves.length; i++) {
+                    if (moves[i].score < bestScore) {
+                        bestScore = moves[i].score;
+                        bestMove = moves[i];
+                    }
+                }
+            }
+            return bestMove;
+        }
+
+        // Function to get a smart move for medium difficulty
+        function getSmartMove() {
+            for (let i = 0; i < board.length; i++) {
+                if (board[i] === '') {
+                    board[i] = 'O';
+                    if (checkWin()) {
+                        board[i] = '';
+                        return i;
+                    }
+                    board[i] = '';
+                }
+            }
+            for (let i = 0; i < board.length; i++) {
+                if (board[i] === '') {
+                    board[i] = 'X';
+                    if (checkWin()) {
+                        board[i] = '';
+                        return i;
+                    }
+                    board[i] = '';
+                }
+            }
+            return null;
         }
 
         // Function to check for a win
