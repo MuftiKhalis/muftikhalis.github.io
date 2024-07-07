@@ -73,6 +73,17 @@
         </svg>
     </div>
 
+    <!-- Sidebar -->
+    <nav class="sidebar hidden md:block bg-pink-200 w-56 h-screen fixed top-0 left-0 transition-all duration-300 ease-in-out opacity-0">
+        <ul class="mt-20">
+            <li><a href="index.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300">Home</a></li>
+            <li><a href="about.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300">About</a></li>
+            <li><a href="blog.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300">Blog</a></li>
+            <li><a href="contact.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300">Contact</a></li>
+            <li><a href="calendar.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300">Calendar</a></li>
+        </ul>
+    </nav>
+
     <!-- Header -->
     <header class="bg-pink-100 w-full py-4 text-center">
         <h1 class="text-2xl font-bold text-gray-700">Calculator</h1>
@@ -132,10 +143,18 @@
             }
         }
 
+        // Hamburger menu toggle
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('opacity-0');
+            sidebar.classList.toggle('opacity-100');
+        }
+
         // Hamburger animation
         const hamburger = document.querySelector('.hamburger');
         hamburger.addEventListener('click', function () {
             this.classList.toggle('change');
+            toggleSidebar();
         });
     </script>
 </body>
