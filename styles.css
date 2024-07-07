@@ -92,6 +92,10 @@ main.shift {
 #calendar {
     max-width: 600px;
     margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #calendar .header {
@@ -112,6 +116,7 @@ main.shift {
     background: #ff99cc;
     color: #fff;
     padding: 10px 0;
+    font-weight: bold;
 }
 
 #calendar #days {
@@ -127,4 +132,15 @@ main.shift {
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#calendar #days div:hover {
+    background: #ffccff;
+}
+
+#calendar #days .today {
+    background: #ff99cc;
+    color: #fff;
 }
