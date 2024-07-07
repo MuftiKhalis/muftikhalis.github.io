@@ -35,9 +35,9 @@
     <div class="bg-white rounded-lg p-8 max-w-xl w-full mx-4">
         <!-- Month Navigation -->
         <div class="flex items-center justify-between mb-4">
-            <button class="text-xl text-gray-700" onclick="navigateToMonth(-1)">&lt;&lt;</button>
+            <button class="text-xl text-gray-700" onclick="navigateToPreviousMonth()">&lt;&lt;</button>
             <h2 class="text-xl font-bold text-gray-800" id="monthYearDisplay"></h2>
-            <button class="text-xl text-gray-700" onclick="navigateToMonth(1)">&gt;&gt;</button>
+            <button class="text-xl text-gray-700" onclick="navigateToNextMonth()">&gt;&gt;</button>
         </div>
         
         <!-- Days of the Week -->
@@ -52,12 +52,16 @@
         </div>
         
         <!-- Calendar Days -->
-        <div class="grid grid-cols-7 gap-2">
+        <div class="grid grid-cols-7 gap-2" id="calendarDays">
             <!-- Days will be dynamically generated with JavaScript -->
         </div>
     </div>
 
     <script>
+        let currentDate = new Date();
+        let currentYear = currentDate.getFullYear();
+        let currentMonth = currentDate.getMonth();
+
         // Function to toggle sidebar
         function toggleSidebar() {
             const sidebar = document.getElementById("sidebar");
@@ -73,7 +77,7 @@
             const monthYearDisplay = document.getElementById("monthYearDisplay");
             monthYearDisplay.textContent = getMonthName(month) + " " + year;
 
-            const daysContainer = document.querySelector(".grid-cols-7");
+            const daysContainer = document.getElementById("calendarDays");
             daysContainer.innerHTML = ""; // Clear previous days
 
             // Create days for the calendar
@@ -121,28 +125,28 @@
             return Math.floor(timeDiff / (1000 * 3600 * 24));
         }
 
-        // Function to navigate to a specific month relative to current month
-        function navigateToMonth(monthDiff) {
-            const currentDate = new Date();
-            let newYear = currentDate.getFullYear();
-            let newMonth = currentDate.getMonth() + monthDiff;
-
-            if (newMonth < 0) {
-                newMonth += 12;
-                newYear--;
-            } else if (newMonth > 11) {
-                newMonth -= 12;
-                newYear++;
+        // Function to navigate to the previous month
+        function navigateToPreviousMonth() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
             }
+            generateCalendar(currentYear, currentMonth);
+        }
 
-            generateCalendar(newYear, newMonth);
+        // Function to navigate to the next month
+        function navigateToNextMonth() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            generateCalendar(currentYear, currentMonth);
         }
 
         // Initial generation of calendar for current month
-        const currentDate = new Date();
-        let year = currentDate.getFullYear();
-        let month = currentDate.getMonth();
-        generateCalendar(year, month);
+        generateCalendar(currentYear, currentMonth);
     </script>
 </body>
 </html>
