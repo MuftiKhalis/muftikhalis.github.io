@@ -51,6 +51,19 @@
             font-size: 1.2em;
             padding: 10px;
             text-align: center;
+            position: relative;
+        }
+        .month-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+        }
+        .month-nav button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
         }
         .today {
             background-color: #ffccff;
@@ -154,7 +167,12 @@
     </div>
 
     <div class="container">
-        <h2 class="month" id="monthYearDisplay">July 2024</h2>
+        <h2 class="month" id="monthYearDisplay">July 2024
+            <div class="month-nav">
+                <button onclick="prevMonth()">&#8249;</button>
+                <button onclick="nextMonth()">&#8250;</button>
+            </div>
+        </h2>
         <table id="calendar">
             <thead>
                 <tr>
@@ -171,10 +189,6 @@
                 <!-- Dates are dynamically generated with JavaScript -->
             </tbody>
         </table>
-        <div id="navButtons">
-            <button onclick="prevMonth()">Prev</button>
-            <button onclick="nextMonth()">Next</button>
-        </div>
     </div>
 
     <script>
@@ -272,9 +286,10 @@
             }
         }
 
-        // Initial generation of calendar for current month
-        const currentDate = new Date();
-        generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        // Initial call to generate current month's calendar
+        const currentMonth = new Date().getMonth();
+        const currentYear = new Date().getFullYear();
+        generateCalendar(currentYear, currentMonth);
     </script>
 </body>
 </html>
