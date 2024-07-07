@@ -3,56 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Code Reader</title>
+    <title>QR Code Reader - Mufti Khalis</title>
+    <!-- Include Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(to right, #ffccff, #ffb3ff);
+        }
+        #content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            margin: 4px 0;
+            transition: 0.4s;
+        }
+        .change .bar1 {
+            transform: rotate(-45deg) translate(-5px, 5px);
+        }
+        .change .bar2 {
+            opacity: 0;
+        }
+        .change .bar3 {
+            transform: rotate(45deg) translate(-5px, -5px);
+        }
+        .sidebar-open {
+            transform: translateX(0);
+            opacity: 0.8;
+        }
+        .section {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        footer {
+            background-color: #ffd1dc;
+            color: #333;
+            text-align: center;
+            padding: 1rem;
+        }
+        .btn {
+            background-color: #ffccff;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .btn:hover {
+            background-color: #ffb3ff;
+        }
+    </style>
 </head>
-<body class="bg-gray-200">
-    <header class="bg-purple-500 text-white py-4 px-6 flex justify-between items-center">
-        <div class="hamburger md:hidden cursor-pointer">
-            <div class="bar1 bg-white"></div>
-            <div class="bar2 bg-white"></div>
-            <div class="bar3 bg-white"></div>
-        </div>
-        <h1 class="text-xl">QR Code Reader</h1>
+<body>
+    <!-- Sidebar -->
+    <div class="fixed left-0 top-0 w-64 h-full bg-pink-100 shadow-lg p-4 transform -translate-x-full opacity-0 ease-in-out transition-all duration-300" id="sidebar">
+        <button class="text-2xl text-gray-700 absolute top-2 right-2" onclick="toggleSidebar()">&times;</button>
+        <ul class="mt-10">
+            <li><a href="index.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Home</a></li>
+            <li><a href="about.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">About</a></li>
+            <li><a href="blog.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Blog</a></li>
+            <li><a href="contact.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Contact</a></li>
+            <li><a href="calendar.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calendar</a></li>
+            <li><a href="xo.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">XO Game</a></li>
+        </ul>
+    </div>
+
+    <!-- Hamburger Menu -->
+    <div class="fixed left-4 top-4 z-50 cursor-pointer hamburger" onclick="toggleSidebar()">
+        <div class="bar1 bg-gray-700 rounded-full"></div>
+        <div class="bar2 bg-gray-700 rounded-full"></div>
+        <div class="bar3 bg-gray-700 rounded-full"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-pink-100 w-full py-4 text-center">
+        <h1 class="text-2xl font-bold text-gray-700">QR Code Reader</h1>
     </header>
-    <nav id="sidebar" class="bg-purple-700 text-white md:w-64 w-0 fixed h-screen top-0 left-0 overflow-x-hidden transition duration-500 ease-in-out">
-        <a href="javascript:void(0)" class="closebtn md:hidden absolute top-0 right-4 text-2xl">&times;</a>
-        <div class="p-4">
-            <a href="index.html" class="block py-2">Home</a>
-            <a href="about.html" class="block py-2">About</a>
-            <a href="contact.html" class="block py-2">Contact</a>
+
+    <!-- Content -->
+    <div id="content">
+        <div class="section">
+            <input type="file" id="uploadInput" accept="image/*" class="mb-4">
+            <button class="btn" onclick="readQRCode()">Upload</button>
+            <div id="output" class="mt-4 text-gray-700 hidden"></div>
         </div>
-    </nav>
-    <main class="flex flex-col items-center justify-center min-h-screen py-8">
-        <input type="file" id="fileInput" class="py-2 px-4 border-2 border-dashed border-gray-400 bg-white cursor-pointer">
-        <div id="result" class="mt-4 text-xl"></div>
-    </main>
-    <footer class="bg-purple-500 text-white text-center py-4">
-        <p>&copy; 2024 Your Company</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-pink-100 w-full py-4 text-center">
+        <p class="text-gray-700">&copy; 2024 Mufti Khalis</p>
     </footer>
 
     <script>
-        document.querySelector('.hamburger').addEventListener('click', function() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.style.width = sidebar.style.width === '250px' ? '0' : '250px';
-        });
+        // Function to toggle sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            const hamburger = document.querySelector(".hamburger");
+            sidebar.classList.toggle("-translate-x-full");
+            sidebar.classList.toggle("sidebar-open");
+            hamburger.classList.toggle("change");
+        }
 
-        document.querySelector('.closebtn').addEventListener('click', function() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.style.width = '0';
-        });
-
-        document.getElementById('fileInput').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const imageUrl = event.target.result;
-                // Perform QR code decoding (implementation needed)
-            };
-            reader.readAsDataURL(file);
-        });
+        // Function to read QR code from uploaded file
+        function readQRCode() {
+            const fileInput = document.getElementById('uploadInput');
+            const outputDiv = document.getElementById('output');
+            outputDiv.textContent = ''; // Clear previous output
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        ctx.drawImage(img, 0, 0);
+                        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                        const code = jsQR(imageData.data, canvas.width, canvas.height);
+                        if (code) {
+                            outputDiv.textContent = code.data;
+                        } else {
+                            outputDiv.textContent = "No QR code found.";
+                        }
+                        outputDiv.classList.remove('hidden');
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                outputDiv.textContent = "Please select a file.";
+                outputDiv.classList.remove('hidden');
+            }
+        }
     </script>
 </body>
 </html>
