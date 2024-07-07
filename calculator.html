@@ -139,6 +139,7 @@
                 <button class="bg-blue-300 hover:bg-blue-400 rounded-full" onclick="appendToDisplay(' ( ')">(</button>
                 <button class="bg-blue-300 hover:bg-blue-400 rounded-full" onclick="appendToDisplay(' ) ')">)</button>
                 <button class="bg-blue-300 hover:bg-blue-400 rounded-full col-span-2" onclick="calculateResult()">=</button>
+                <button class="bg-red-300 hover:bg-red-400 rounded-full" onclick="deleteLast()">X</button>
             </div>
         </div>
     </div>
@@ -168,6 +169,11 @@
         // Function to clear display
         function clearDisplay() {
             calcDisplay.value = '';
+        }
+
+        // Function to delete last character
+        function deleteLast() {
+            calcDisplay.value = calcDisplay.value.slice(0, -1);
         }
 
         // Function to calculate result
