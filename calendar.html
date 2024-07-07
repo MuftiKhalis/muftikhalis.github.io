@@ -42,13 +42,13 @@
         
         <!-- Days of the Week -->
         <div class="flex justify-between font-semibold text-sm text-gray-700 mb-2">
-            <div class="w-1/7 text-center">Sun</div>
             <div class="w-1/7 text-center">Mon</div>
             <div class="w-1/7 text-center">Tue</div>
             <div class="w-1/7 text-center">Wed</div>
             <div class="w-1/7 text-center">Thu</div>
             <div class="w-1/7 text-center">Fri</div>
             <div class="w-1/7 text-center">Sat</div>
+            <div class="w-1/7 text-center">Sun</div>
         </div>
         
         <!-- Calendar Days -->
@@ -58,9 +58,10 @@
     </div>
 
     <script>
-        let currentDate = new Date();
+        let currentDate = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" }));
         let currentYear = currentDate.getFullYear();
         let currentMonth = currentDate.getMonth();
+        const originalDate = new Date(currentDate);
 
         // Function to toggle sidebar
         function toggleSidebar() {
@@ -70,9 +71,9 @@
 
         // Function to generate calendar
         function generateCalendar(year, month) {
-            const today = new Date();
+            const today = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" }));
             const daysInMonth = new Date(year, month + 1, 0).getDate(); // Total days in the month
-            const firstDay = new Date(year, month, 1).getDay(); // Day of the week of the first day
+            const firstDay = (new Date(year, month, 1).getDay() + 6) % 7; // Day of the week of the first day
 
             const monthYearDisplay = document.getElementById("monthYearDisplay");
             monthYearDisplay.textContent = getMonthName(month) + " " + year;
@@ -83,7 +84,7 @@
             // Create days for the calendar
             for (let i = 0; i < firstDay; i++) {
                 const emptyDay = document.createElement("div");
-                emptyDay.classList.add("text-center", "py-2", "bg-white");
+                emptyDay.classList.add("text-center", "py-2", "bg-transparent");
                 daysContainer.appendChild(emptyDay);
             }
 
@@ -91,14 +92,14 @@
                 const day = document.createElement("div");
                 day.textContent = date;
                 day.classList.add("text-center", "py-2", "bg-white", "rounded-lg", "cursor-pointer", "hover:bg-gray-200");
-                if (year === today.getFullYear() && month === today.getMonth() && date === today.getDate()) {
+                if (year === originalDate.getFullYear() && month === originalDate.getMonth() && date === originalDate.getDate()) {
                     day.classList.add("bg-pink-200");
                 }
                 // Add click event listener to highlight selected date
                 day.addEventListener("click", function() {
                     const selectedDate = new Date(year, month, date);
                     const diffDays = getDifferenceInDays(selectedDate, today);
-                    highlightSelectedDate(this, diffDays);
+                    highlightSelectedDate(this, diffDays, selectedDate);
                 });
                 daysContainer.appendChild(day);
             }
@@ -112,10 +113,12 @@
         }
 
         // Function to highlight selected date and display days difference
-        function highlightSelectedDate(day, diffDays) {
+        function highlightSelectedDate(day, diffDays, selectedDate) {
             const days = document.querySelectorAll(".bg-white");
-            days.forEach(day => day.classList.remove("bg-pink-200"));
-            day.classList.add("bg-pink-200");
+            days.forEach(d => d.classList.remove("bg-gray-200"));
+            if (!(selectedDate.getFullYear() === originalDate.getFullYear() && selectedDate.getMonth() === originalDate.getMonth() && selectedDate.getDate() === originalDate.getDate())) {
+                day.classList.add("bg-gray-200");
+            }
             alert(Math.abs(diffDays) + " days " + (diffDays >= 0 ? "ahead" : "ago") + " from today.");
         }
 
