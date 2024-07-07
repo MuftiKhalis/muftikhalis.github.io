@@ -67,7 +67,7 @@ nav .closebtn {
 main {
     flex: 1;
     padding: 20px;
-    margin-left: 250px;
+    margin-left: 0;
     transition: margin-left 0.5s;
 }
 
@@ -90,7 +90,7 @@ main.shift {
 }
 
 #calendar {
-    max-width: 600px;
+    max-width: 100%;
     margin: 0 auto;
     background: #fff;
     padding: 20px;
@@ -125,7 +125,7 @@ main.shift {
 }
 
 #calendar #days div {
-    width: calc(100% / 7);
+    width: 14.28%; /* 100% divided by 7 days */
     height: 100px;
     border: 1px solid #ddd;
     display: flex;
@@ -143,4 +143,30 @@ main.shift {
 #calendar #days .today {
     background: #ff99cc;
     color: #fff;
+}
+
+@media (max-width: 768px) {
+    #calendar #days div {
+        height: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    #calendar #days div {
+        height: 60px;
+    }
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav {
+        width: 200px;
+        left: -200px;
+    }
+
+    main.shift {
+        margin-left: 200px;
+    }
 }
