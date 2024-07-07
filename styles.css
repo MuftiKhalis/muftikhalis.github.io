@@ -172,3 +172,60 @@ main.shift {
         margin-left: 200px;
     }
 }
+
+
+.calculator {
+    width: 300px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.screen {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.screen input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.5em;
+    text-align: right;
+    border: none;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.calculator .buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.calculator .buttons button {
+    padding: 15px;
+    font-size: 1.2em;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.calculator .buttons button:hover {
+    background-color: #ffd1dc;
+    color: #333;
+}
+
+.calculator .buttons #clear-btn {
+    grid-column: span 2; /* Menggunakan 2 kolom */
+}
+
+.calculator .buttons #equals-btn {
+    background-color: #ff9a9e; /* Warna yang berbeda untuk tombol equals */
+    color: white;
+}
