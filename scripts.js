@@ -5,25 +5,6 @@ function toggleSidebar() {
     main.classList.toggle("shift");
 }
 
-// Calculator Script
-let display = document.getElementById('calc-display');
-
-function appendToDisplay(value) {
-    display.value += value;
-}
-
-function clearDisplay() {
-    display.value = '';
-}
-
-function calculateResult() {
-    try {
-        display.value = eval(display.value);
-    } catch (e) {
-        display.value = 'Error';
-    }
-}
-
 // Calendar Script
 const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 let currentDate = new Date();
@@ -49,6 +30,12 @@ function renderCalendar() {
     for (let day = 1; day <= daysInMonth; day++) {
         const dayDiv = document.createElement('div');
         dayDiv.innerHTML = day;
+
+        const today = new Date();
+        if (day === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+            dayDiv.classList.add('today');
+        }
+
         daysElement.appendChild(dayDiv);
     }
 }
