@@ -1,46 +1,7 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const posts = document.querySelectorAll('.post');
-    posts.forEach(post => {
-        post.addEventListener('mouseover', () => {
-            post.style.backgroundColor = '#ffd1dc';
-        });
-        post.addEventListener('mouseout', () => {
-            post.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
-        });
-    });
-});
-
-// JavaScript for Complex Calculator functionality
-const calcDisplay = document.getElementById('calc-display');
-
-function appendToDisplay(value) {
-    calcDisplay.value += value;
-}
-
-function clearDisplay() {
-    calcDisplay.value = '';
-}
-
-function calculateResult() {
-    try {
-        let result = eval(calcDisplay.value);
-        calcDisplay.value = result;
-    } catch (error) {
-        calcDisplay.value = 'Error';
-    }
-}
-
-// Listen for Enter key press to calculate result
-calcDisplay.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        calculateResult();
-    }
-});
-
 function toggleSidebar() {
     var sidebar = document.getElementById("sidebar");
     var hamburger = document.querySelector(".hamburger");
-    sidebar.style.width = sidebar.style.width === "250px" ? "0" : "250px";
+    sidebar.classList.toggle("open");
     hamburger.classList.toggle("change");
 }
 
@@ -113,33 +74,4 @@ document.addEventListener("DOMContentLoaded", () => {
     if (document.getElementById("monthYear")) {
         renderCalendar(currentMonth, currentYear);
     }
-});
-
-// Theme toggle functionality
-function toggleTheme() {
-    const body = document.body;
-    if (body.classList.contains('light-theme')) {
-        body.classList.remove('light-theme');
-        body.classList.add('dark-theme');
-    } else {
-        body.classList.remove('dark-theme');
-        body.classList.add('light-theme');
-    }
-}
-
-// Load the saved theme on page load
-document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-        document.body.classList.add(savedTheme);
-    } else {
-        document.body.classList.add('light-theme');
-    }
-});
-
-// Save the current theme on change
-document.body.classList.add('light-theme');
-document.body.addEventListener('classchange', () => {
-    const theme = document.body.classList.contains('light-theme') ? 'light-theme' : 'dark-theme';
-    localStorage.setItem('theme', theme);
 });
