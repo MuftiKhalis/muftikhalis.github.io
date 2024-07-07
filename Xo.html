@@ -213,7 +213,7 @@
                 let index;
                 switch (difficulty) {
                     case 'easy':
-                        index = getRandomEmptyCell();
+                        index = getEasyComputerMove();
                         break;
                     case 'medium':
                         index = getMediumComputerMove();
@@ -303,6 +303,11 @@
             difficulty = this.value;
             resetGame();
         });
+
+        // Initial computer move if player is 'O' and it's computer's turn
+        if (currentPlayer === 'O') {
+            setTimeout(computerMove, 500); // Computer's move delay for demo
+        }
     </script>
 </body>
 </html>
