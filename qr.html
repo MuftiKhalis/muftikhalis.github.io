@@ -113,6 +113,9 @@
         <p class="text-gray-700">&copy; 2024 Mufti Khalis</p>
     </footer>
 
+    <!-- Include jsQR library -->
+    <script src="jsQR.js"></script>
+
     <script>
         // Function to toggle sidebar
         function toggleSidebar() {
@@ -142,7 +145,8 @@
                         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                         const code = jsQR(imageData.data, canvas.width, canvas.height);
                         if (code) {
-                            outputDiv.textContent = code.data;
+                            const qrText = code.data;
+                            outputDiv.innerHTML = `<a href="${qrText}" target="_blank">${qrText}</a>`;
                         } else {
                             outputDiv.textContent = "No QR code found.";
                         }
