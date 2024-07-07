@@ -23,6 +23,22 @@
         .hidden {
             display: none;
         }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            margin: 4px 0;
+            transition: 0.4s;
+        }
+        .change .bar1 {
+            transform: rotate(-45deg) translate(-5px, 5px);
+        }
+        .change .bar2 {
+            opacity: 0;
+        }
+        .change .bar3 {
+            transform: rotate(45deg) translate(-5px, -5px);
+        }
     </style>
 </head>
 <body>
@@ -40,10 +56,10 @@
     </div>
 
     <!-- Hamburger Menu -->
-    <div class="fixed left-4 top-4 z-50 cursor-pointer" onclick="toggleSidebar()">
-        <div class="w-8 h-1 bg-gray-700 mb-1"></div>
-        <div class="w-8 h-1 bg-gray-700 mb-1"></div>
-        <div class="w-8 h-1 bg-gray-700"></div>
+    <div class="fixed left-4 top-4 z-50 cursor-pointer hamburger" onclick="toggleSidebar()">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
     </div>
 
     <!-- Header -->
@@ -96,7 +112,9 @@
         // Function to toggle sidebar
         function toggleSidebar() {
             const sidebar = document.getElementById("sidebar");
+            const hamburger = document.querySelector(".hamburger");
             sidebar.classList.toggle("-translate-x-full");
+            hamburger.classList.toggle("change");
         }
 
         // Function to generate calendar
@@ -161,7 +179,7 @@
 
         // Function to calculate difference in days between two dates
         function getDifferenceInDays(date1, date2) {
-            const timeDiff = date1.getTime() - date2.getTime();
+            const timeDiff = date1.setHours(0,0,0,0) - date2.setHours(0,0,0,0);
             return Math.floor(timeDiff / (1000 * 3600 * 24));
         }
 
@@ -185,7 +203,7 @@
             generateCalendar(currentYear, currentMonth);
         }
 
-        // Initial generation of calendar for current month
+        // Initialize calendar for the current month
         generateCalendar(currentYear, currentMonth);
     </script>
 </body>
