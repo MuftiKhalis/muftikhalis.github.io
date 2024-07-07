@@ -77,9 +77,28 @@
             transition: background-color 0.3s, color 0.3s, transform 0.3s;
         }
         .buttons button:hover {
-            background-color: #f0f0f0;
-            color: #333;
             transform: scale(1.05); /* Menyesuaikan efek hover */
+        }
+        .bg-add {
+            background-color: #64dfdf; /* Warna untuk operasi penambahan */
+        }
+        .bg-subtract {
+            background-color: #ffa94d; /* Warna untuk operasi pengurangan */
+        }
+        .bg-multiply {
+            background-color: #ff99cc; /* Warna untuk operasi perkalian */
+        }
+        .bg-divide {
+            background-color: #cc99ff; /* Warna untuk operasi pembagian */
+        }
+        .bg-equal {
+            background-color: #00b894; /* Warna untuk tombol sama dengan */
+        }
+        .bg-clear {
+            background-color: #ff4757; /* Warna untuk tombol clear (C) */
+        }
+        .bg-delete {
+            background-color: #747d8c; /* Warna untuk tombol delete (X) */
         }
         footer {
             background-color: #ffd1dc;
@@ -122,24 +141,21 @@
                 <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('7')">7</button>
                 <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('8')">8</button>
                 <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('9')">9</button>
-                <button class="bg-green-300 hover:bg-green-400 rounded-full" onclick="appendToDisplay(' + ')">+</button>
+                <button class="bg-divide hover:bg-purple-400 rounded-full" onclick="appendToDisplay(' / ')">/</button>
                 <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('4')">4</button>
                 <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('5')">5</button>
                 <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('6')">6</button>
-                <button class="bg-green-300 hover:bg-green-400 rounded-full" onclick="appendToDisplay(' - ')">-</button>
+                <button class="bg-multiply hover:bg-pink-400 rounded-full" onclick="appendToDisplay(' * ')">*</button>
                 <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('1')">1</button>
                 <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('2')">2</button>
                 <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('3')">3</button>
-                <button class="bg-green-300 hover:bg-green-400 rounded-full" onclick="appendToDisplay(' ** ')">^</button>
+                <button class="bg-subtract hover:bg-orange-400 rounded-full" onclick="appendToDisplay(' - ')">-</button>
                 <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('0')">0</button>
                 <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('.')">.</button>
-                <button class="bg-red-300 hover:bg-red-400 rounded-full" onclick="clearDisplay()">C</button>
-                <button class="bg-green-300 hover:bg-green-400 rounded-full" onclick="appendToDisplay(' / ')">/</button>
-                <button class="bg-blue-300 hover:bg-blue-400 rounded-full" onclick="calculatePercentage()">%</button>
-                <button class="bg-blue-300 hover:bg-blue-400 rounded-full" onclick="appendToDisplay(' ( ')">(</button>
-                <button class="bg-blue-300 hover:bg-blue-400 rounded-full" onclick="appendToDisplay(' ) ')">)</button>
-                <button class="bg-blue-300 hover:bg-blue-400 rounded-full col-span-2" onclick="calculateResult()">=</button>
-                <button class="bg-red-300 hover:bg-red-400 rounded-full" onclick="deleteLast()">X</button>
+                <button class="bg-clear hover:bg-red-500 rounded-full" onclick="clearDisplay()">C</button>
+                <button class="bg-add hover:bg-green-400 rounded-full" onclick="appendToDisplay(' + ')">+</button>
+                <button class="bg-equal hover:bg-teal-400 rounded-full col-span-2" onclick="calculateResult()">=</button>
+                <button class="bg-delete hover:bg-gray-500 rounded-full" onclick="deleteLast()">X</button>
             </div>
         </div>
     </div>
@@ -171,7 +187,7 @@
             calcDisplay.value = '';
         }
 
-        // Function to delete last character
+        // Function to delete last character from display
         function deleteLast() {
             calcDisplay.value = calcDisplay.value.slice(0, -1);
         }
@@ -186,12 +202,7 @@
             }
         }
 
-        // Function to calculate percentage
-        function calculatePercentage() {
-            calcDisplay.value = eval(calcDisplay.value) / 100;
-        }
-
-        // Handle keyboard enter key
+        // Function to handle keyboard enter key
         calcDisplay.addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
                 calculateResult();
