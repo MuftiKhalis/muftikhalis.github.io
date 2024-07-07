@@ -34,21 +34,23 @@ const months = [
 ];
 
 function renderCalendar(month, year) {
-    monthYear.innerHTML = `${months[month]} ${year}`;
-    daysContainer.innerHTML = "";
+    if (monthYear && daysContainer) {
+        monthYear.innerHTML = `${months[month]} ${year}`;
+        daysContainer.innerHTML = "";
 
-    const firstDay = new Date(year, month, 1).getDay();
-    const daysInMonth = 32 - new Date(year, month, 32).getDate();
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = 32 - new Date(year, month, 32).getDate();
 
-    for (let i = 0; i < firstDay; i++) {
-        const emptyDiv = document.createElement("div");
-        daysContainer.appendChild(emptyDiv);
-    }
+        for (let i = 0; i < firstDay; i++) {
+            const emptyDiv = document.createElement("div");
+            daysContainer.appendChild(emptyDiv);
+        }
 
-    for (let i = 1; i <= daysInMonth; i++) {
-        const dayDiv = document.createElement("div");
-        dayDiv.innerHTML = i;
-        daysContainer.appendChild(dayDiv);
+        for (let i = 1; i <= daysInMonth; i++) {
+            const dayDiv = document.createElement("div");
+            dayDiv.innerHTML = i;
+            daysContainer.appendChild(dayDiv);
+        }
     }
 }
 
