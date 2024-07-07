@@ -126,8 +126,15 @@
                 padding: 10px;
                 font-size: 1em;
             }
+            #sidebar {
+                width: 250px;
+            }
             #sidebar a {
                 font-size: 16px;
+            }
+            .hamburger {
+                width: 25px;
+                height: 20px;
             }
         }
     </style>
@@ -181,11 +188,7 @@
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById("sidebar");
-            if (sidebar.style.width === "250px") {
-                sidebar.style.width = "0";
-            } else {
-                sidebar.style.width = "250px";
-            }
+            sidebar.style.width = sidebar.style.width === "250px" ? "0" : "250px";
         }
 
         const calcDisplay = document.getElementById('calc-display');
