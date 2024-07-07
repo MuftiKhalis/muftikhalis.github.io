@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Mufti Khalis</title>
     <style>
+        /* Styling for body and layout */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -14,55 +15,138 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
         }
-        h1 {
-            font-size: 2em;
-            margin-bottom: 20px;
+        .container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
         }
-        nav {
-            margin-bottom: 20px;
+        /* Styling for sidebar */
+        #sidebar {
+            width: 250px;
+            background-color: #ffd1dc;
+            transition: all 0.3s ease;
+            z-index: 1;
+            padding-top: 60px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            overflow-x: hidden;
+            border-right: 1px solid #ccc;
         }
-        nav ul {
+        #sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+            cursor: pointer;
+        }
+        #sidebar ul {
             list-style-type: none;
             padding: 0;
-            display: flex;
         }
-        nav ul li {
-            margin-right: 10px;
-        }
-        nav ul li a {
-            text-decoration: none;
-            color: #ff66a3;
-            transition: color 0.3s;
+        #sidebar ul li {
             padding: 10px;
-            border-radius: 5px;
-            background-color: #ffd1dc;
+            border-bottom: 1px solid #ccc;
         }
-        nav ul li a:hover {
+        #sidebar ul li:last-child {
+            border-bottom: none;
+        }
+        #sidebar ul li a {
+            text-decoration: none;
             color: #333;
-            background-color: #ffccff;
+            font-size: 18px;
+            display: block;
+            padding: 10px;
+            transition: background-color 0.3s, color 0.3s;
         }
-        p {
-            text-align: center;
-            max-width: 600px;
-            line-height: 1.6;
+        #sidebar ul li a:hover {
+            background-color: #ffccff;
+            color: #333;
+        }
+        /* Styling for main content */
+        main {
+            flex: 1;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+        }
+        main h1 {
+            margin-top: 0;
+        }
+        /* Styling for hamburger menu */
+        .hamburger {
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            cursor: pointer;
+            z-index: 2;
+            display: none;
+        }
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            margin: 4px 0;
+            transition: 0.4s;
+        }
+        /* Media query for responsive design */
+        @media screen and (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            #sidebar {
+                width: 0;
+            }
+            main {
+                margin-left: 0;
+            }
+            .hamburger {
+                display: block;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to Mufti Khalis's Website</h1>
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="blog.html">Blog</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="calculator.html">Calculator</a></li>
-            <li><a href="calendar.html">Calendar</a></li>
-        </ul>
-    </nav>
-    <p>This is the home page of Mufti Khalis's website. Feel free to explore!</p>
+    <div class="container">
+        <!-- Sidebar -->
+        <nav id="sidebar">
+            <div class="closebtn" onclick="toggleSidebar()">&times;</div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="calculator.html">Calculator</a></li>
+                <li><a href="calendar.html">Calendar</a></li>
+            </ul>
+        </nav>
+        <!-- Main content -->
+        <main>
+            <div class="hamburger" onclick="toggleSidebar()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <h1>Welcome to Mufti Khalis's Website</h1>
+            <p>This is the home page of Mufti Khalis's website. Feel free to explore!</p>
+        </main>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            const main = document.querySelector("main");
+
+            if (sidebar.style.width === "250px") {
+                sidebar.style.width = "0";
+                main.style.marginLeft = "0";
+            } else {
+                sidebar.style.width = "250px";
+                main.style.marginLeft = "250px";
+            }
+        }
+    </script>
 </body>
 </html>
