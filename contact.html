@@ -4,36 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - Mufti Khalis</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="favicon.ico">
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(to right, #ffccff, #ffb3ff);
+        }
+        #content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            margin: 4px 0;
+            transition: 0.4s;
+        }
+        .change .bar1 {
+            transform: rotate(-45deg) translate(-5px, 5px);
+        }
+        .change .bar2 {
+            opacity: 0;
+        }
+        .change .bar3 {
+            transform: rotate(45deg) translate(-5px, -5px);
+        }
+        .sidebar-open {
+            transform: translateX(0);
+            opacity: 0.8;
+        }
+        .section {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        footer {
+            background-color: #ffd1dc;
+            color: #333;
+            text-align: center;
+            padding: 1rem;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="hamburger" onclick="toggleSidebar()">
-            <div class="bar1"></div>
-            <div class="bar2"></div>
-            <div class="bar3"></div>
-        </div>
-        <h1>Mufti Khalis</h1>
-    </header>
-    <nav id="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="toggleSidebar()">&times;</a>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="blog.html">Blog</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="calculator.html">Calculator</a></li>
-            <li><a href="calendar.html">Calendar</a></li>
+    <!-- Sidebar -->
+    <div class="fixed left-0 top-0 w-64 h-full bg-pink-100 shadow-lg p-4 transform -translate-x-full opacity-0 ease-in-out transition-all duration-300" id="sidebar">
+        <button class="text-2xl text-gray-700 absolute top-2 right-2" onclick="toggleSidebar()">&times;</button>
+        <ul class="mt-10">
+            <li><a href="index.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Home</a></li>
+            <li><a href="about.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">About</a></li>
+            <li><a href="blog.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Blog</a></li>
+            <li><a href="contact.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Contact</a></li>
+            <li><a href="calendar.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calendar</a></li>
         </ul>
-    </nav>
-    <main>
-        <h2>Contact</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt, nisl eget venenatis aliquet, ligula turpis venenatis quam, a convallis urna neque eget sapien. Morbi in est ut magna cursus facilisis.</p>
-    </main>
-    <footer>
-        <p>&copy; 2024 Mufti Khalis</p>
+    </div>
+
+    <!-- Hamburger Menu -->
+    <div class="fixed left-4 top-4 z-50 cursor-pointer hamburger" onclick="toggleSidebar()">
+        <div class="bar1 bg-gray-700 rounded-full"></div>
+        <div class="bar2 bg-gray-700 rounded-full"></div>
+        <div class="bar3 bg-gray-700 rounded-full"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-pink-100 w-full py-4 text-center">
+        <h1 class="text-2xl font-bold text-gray-700">Contact</h1>
+    </header>
+
+    <!-- Content -->
+    <div id="content">
+        <div class="section">
+            <p class="text-lg text-gray-700">Contact Mufti Khalis</p>
+            <p class="mt-4 text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla accumsan tortor et odio rutrum, sit amet rutrum dui efficitur. Sed vitae magna ac leo accumsan placerat vel eu erat. Quisque nec magna eu ante blandit accumsan at sit amet lacus.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-pink-100 w-full py-4 text-center">
+        <p class="text-gray-700">&copy; 2024 Mufti Khalis</p>
     </footer>
-    <script src="scripts.js"></script>
+
+    <script>
+        // Function to toggle sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            const hamburger = document.querySelector(".hamburger");
+            sidebar.classList.toggle("-translate-x-full");
+            sidebar.classList.toggle("sidebar-open");
+            hamburger.classList.toggle("change");
+        }
+    </script>
 </body>
 </html>
