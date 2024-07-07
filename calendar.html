@@ -144,17 +144,17 @@
     <div class="sidebar" id="sidebar">
         <div class="close-btn" onclick="toggleSidebar()">X</div>
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Calculator</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="calculator.html">Calculator</a></li>
             <li><a href="#">Calendar</a></li>
         </ul>
     </div>
 
     <div class="container">
-        <h2 class="month">July 2024</h2>
+        <h2 class="month" id="monthYearDisplay">July 2024</h2>
         <table id="calendar">
             <thead>
                 <tr>
@@ -171,6 +171,10 @@
                 <!-- Dates are dynamically generated with JavaScript -->
             </tbody>
         </table>
+        <div id="navButtons">
+            <button onclick="prevMonth()">Prev</button>
+            <button onclick="nextMonth()">Next</button>
+        </div>
     </div>
 
     <script>
@@ -186,6 +190,8 @@
             const calendarBody = document.querySelector("#calendar tbody");
             const daysInMonth = new Date(year, month + 1, 0).getDate(); // Total days in the month
             const firstDay = new Date(year, month, 1).getDay(); // Day of the week of the first day
+
+            document.getElementById("monthYearDisplay").textContent = getMonthName(month) + " " + year;
 
             calendarBody.innerHTML = ""; // Clear previous calendar
 
@@ -207,7 +213,7 @@
                         // Add click event listener to highlight selected date
                         cell.addEventListener("click", function() {
                             const selectedDate = new Date(year, month, date);
-                            const diffDays = Math.floor((selectedDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+                            const diffDays = getDifferenceInDays(selectedDate, today);
                             highlightSelectedDate(this, diffDays);
                         });
                         date++;
@@ -219,12 +225,51 @@
             }
         }
 
+        // Function to get month name
+        function getMonthName(month) {
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                                "July", "August", "September", "October", "November", "December"];
+            return monthNames[month];
+        }
+
         // Function to highlight selected date and display days difference
         function highlightSelectedDate(cell, diffDays) {
             const cells = document.querySelectorAll("#calendar td");
             cells.forEach(cell => cell.classList.remove("selected"));
             cell.classList.add("selected");
-            alert(diffDays + " days difference from today.");
+            alert(Math.abs(diffDays) + " days " + (diffDays >= 0 ? "ahead" : "ago") + " from today.");
+        }
+
+        // Function to calculate difference in days between two dates
+        function getDifferenceInDays(date1, date2) {
+            const timeDiff = date1.getTime() - date2.getTime();
+            return Math.floor(timeDiff / (1000 * 3600 * 24));
+        }
+
+        // Function to navigate to previous month
+        function prevMonth() {
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+            const currentMonth = currentDate.getMonth();
+
+            if (currentMonth === 0) {
+                generateCalendar(currentYear - 1, 11);
+            } else {
+                generateCalendar(currentYear, currentMonth - 1);
+            }
+        }
+
+        // Function to navigate to next month
+        function nextMonth() {
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+            const currentMonth = currentDate.getMonth();
+
+            if (currentMonth === 11) {
+                generateCalendar(currentYear + 1, 0);
+            } else {
+                generateCalendar(currentYear, currentMonth + 1);
+            }
         }
 
         // Initial generation of calendar for current month
