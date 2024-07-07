@@ -6,6 +6,9 @@
     <title>Calendar - Mufti Khalis</title>
     <!-- Include Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles can be added here */
+    </style>
 </head>
 <body class="bg-gradient-to-r from-pink-200 to-purple-300 min-h-screen flex justify-center items-center">
     <!-- Sidebar -->
@@ -32,9 +35,9 @@
     <div class="bg-white rounded-lg p-8 max-w-xl w-full mx-4">
         <!-- Month Navigation -->
         <div class="flex items-center justify-between mb-4">
-            <button class="text-xl text-gray-700" onclick="prevMonth()">&#8249;</button>
+            <button class="text-xl text-gray-700" onclick="navigateToMonth(-1)">&lt;&lt;</button>
             <h2 class="text-xl font-bold text-gray-800" id="monthYearDisplay"></h2>
-            <button class="text-xl text-gray-700" onclick="nextMonth()">&#8250;</button>
+            <button class="text-xl text-gray-700" onclick="navigateToMonth(1)">&gt;&gt;</button>
         </div>
         
         <!-- Days of the Week -->
@@ -118,30 +121,21 @@
             return Math.floor(timeDiff / (1000 * 3600 * 24));
         }
 
-        // Function to navigate to previous month
-        function prevMonth() {
+        // Function to navigate to a specific month relative to current month
+        function navigateToMonth(monthDiff) {
             const currentDate = new Date();
-            const currentYear = currentDate.getFullYear();
-            const currentMonth = currentDate.getMonth();
+            let newYear = currentDate.getFullYear();
+            let newMonth = currentDate.getMonth() + monthDiff;
 
-            if (currentYear === year && currentMonth === 0) {
-                generateCalendar(currentYear - 1, 11);
-            } else if (currentYear !== year || currentMonth !== 0) {
-                generateCalendar(year, month - 1);
+            if (newMonth < 0) {
+                newMonth += 12;
+                newYear--;
+            } else if (newMonth > 11) {
+                newMonth -= 12;
+                newYear++;
             }
-        }
 
-        // Function to navigate to next month
-        function nextMonth() {
-            const currentDate = new Date();
-            const currentYear = currentDate.getFullYear();
-            const currentMonth = currentDate.getMonth();
-
-            if (currentYear === year && currentMonth === 11) {
-                generateCalendar(currentYear + 1, 0);
-            } else if (currentYear !== year || currentMonth !== 11) {
-                generateCalendar(year, month + 1);
-            }
+            generateCalendar(newYear, newMonth);
         }
 
         // Initial generation of calendar for current month
