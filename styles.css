@@ -1,15 +1,17 @@
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: #f7f7f7;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     height: 100vh;
+    color: #333;
 }
 
 header {
-    background-color: #4CAF50;
+    background-color: #77dd77; /* pastel green */
     color: white;
     padding: 15px;
     display: flex;
@@ -58,15 +60,15 @@ nav ul li a:hover {
 .hamburger .bar1,
 .hamburger .bar2,
 .hamburger .bar3 {
-    width: 35px;
-    height: 5px;
+    width: 30px;
+    height: 4px;
     background-color: white;
-    margin: 6px 0;
+    margin: 5px 0;
     transition: 0.4s;
 }
 
 .hamburger.change .bar1 {
-    transform: rotate(-45deg) translate(-9px, 6px);
+    transform: rotate(-45deg) translate(-5px, 6px);
 }
 
 .hamburger.change .bar2 {
@@ -74,7 +76,7 @@ nav ul li a:hover {
 }
 
 .hamburger.change .bar3 {
-    transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-5px, -6px);
 }
 
 main {
@@ -84,25 +86,26 @@ main {
 }
 
 footer {
-    background-color: #4CAF50;
+    background-color: #77dd77; /* pastel green */
     color: white;
     text-align: center;
     padding: 10px;
 }
 
+/* Calculator Styles */
 #calculator {
-    max-width: 400px;
-    margin: 0 auto;
+    max-width: 320px;
+    margin: 20px auto;
     background-color: white;
-    padding: 20px;
+    padding: 15px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 #calc-display {
     width: 100%;
-    padding: 20px;
-    font-size: 2em;
+    padding: 15px;
+    font-size: 1.5em;
     border: none;
     background-color: #f0f0f0;
     text-align: right;
@@ -117,22 +120,23 @@ footer {
 }
 
 .buttons button {
-    padding: 20px;
-    font-size: 1.5em;
+    padding: 15px;
+    font-size: 1.2em;
     border: none;
-    background-color: #4CAF50;
+    background-color: #ffd1dc; /* pastel pink */
     color: white;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .buttons button:hover {
-    background-color: #45a049;
+    background-color: #ffb6c1;
 }
 
+/* Calendar Styles */
 #calendar {
     max-width: 600px;
-    margin: 0 auto;
+    margin: 20px auto;
     background-color: white;
     padding: 20px;
     border-radius: 10px;
@@ -149,14 +153,14 @@ footer {
     padding: 10px;
     font-size: 1.2em;
     border: none;
-    background-color: #4CAF50;
+    background-color: #ffb347; /* pastel orange */
     color: white;
     border-radius: 5px;
     cursor: pointer;
 }
 
 #calendar .header button:hover {
-    background-color: #45a049;
+    background-color: #ffcc99;
 }
 
 #calendar #weekdays, #calendar #days {
@@ -172,7 +176,7 @@ footer {
 }
 
 #calendar #weekdays div {
-    background-color: #4CAF50;
+    background-color: #77dd77; /* pastel green */
     color: white;
 }
 
@@ -180,6 +184,7 @@ footer {
     background-color: #f0f0f0;
 }
 
+/* Responsive Design */
 @media (max-width: 768px) {
     nav {
         width: 100%;
@@ -204,7 +209,10 @@ footer {
         padding: 10px;
     }
     .buttons button {
-        padding: 15px;
+        padding: 10px;
+        font-size: 1em;
+    }
+    #calc-display {
         font-size: 1.2em;
     }
 }
