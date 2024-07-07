@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Reader</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-200">
+    <header class="bg-purple-500 text-white py-4 px-6 flex justify-between items-center">
+        <div class="hamburger md:hidden cursor-pointer">
+            <div class="bar1 bg-white"></div>
+            <div class="bar2 bg-white"></div>
+            <div class="bar3 bg-white"></div>
+        </div>
+        <h1 class="text-xl">QR Code Reader</h1>
+    </header>
+    <nav id="sidebar" class="bg-purple-700 text-white md:w-64 w-0 fixed h-screen top-0 left-0 overflow-x-hidden transition duration-500 ease-in-out">
+        <a href="javascript:void(0)" class="closebtn md:hidden absolute top-0 right-4 text-2xl">&times;</a>
+        <div class="p-4">
+            <a href="index.html" class="block py-2">Home</a>
+            <a href="about.html" class="block py-2">About</a>
+            <a href="contact.html" class="block py-2">Contact</a>
+        </div>
+    </nav>
+    <main class="flex flex-col items-center justify-center min-h-screen py-8">
+        <input type="file" id="fileInput" class="py-2 px-4 border-2 border-dashed border-gray-400 bg-white cursor-pointer">
+        <div id="result" class="mt-4 text-xl"></div>
+    </main>
+    <footer class="bg-purple-500 text-white text-center py-4">
+        <p>&copy; 2024 Your Company</p>
+    </footer>
+
+    <script>
+        document.querySelector('.hamburger').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.style.width = sidebar.style.width === '250px' ? '0' : '250px';
+        });
+
+        document.querySelector('.closebtn').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.style.width = '0';
+        });
+
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const imageUrl = event.target.result;
+                // Perform QR code decoding (implementation needed)
+            };
+            reader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html>
