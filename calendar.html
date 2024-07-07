@@ -1,52 +1,169 @@
+<!-- HTML untuk Kalender -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendar - Mufti Khalis</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="favicon.ico">
+    <title>Pastel Calendar</title>
+    <link rel="stylesheet" href="calendar-styles.css">
 </head>
 <body>
-    <header>
-        <div class="hamburger" onclick="toggleSidebar()">
-            <div class="bar1"></div>
-            <div class="bar2"></div>
-            <div class="bar3"></div>
-        </div>
-        <h1>Mufti Khalis</h1>
-    </header>
-    <nav id="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="toggleSidebar()">&times;</a>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="blog.html">Blog</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="calculator.html">Calculator</a></li>
-            <li><a href="calendar.html">Calendar</a></li>
-        </ul>
-    </nav>
-    <main id="calendar">
+    <div id="calendar">
         <div class="header">
-            <button onclick="prevMonth()">&#8249;</button>
+            <button onclick="prevMonth()">&lt;</button>
             <div id="monthYear"></div>
-            <button onclick="nextMonth()">&#8250;</button>
+            <button onclick="nextMonth()">&gt;</button>
         </div>
         <div id="weekdays">
-            <div>Sun</div>
-            <div>Mon</div>
-            <div>Tue</div>
-            <div>Wed</div>
-            <div>Thu</div>
-            <div>Fri</div>
-            <div>Sat</div>
+            <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
         </div>
         <div id="days"></div>
-    </main>
-    <footer>
-        <p>&copy; 2024 Mufti Khalis</p>
-    </footer>
-    <script src="scripts.js"></script>
+    </div>
+    <script src="calendar-script.js"></script>
 </body>
 </html>
+
+<!-- CSS untuk Kalender (calendar-styles.css) -->
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(to right, #ffccff, #ffb3ff);
+}
+
+#calendar {
+    max-width: 800px;
+    width: 100%;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#calendar .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#calendar #monthYear {
+    font-size: 1.5em;
+    text-align: center;
+}
+
+#calendar #weekdays {
+    display: flex;
+    justify-content: space-between;
+    background: #ff99cc;
+    color: #fff;
+    padding: 10px 0;
+    font-weight: bold;
+}
+
+#calendar #weekdays div {
+    width: 14.28%;
+    text-align: center;
+}
+
+#calendar #days {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#calendar #days div {
+    width: 14.28%;
+    height: 100px;
+    border: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#calendar #days div:hover {
+    background: #ffccff;
+}
+
+#calendar #days .today {
+    background: #ff99cc;
+    color: #fff;
+}
+
+#calendar button {
+    background: #ff99cc;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#calendar button:hover {
+    background: #ff66b2;
+}
+
+@media (max-width: 768px) {
+    #calendar #days div {
+        height: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    #calendar #days div {
+        height: 60px;
+    }
+}
+
+<!-- JavaScript untuk Kalender (calendar-script.js) -->
+const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+let currentDate = new Date();
+
+function renderCalendar() {
+    const daysElement = document.getElementById('days');
+    const monthYearElement = document.getElementById('monthYear');
+    daysElement.innerHTML = '';
+
+    const month = currentDate.getMonth();
+    const year = currentDate.getFullYear();
+
+    monthYearElement.innerHTML = `${monthNames[month]} ${year}`;
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    for (let i = 0; i < firstDay; i++) {
+        const emptyDiv = document.createElement('div');
+        daysElement.appendChild(emptyDiv);
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dayDiv = document.createElement('div');
+        dayDiv.innerHTML = day;
+
+        const today = new Date();
+        if (day === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+            dayDiv.classList.add('today');
+        }
+
+        daysElement.appendChild(dayDiv);
+    }
+}
+
+function prevMonth() {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar();
+}
+
+function nextMonth() {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar();
+}
+
+document.addEventListener('DOMContentLoaded', renderCalendar);
