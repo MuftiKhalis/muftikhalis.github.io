@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar - Mufti Khalis</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <h1>Calendar</h1>
+        <div class="hamburger" onclick="toggleSidebar()">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+        </div>
+    </header>
+    <nav id="sidebar">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="calculator.html">Calculator</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div id="calendar">
+            <div class="header">
+                <button onclick="prevMonth()">&lt;</button>
+                <div id="monthYear"></div>
+                <button onclick="nextMonth()">&gt;</button>
+            </div>
+            <div id="weekdays">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </div>
+            <div id="days"></div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Mufti Khalis. All rights reserved.</p>
+    </footer>
+    <script src="scripts.js"></script>
+</body>
+</html>
