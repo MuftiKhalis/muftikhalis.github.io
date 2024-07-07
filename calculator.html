@@ -66,7 +66,6 @@
             <li><a href="about.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">About</a></li>
             <li><a href="blog.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Blog</a></li>
             <li><a href="contact.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Contact</a></li>
-            <li><a href="calculator.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calculator</a></li>
             <li><a href="calendar.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calendar</a></li>
         </ul>
     </div>
@@ -90,19 +89,23 @@
             <button onclick="appendToDisplay('7')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">7</button>
             <button onclick="appendToDisplay('8')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">8</button>
             <button onclick="appendToDisplay('9')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">9</button>
-            <button onclick="appendToDisplay('/')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">/</button>
+            <button onclick="appendToDisplay(' / ')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">/</button>
             <button onclick="appendToDisplay('4')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">4</button>
             <button onclick="appendToDisplay('5')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">5</button>
             <button onclick="appendToDisplay('6')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">6</button>
-            <button onclick="appendToDisplay('*')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">*</button>
+            <button onclick="appendToDisplay(' * ')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">*</button>
             <button onclick="appendToDisplay('1')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">1</button>
             <button onclick="appendToDisplay('2')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">2</button>
             <button onclick="appendToDisplay('3')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">3</button>
-            <button onclick="appendToDisplay('-')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">-</button>
+            <button onclick="appendToDisplay(' - ')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">-</button>
             <button onclick="appendToDisplay('0')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">0</button>
             <button onclick="appendToDisplay('.')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">.</button>
             <button onclick="clearDisplay()" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">C</button>
-            <button onclick="appendToDisplay('+')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">+</button>
+            <button onclick="appendToDisplay(' + ')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">+</button>
+            <button onclick="appendToDisplay(' ** ')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">^</button>
+            <button onclick="appendToDisplay(' % ')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">%</button>
+            <button onclick="appendToDisplay('(')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">(</button>
+            <button onclick="appendToDisplay(')')" class="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-2 px-4 rounded-lg">)</button>
             <button onclick="calculateResult()" class="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 col-span-4 rounded-lg">=</button>
         </div>
     </div>
@@ -143,7 +146,8 @@
         }
 
         // Hamburger animation
-        document.querySelector('.hamburger').addEventListener('click', function() {
+        const hamburger = document.querySelector('.hamburger');
+        hamburger.addEventListener('click', function () {
             this.classList.toggle('change');
         });
     </script>
