@@ -76,6 +76,7 @@
             align-items: center;
             padding: 2rem;
             transition: margin-left 0.5s;
+            margin-left: 0;
         }
         .calendar {
             width: 100%;
@@ -259,12 +260,13 @@
 
         function toggleSidebar() {
             const sidebar = document.getElementById("sidebar");
+            const mainContent = document.querySelector("main");
             if (sidebar.style.width === "250px") {
                 sidebar.style.width = "0";
-                document.querySelector("main").style.marginLeft = "0";
+                mainContent.style.marginLeft = "0";
             } else {
                 sidebar.style.width = "250px";
-                document.querySelector("main").style.marginLeft = "250px";
+                mainContent.style.marginLeft = "250px";
             }
         }
     </script>
