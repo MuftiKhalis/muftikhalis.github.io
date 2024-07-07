@@ -10,7 +10,6 @@
         body {
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             background: linear-gradient(to right, #ffccff, #ffb3ff);
@@ -51,30 +50,27 @@
             background-color: #ffd1dc;
             color: #333;
         }
-        .sidebar-open {
-            transform: translateX(0);
-            opacity: 0.8;
+        .hamburger {
+            display: none;
+        }
+        @media screen and (max-width: 768px) {
+            .hamburger {
+                display: block;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 1000;
+                cursor: pointer;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Sidebar -->
-    <div class="fixed left-0 top-0 w-64 h-full bg-pink-100 shadow-lg p-4 transform -translate-x-full opacity-0 ease-in-out transition-all duration-300" id="sidebar">
-        <button class="text-2xl text-gray-700 absolute top-2 right-2" onclick="toggleSidebar()">&times;</button>
-        <ul class="mt-10">
-            <li><a href="index.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Home</a></li>
-            <li><a href="about.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">About</a></li>
-            <li><a href="blog.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Blog</a></li>
-            <li><a href="contact.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Contact</a></li>
-            <li><a href="calendar.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calendar</a></li>
-        </ul>
-    </div>
-
     <!-- Hamburger Menu -->
-    <div class="fixed left-4 top-4 z-50 cursor-pointer hamburger" onclick="toggleSidebar()">
-        <div class="bar1"></div>
-        <div class="bar2"></div>
-        <div class="bar3"></div>
+    <div class="hamburger" onclick="toggleSidebar()">
+        <svg class="w-8 h-8 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
     </div>
 
     <!-- Header -->
@@ -116,15 +112,6 @@
     </footer>
 
     <script>
-        // Toggle sidebar function
-        function toggleSidebar() {
-            const sidebar = document.getElementById("sidebar");
-            const hamburger = document.querySelector(".hamburger");
-            sidebar.classList.toggle("-translate-x-full");
-            sidebar.classList.toggle("sidebar-open");
-            hamburger.classList.toggle("change");
-        }
-
         // Calculator functions
         const calcDisplay = document.getElementById('calc-display');
 
