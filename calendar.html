@@ -89,6 +89,23 @@
             font-size: 1.5em;
             color: #333;
         }
+        .month-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 0 20px;
+        }
+        .month-nav button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            color: #333;
+            transition: color 0.3s;
+        }
+        .month-nav button:hover {
+            color: #ff66a3;
+        }
         .weekdays {
             display: flex;
             justify-content: space-around;
@@ -159,7 +176,11 @@
     </nav>
     <main>
         <div class="calendar">
-            <div class="month">July 2024</div>
+            <div class="month-nav">
+                <button onclick="prevMonth()">&#10094;</button>
+                <div class="month">July 2024</div>
+                <button onclick="nextMonth()">&#10095;</button>
+            </div>
             <div class="weekdays">
                 <div class="weekday">Sun</div>
                 <div class="weekday">Mon</div>
@@ -169,17 +190,8 @@
                 <div class="weekday">Fri</div>
                 <div class="weekday">Sat</div>
             </div>
-            <div class="days">
-                <!-- Replace with PHP or JavaScript to generate calendar days -->
-                <!-- Example for demonstration -->
-                <div class="day">28</div>
-                <div class="day">29</div>
-                <div class="day">30</div>
-                <div class="day">1</div>
-                <div class="day">2</div>
-                <div class="day">3</div>
-                <div class="day today">4</div> <!-- Example for today's date -->
-                <!-- End of example -->
+            <div class="days" id="calendar-days">
+                <!-- Days will be dynamically generated here -->
             </div>
         </div>
     </main>
@@ -188,6 +200,61 @@
     </footer>
 
     <script>
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            showCalendar(currentMonth, currentYear);
+        });
+
+        function showCalendar(month, year) {
+            const firstDay = new Date(year, month).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            const monthName = new Date(year, month).toLocaleDateString('en-us', { month: 'long' });
+            document.querySelector('.month').textContent = `${monthName} ${year}`;
+
+            const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const calendarDays = document.getElementById('calendar-days');
+            calendarDays.innerHTML = '';
+
+            // Add empty days for spacing
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.classList.add('day');
+                calendarDays.appendChild(emptyDay);
+            }
+
+            // Add days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const calendarDay = document.createElement('div');
+                calendarDay.textContent = day;
+                calendarDay.classList.add('day');
+                if (day === new Date().getDate() && year === new Date().getFullYear() && month === new Date().getMonth()) {
+                    calendarDay.classList.add('today');
+                }
+                calendarDays.appendChild(calendarDay);
+            }
+        }
+
+        function nextMonth() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            showCalendar(currentMonth, currentYear);
+        }
+
+        function prevMonth() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            showCalendar(currentMonth, currentYear);
+        }
+
         function toggleSidebar() {
             const sidebar = document.getElementById("sidebar");
             sidebar.style.width = sidebar.style.width === "250px" ? "0" : "250px";
