@@ -1,57 +1,130 @@
+<!-- HTML untuk Kalkulator -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator - Mufti Khalis</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="favicon.ico">
+    <title>Pastel Calculator</title>
+    <link rel="stylesheet" href="calculator-styles.css">
 </head>
 <body>
-    <header>
-        <div class="hamburger" onclick="toggleSidebar()">
-            <div class="bar1"></div>
-            <div class="bar2"></div>
-            <div class="bar3"></div>
+    <div class="calculator">
+        <div class="screen">
+            <input type="text" id="calc-display" readonly>
         </div>
-        <h1>Mufti Khalis</h1>
-    </header>
-    <nav id="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="toggleSidebar()">&times;</a>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="blog.html">Blog</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="calculator.html">Calculator</a></li>
-            <li><a href="calendar.html">Calendar</a></li>
-        </ul>
-    </nav>
-    <main id="calculator">
-        <input type="text" id="calc-display" readonly>
         <div class="buttons">
+            <button onclick="clearDisplay()" id="clear-btn">AC</button>
+            <button onclick="appendToDisplay('/')">/</button>
+            <button onclick="appendToDisplay('*')">*</button>
             <button onclick="appendToDisplay('7')">7</button>
             <button onclick="appendToDisplay('8')">8</button>
             <button onclick="appendToDisplay('9')">9</button>
-            <button onclick="appendToDisplay('/')">/</button>
+            <button onclick="appendToDisplay('-')">-</button>
             <button onclick="appendToDisplay('4')">4</button>
             <button onclick="appendToDisplay('5')">5</button>
             <button onclick="appendToDisplay('6')">6</button>
-            <button onclick="appendToDisplay('*')">*</button>
+            <button onclick="appendToDisplay('+')">+</button>
             <button onclick="appendToDisplay('1')">1</button>
             <button onclick="appendToDisplay('2')">2</button>
             <button onclick="appendToDisplay('3')">3</button>
-            <button onclick="appendToDisplay('-')">-</button>
+            <button onclick="calculateResult()" id="equals-btn">=</button>
             <button onclick="appendToDisplay('0')">0</button>
             <button onclick="appendToDisplay('.')">.</button>
-            <button onclick="clearDisplay()">C</button>
-            <button onclick="appendToDisplay('+')">+</button>
-            <button onclick="calculateResult()" style="grid-column: span 4;">=</button>
         </div>
-    </main>
-    <footer>
-        <p>&copy; 2024 Mufti Khalis</p>
-    </footer>
-    <script src="scripts.js"></script>
+    </div>
+    <script src="calculator-script.js"></script>
 </body>
 </html>
+
+<!-- CSS untuk Kalkulator (calculator-styles.css) -->
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(to right, #ffccff, #ffb3ff);
+}
+
+.calculator {
+    width: 300px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.screen {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.screen input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.5em;
+    text-align: right;
+    border: none;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.calculator .buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.calculator .buttons button {
+    padding: 15px;
+    font-size: 1.2em;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.calculator .buttons button:hover {
+    background-color: #ffd1dc;
+    color: #333;
+}
+
+.calculator .buttons #clear-btn {
+    grid-column: span 2;
+}
+
+.calculator .buttons #equals-btn {
+    background-color: #ff9a9e;
+    color: white;
+}
+
+<!-- JavaScript untuk Kalkulator (calculator-script.js) -->
+const calcDisplay = document.getElementById('calc-display');
+
+function appendToDisplay(value) {
+    calcDisplay.value += value;
+}
+
+function clearDisplay() {
+    calcDisplay.value = '';
+}
+
+function calculateResult() {
+    try {
+        let result = eval(calcDisplay.value);
+        calcDisplay.value = result;
+    } catch (error) {
+        calcDisplay.value = 'Error';
+    }
+}
+
+calcDisplay.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        calculateResult();
+    }
+});
