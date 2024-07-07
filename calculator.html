@@ -72,13 +72,14 @@
             font-size: 1.2em;
             text-align: center;
             border: none;
-            border-radius: 5px;
+            border-radius: 50%;
             cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
         }
         .buttons button:hover {
-            background-color: #ffd1dc;
+            background-color: #f0f0f0;
             color: #333;
+            transform: scale(1.1);
         }
         footer {
             background-color: #ffd1dc;
@@ -117,26 +118,26 @@
     <div id="content">
         <div id="calculator">
             <input type="text" id="calc-display" readonly>
-            <div class="buttons">
-                <button onclick="appendToDisplay('7')">7</button>
-                <button onclick="appendToDisplay('8')">8</button>
-                <button onclick="appendToDisplay('9')">9</button>
-                <button onclick="appendToDisplay(' + ')">+</button>
-                <button onclick="appendToDisplay('4')">4</button>
-                <button onclick="appendToDisplay('5')">5</button>
-                <button onclick="appendToDisplay('6')">6</button>
-                <button onclick="appendToDisplay(' - ')">-</button>
-                <button onclick="appendToDisplay('1')">1</button>
-                <button onclick="appendToDisplay('2')">2</button>
-                <button onclick="appendToDisplay('3')">3</button>
-                <button onclick="appendToDisplay(' * ')">×</button>
-                <button onclick="appendToDisplay('0')">0</button>
-                <button onclick="appendToDisplay('.')">.</button>
-                <button onclick="clearDisplay()">C</button>
-                <button onclick="appendToDisplay(' / ')">/</button>
-                <button onclick="calculatePercentage()">%</button>
-                <button onclick="appendToDisplay(' ** ')">^</button>
-                <button onclick="calculateResult()" style="grid-column: span 4;">=</button>
+            <div class="buttons grid grid-cols-4 gap-4">
+                <button class="bg-yellow-300 hover:bg-yellow-400" onclick="appendToDisplay('7')">7</button>
+                <button class="bg-yellow-300 hover:bg-yellow-400" onclick="appendToDisplay('8')">8</button>
+                <button class="bg-yellow-300 hover:bg-yellow-400" onclick="appendToDisplay('9')">9</button>
+                <button class="bg-green-300 hover:bg-green-400" onclick="appendToDisplay(' + ')">+</button>
+                <button class="bg-yellow-300 hover:bg-yellow-400" onclick="appendToDisplay('4')">4</button>
+                <button class="bg-yellow-300 hover:bg-yellow-400" onclick="appendToDisplay('5')">5</button>
+                <button class="bg-yellow-300 hover:bg-yellow-400" onclick="appendToDisplay('6')">6</button>
+                <button class="bg-green-300 hover:bg-green-400" onclick="appendToDisplay(' - ')">-</button>
+                <button class="bg-yellow-300 hover:bg-yellow-400" onclick="appendToDisplay('1')">1</button>
+                <button class="bg-yellow-300 hover:bg-yellow-400" onclick="appendToDisplay('2')">2</button>
+                <button class="bg-yellow-300 hover:bg-yellow-400" onclick="appendToDisplay('3')">3</button>
+                <button class="bg-green-300 hover:bg-green-400" onclick="appendToDisplay(' ** ')">^</button>
+                <button class="bg-yellow-300 hover:bg-yellow-400" onclick="appendToDisplay('0')">0</button>
+                <button class="bg-yellow-300 hover:bg-yellow-400" onclick="appendToDisplay('.')">.</button>
+                <button class="bg-red-300 hover:bg-red-400" onclick="clearDisplay()">C</button>
+                <button class="bg-green-300 hover:bg-green-400" onclick="appendToDisplay(' / ')">/</button>
+                <button class="bg-blue-300 hover:bg-blue-400" onclick="calculatePercentage()">%</button>
+                <button class="bg-blue-300 hover:bg-blue-400" onclick="appendToDisplay(' ( ')">(</button>
+                <button class="bg-blue-300 hover:bg-blue-400" onclick="appendToDisplay(' ) ')">)</button>
             </div>
         </div>
     </div>
@@ -181,11 +182,6 @@
         // Function to calculate percentage
         function calculatePercentage() {
             calcDisplay.value = eval(calcDisplay.value + ' / 100');
-        }
-
-        // Function to calculate power
-        function calculatePower() {
-            calcDisplay.value = eval(calcDisplay.value + ' ** 2');
         }
 
         // Handle Enter key press for calculation
