@@ -79,6 +79,12 @@
         .cell:hover {
             background-color: #e0e0e0;
         }
+        .cell.X {
+            color: #ff6347; /* Tomato */
+        }
+        .cell.O {
+            color: #4682b4; /* Steel Blue */
+        }
         .win {
             background-color: #b4f1b4 !important;
         }
@@ -139,13 +145,6 @@
                         <option value="impossible">Impossible</option>
                     </select>
                 </div>
-                <div>
-                    <label for="player">Play Against:</label>
-                    <select id="player" class="ml-2 px-2 py-1 border border-gray-300 rounded">
-                        <option value="computer">Computer</option>
-                        <option value="human">Human</option>
-                    </select>
-                </div>
             </div>
             <div class="board">
                 <div class="cell" onclick="cellClick(0)"></div>
@@ -175,7 +174,6 @@
         let currentPlayer = 'X';
         let gameOver = false;
         let difficulty = 'easy'; // Default difficulty
-        let against = 'computer'; // Default opponent
 
         // Function to toggle sidebar
         function toggleSidebar() {
@@ -191,6 +189,7 @@
             if (!gameOver && board[index] === '') {
                 board[index] = currentPlayer;
                 document.querySelectorAll('.cell')[index].textContent = currentPlayer;
+                document.querySelectorAll('.cell')[index].classList.add(currentPlayer === 'X' ? 'X' : 'O');
                 if (checkWin()) {
                     document.getElementById('result-text').textContent = `${currentPlayer} wins!`;
                     document.getElementById('result').classList.remove('hidden');
@@ -201,7 +200,7 @@
                     gameOver = true;
                 } else {
                     currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-                    if (currentPlayer === 'O' && against === 'computer') {
+                    if (currentPlayer === 'O') {
                         setTimeout(computerMove, 500); // Computer's move delay for demo
                     }
                 }
@@ -233,6 +232,7 @@
                 }
                 board[index] = currentPlayer;
                 document.querySelectorAll('.cell')[index].textContent = currentPlayer;
+                document.querySelectorAll('.cell')[index].classList.add(currentPlayer === 'X' ? 'X' : 'O');
                 if (checkWin()) {
                     document.getElementById('result-text').textContent = `${currentPlayer} wins!`;
                     document.getElementById('result').classList.remove('hidden');
@@ -290,7 +290,7 @@
             gameOver = false;
             document.querySelectorAll('.cell').forEach(cell => {
                 cell.textContent = '';
-                cell.classList.remove('win');
+                cell.classList.remove('win', 'X', 'O');
             });
             document.getElementById('result').classList.add('hidden');
             if (currentPlayer === 'O' && against === 'computer') {
@@ -301,12 +301,6 @@
         // Function to handle difficulty change
         document.getElementById('level').addEventListener('change', function() {
             difficulty = this.value;
-            resetGame();
-        });
-
-        // Function to handle opponent change
-        document.getElementById('player').addEventListener('change', function() {
-            against = this.value;
             resetGame();
         });
     </script>
