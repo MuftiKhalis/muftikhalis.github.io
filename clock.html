@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clock - Mufti Khalis</title>
+    <!-- Include Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
         body {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-            color: #fff;
-            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(to right, #ffccff, #ffb3ff);
+            color: #333;
         }
+
         #content {
             flex: 1;
             display: flex;
@@ -22,91 +23,88 @@
             align-items: center;
             padding: 20px;
         }
+
         .hidden {
             display: none;
         }
+
         .hamburger div {
             width: 25px;
             height: 3px;
-            background-color: #fff;
+            background-color: #333;
             margin: 4px 0;
             transition: 0.4s;
         }
+
         .change .bar1 {
             transform: rotate(-45deg) translate(-5px, 5px);
         }
+
         .change .bar2 {
             opacity: 0;
         }
+
         .change .bar3 {
             transform: rotate(45deg) translate(-5px, -5px);
         }
+
         .sidebar-open {
             transform: translateX(0);
             opacity: 0.8;
         }
+
         #clock {
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
             padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             max-width: 800px;
             width: 100%;
             margin: 0 auto;
             text-align: center;
-            color: #fff;
         }
-        #local-time, #gmt-time, #selected-time {
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
-        #timezones {
-            background-color: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            color: #fff;
-        }
-        .neon {
-            color: #fff;
-            text-shadow: 
-                0 0 5px #fff,
-                0 0 10px #fff,
-                0 0 20px #00ff00,
-                0 0 30px #00ff00,
-                0 0 40px #00ff00,
-                0 0 50px #00ff00,
-                0 0 60px #00ff00;
-        }
-        .digit {
-            display: inline-block;
+
+        .time-display {
+            font-family: 'Courier New', Courier, monospace;
             font-size: 4em;
-            font-weight: bold;
-            margin: 0 10px;
-            text-shadow: 
-                0 0 5px #fff,
-                0 0 10px #fff,
-                0 0 20px #00ff00,
-                0 0 30px #00ff00,
-                0 0 40px #00ff00,
-                0 0 50px #00ff00,
-                0 0 60px #00ff00;
+            color: #333;
         }
-        .day {
+
+        .date-display {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.5em;
+            color: #333;
+        }
+
+        .day-display {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2em;
+            color: #ff66cc;
+            margin-top: 20px;
+        }
+
+        .timezone-display {
+            font-family: 'Courier New', Courier, monospace;
             font-size: 1em;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin: 10px 0;
+            color: #ff66cc;
+            margin-top: 10px;
         }
-        .selected-day {
-            color: #00ff00;
-        }
+
         footer {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: #fff;
+            background-color: #ffd1dc;
+            color: #333;
             text-align: center;
             padding: 1rem;
         }
+
+        select {
+            padding: 10px;
+            border-radius: 15px;
+            margin-top: 15px;
+        }
     </style>
 </head>
+
 <body>
     <!-- Sidebar -->
     <div class="fixed left-0 top-0 w-64 h-full bg-pink-100 shadow-lg p-4 transform -translate-x-full opacity-0 ease-in-out transition-all duration-300" id="sidebar">
@@ -123,61 +121,39 @@
 
     <!-- Hamburger Menu -->
     <div class="fixed left-4 top-4 z-50 cursor-pointer hamburger" onclick="toggleSidebar()">
-        <div class="bar1 bg-white rounded-full"></div>
-        <div class="bar2 bg-white rounded-full"></div>
-        <div class="bar3 bg-white rounded-full"></div>
+        <div class="bar1 bg-gray-700 rounded-full"></div>
+        <div class="bar2 bg-gray-700 rounded-full"></div>
+        <div class="bar3 bg-gray-700 rounded-full"></div>
     </div>
 
     <!-- Header -->
-    <header class="bg-transparent w-full py-4 text-center">
-        <h1 class="text-3xl font-bold neon">Futuristic Clock</h1>
+    <header class="bg-pink-100 w-full py-4 text-center">
+        <h1 class="text-2xl font-bold text-gray-700">Clock</h1>
     </header>
 
     <!-- Content -->
     <div id="content">
         <div id="clock">
-            <div class="day">
-                <span class="day">Monday</span>
-                <span class="day">Tuesday</span>
-                <span class="day">Wednesday</span>
-                <span class="day">Thursday</span>
-                <span class="day">Friday</span>
-                <span class="day">Saturday</span>
-                <span class="day">Sunday</span>
-            </div>
-            <div id="local-time" class="neon">
-                <span class="digit" id="local-hours">00</span>:
-                <span class="digit" id="local-minutes">00</span>:
-                <span class="digit" id="local-seconds">00</span>
-            </div>
-            <div id="gmt-time" class="neon">
-                <span class="digit" id="gmt-hours">00</span>:
-                <span class="digit" id="gmt-minutes">00</span>:
-                <span class="digit" id="gmt-seconds">00</span> GMT
-            </div>
-            <label for="timezones" class="block text-gray-200 mb-2">Select Timezone:</label>
-            <select id="timezones" class="w-full p-2 border rounded-lg mb-4">
-                <option value="GMT">GMT</option>
-                <option value="America/New_York">New York (GMT-4)</option>
-                <option value="Europe/London">London (GMT+1)</option>
-                <option value="Asia/Tokyo">Tokyo (GMT+9)</option>
-                <option value="Asia/Jakarta">Jakarta (GMT+7)</option>
-                <option value="Australia/Sydney">Sydney (GMT+10)</option>
+            <div class="time-display" id="time"></div>
+            <div class="date-display" id="date"></div>
+            <div class="day-display" id="day"></div>
+            <div class="timezone-display" id="timezone"></div>
+            <select id="timezone-select" onchange="updateTimeZone()">
+                <option value="Asia/Jakarta">Asia/Jakarta (GMT+7)</option>
+                <option value="America/New_York">America/New York (GMT-5)</option>
+                <option value="Europe/London">Europe/London (GMT+1)</option>
+                <option value="Asia/Tokyo">Asia/Tokyo (GMT+9)</option>
             </select>
-            <div id="selected-time" class="neon">
-                <span class="digit" id="selected-hours">00</span>:
-                <span class="digit" id="selected-minutes">00</span>:
-                <span class="digit" id="selected-seconds">00</span>
-            </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="bg-transparent w-full py-4 text-center">
-        <p class="text-gray-200">&copy; 2024 Mufti Khalis</p>
+    <footer class="bg-pink-100 w-full py-4 text-center">
+        <p class="text-gray-700">&copy; 2024 Mufti Khalis</p>
     </footer>
 
     <script>
+        // Function to toggle sidebar
         function toggleSidebar() {
             const sidebar = document.getElementById("sidebar");
             const hamburger = document.querySelector(".hamburger");
@@ -187,46 +163,32 @@
         }
 
         function updateClock() {
+            const timeElement = document.getElementById('time');
+            const dateElement = document.getElementById('date');
+            const dayElement = document.getElementById('day');
+            const timezoneElement = document.getElementById('timezone');
+            const selectedTimeZone = document.getElementById('timezone-select').value;
             const now = new Date();
-
-            // Local time
-            const localHours = now.getHours().toString().padStart(2, '0');
-            const localMinutes = now.getMinutes().toString().padStart(2, '0');
-            const localSeconds = now.getSeconds().toString().padStart(2, '0');
-            document.getElementById('local-hours').textContent = localHours;
-            document.getElementById('local-minutes').textContent = localMinutes;
-            document.getElementById('local-seconds').textContent = localSeconds;
-
-            // GMT time
-            const gmtHours = now.getUTCHours().toString().padStart(2, '0');
-            const gmtMinutes = now.getUTCMinutes().toString().padStart(2, '0');
-            const gmtSeconds = now.getUTCSeconds().toString().padStart(2, '0');
-            document.getElementById('gmt-hours').textContent = gmtHours;
-            document.getElementById('gmt-minutes').textContent = gmtMinutes;
-            document.getElementById('gmt-seconds').textContent = gmtSeconds;
-
-            // Selected timezone
-            const timezone = document.getElementById('timezones').value;
-            const selectedDate = new Date(now.toLocaleString("en-US", { timeZone: timezone }));
-            const selectedHours = selectedDate.getHours().toString().padStart(2, '0');
-            const selectedMinutes = selectedDate.getMinutes().toString().padStart(2, '0');
-            const selectedSeconds = selectedDate.getSeconds().toString().padStart(2, '0');
-            document.getElementById('selected-hours').textContent = selectedHours;
-            document.getElementById('selected-minutes').textContent = selectedMinutes;
-            document.getElementById('selected-seconds').textContent = selectedSeconds;
-
-            // Update day
-            const dayIndex = now.getDay();
-            const days = document.querySelectorAll('.day');
-            days.forEach((day, index) => {
-                day.classList.toggle('selected-day', index === dayIndex);
-            });
+            const timeOptions = { timeZone: selectedTimeZone, hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            const dateOptions = { timeZone: selectedTimeZone, year: 'numeric', month: 'long', day: 'numeric' };
+            const dayOptions = { timeZone: selectedTimeZone, weekday: 'long' };
+            const timeFormatter = new Intl.DateTimeFormat('en-US', timeOptions);
+            const dateFormatter = new Intl.DateTimeFormat('en-US', dateOptions);
+            const dayFormatter = new Intl.DateTimeFormat('en-US', dayOptions);
+            const timeParts = timeFormatter.formatToParts(now);
+            const timeString = `${timeParts[0].value}:${timeParts[2].value}:${timeParts[4].value}`;
+            timeElement.textContent = timeString;
+            dateElement.textContent = dateFormatter.format(now);
+            dayElement.textContent = dayFormatter.format(now);
+            timezoneElement.textContent = `TimeZone: ${selectedTimeZone}`;
         }
 
-        document.getElementById('timezones').addEventListener('change', updateClock);
+        function updateTimeZone() {
+            updateClock();
+        }
 
         setInterval(updateClock, 1000);
-        updateClock();
     </script>
 </body>
+
 </html>
