@@ -156,6 +156,10 @@
                 <button class="bg-add hover:bg-green-400 rounded-full" onclick="appendToDisplay('+')">+</button>
                 <button class="bg-equal hover:bg-teal-400 rounded-full col-span-2" onclick="calculateResult()">=</button>
                 <button class="bg-delete hover:bg-gray-500 rounded-full" onclick="deleteLast()">X</button>
+                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('(')">(</button>
+                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay(')')">)</button>
+                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('%')">%</button>
+                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('**')">^</button>
             </div>
         </div>
     </div>
@@ -207,15 +211,23 @@
             if (event.key >= 0 && event.key <= 9) {
                 appendToDisplay(event.key);
             } else if (event.key === '+') {
-                appendToDisplay(' + ');
+                appendToDisplay('+');
             } else if (event.key === '-') {
-                appendToDisplay(' - ');
+                appendToDisplay('-');
             } else if (event.key === '*') {
-                appendToDisplay(' * ');
+                appendToDisplay('*');
             } else if (event.key === '/') {
-                appendToDisplay(' / ');
+                appendToDisplay('/');
             } else if (event.key === '.') {
                 appendToDisplay('.');
+            } else if (event.key === '(') {
+                appendToDisplay('(');
+            } else if (event.key === ')') {
+                appendToDisplay(')');
+            } else if (event.key === '%') {
+                appendToDisplay('%');
+            } else if (event.key === '^') {
+                appendToDisplay('**');
             } else if (event.key === 'Enter') {
                 calculateResult();
             } else if (event.key === 'Backspace') {
