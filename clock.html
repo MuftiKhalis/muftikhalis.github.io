@@ -82,26 +82,6 @@
             color: #ff66cc;
             margin-top: 20px;
         }
-
-        .timezone-display {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1em;
-            color: #ff66cc;
-            margin-top: 10px;
-        }
-
-        footer {
-            background-color: #ffd1dc;
-            color: #333;
-            text-align: center;
-            padding: 1rem;
-        }
-
-        select {
-            padding: 10px;
-            border-radius: 15px;
-            margin-top: 15px;
-        }
     </style>
 </head>
 
@@ -137,13 +117,6 @@
             <div class="time-display" id="time"></div>
             <div class="date-display" id="date"></div>
             <div class="day-display" id="day"></div>
-            <div class="timezone-display" id="timezone"></div>
-            <select id="timezone-select" onchange="updateTimeZone()">
-                <option value="Asia/Jakarta">Asia/Jakarta (GMT+7)</option>
-                <option value="America/New_York">America/New York (GMT-5)</option>
-                <option value="Europe/London">Europe/London (GMT+1)</option>
-                <option value="Asia/Tokyo">Asia/Tokyo (GMT+9)</option>
-            </select>
         </div>
     </div>
 
@@ -166,25 +139,17 @@
             const timeElement = document.getElementById('time');
             const dateElement = document.getElementById('date');
             const dayElement = document.getElementById('day');
-            const timezoneElement = document.getElementById('timezone');
-            const selectedTimeZone = document.getElementById('timezone-select').value;
             const now = new Date();
-            const timeOptions = { timeZone: selectedTimeZone, hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
-            const dateOptions = { timeZone: selectedTimeZone, year: 'numeric', month: 'long', day: 'numeric' };
-            const dayOptions = { timeZone: selectedTimeZone, weekday: 'long' };
-            const timeFormatter = new Intl.DateTimeFormat('en-US', timeOptions);
+            const options = { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            const timeFormatter = new Intl.DateTimeFormat('en-US', options);
+            const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
             const dateFormatter = new Intl.DateTimeFormat('en-US', dateOptions);
+            const dayOptions = { weekday: 'long' };
             const dayFormatter = new Intl.DateTimeFormat('en-US', dayOptions);
-            const timeParts = timeFormatter.formatToParts(now);
-            const timeString = `${timeParts[0].value}:${timeParts[2].value}:${timeParts[4].value}`;
+            const timeString = timeFormatter.format(now);
             timeElement.textContent = timeString;
             dateElement.textContent = dateFormatter.format(now);
             dayElement.textContent = dayFormatter.format(now);
-            timezoneElement.textContent = `TimeZone: ${selectedTimeZone}`;
-        }
-
-        function updateTimeZone() {
-            updateClock();
         }
 
         setInterval(updateClock, 1000);
