@@ -6,12 +6,14 @@
     <title>Clock - Mufti Khalis</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
         body {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
             color: #fff;
+            font-family: 'Orbitron', sans-serif;
         }
         #content {
             flex: 1;
@@ -44,42 +46,64 @@
             opacity: 0.8;
         }
         #clock {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(0, 0, 0, 0.7);
             border-radius: 15px;
             padding: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
+            max-width: 800px;
             width: 100%;
             margin: 0 auto;
             text-align: center;
+            color: #fff;
         }
         #local-time, #gmt-time, #selected-time {
             font-size: 2em;
             margin-bottom: 10px;
-            font-family: 'Orbitron', sans-serif;
         }
         #timezones {
             background-color: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.5);
             color: #fff;
-            font-family: 'Orbitron', sans-serif;
-        }
-        footer {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: #fff;
-            text-align: center;
-            padding: 1rem;
         }
         .neon {
             color: #fff;
             text-shadow: 
                 0 0 5px #fff,
                 0 0 10px #fff,
-                0 0 20px #ff00ff,
-                0 0 30px #ff00ff,
-                0 0 40px #ff00ff,
-                0 0 50px #ff00ff,
-                0 0 60px #ff00ff;
+                0 0 20px #00ff00,
+                0 0 30px #00ff00,
+                0 0 40px #00ff00,
+                0 0 50px #00ff00,
+                0 0 60px #00ff00;
+        }
+        .digit {
+            display: inline-block;
+            font-size: 4em;
+            font-weight: bold;
+            margin: 0 10px;
+            text-shadow: 
+                0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 20px #00ff00,
+                0 0 30px #00ff00,
+                0 0 40px #00ff00,
+                0 0 50px #00ff00,
+                0 0 60px #00ff00;
+        }
+        .day {
+            font-size: 1em;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin: 10px 0;
+        }
+        .selected-day {
+            color: #00ff00;
+        }
+        footer {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
         }
     </style>
 </head>
@@ -112,8 +136,25 @@
     <!-- Content -->
     <div id="content">
         <div id="clock">
-            <div id="local-time" class="neon"></div>
-            <div id="gmt-time" class="neon"></div>
+            <div class="day">
+                <span class="day">Monday</span>
+                <span class="day">Tuesday</span>
+                <span class="day">Wednesday</span>
+                <span class="day">Thursday</span>
+                <span class="day">Friday</span>
+                <span class="day">Saturday</span>
+                <span class="day">Sunday</span>
+            </div>
+            <div id="local-time" class="neon">
+                <span class="digit" id="local-hours">00</span>:
+                <span class="digit" id="local-minutes">00</span>:
+                <span class="digit" id="local-seconds">00</span>
+            </div>
+            <div id="gmt-time" class="neon">
+                <span class="digit" id="gmt-hours">00</span>:
+                <span class="digit" id="gmt-minutes">00</span>:
+                <span class="digit" id="gmt-seconds">00</span> GMT
+            </div>
             <label for="timezones" class="block text-gray-200 mb-2">Select Timezone:</label>
             <select id="timezones" class="w-full p-2 border rounded-lg mb-4">
                 <option value="GMT">GMT</option>
@@ -123,7 +164,11 @@
                 <option value="Asia/Jakarta">Jakarta (GMT+7)</option>
                 <option value="Australia/Sydney">Sydney (GMT+10)</option>
             </select>
-            <div id="selected-time" class="neon"></div>
+            <div id="selected-time" class="neon">
+                <span class="digit" id="selected-hours">00</span>:
+                <span class="digit" id="selected-minutes">00</span>:
+                <span class="digit" id="selected-seconds">00</span>
+            </div>
         </div>
     </div>
 
@@ -143,20 +188,44 @@
 
         function updateClock() {
             const now = new Date();
-            const localTime = now.toLocaleTimeString('en-GB', { hour12: false, timeZoneName: 'short' });
-            const gmtTime = now.toLocaleTimeString('en-GB', { hour12: false, timeZone: 'GMT', timeZoneName: 'short' });
 
-            document.getElementById('local-time').textContent = `Local Time: ${localTime}`;
-            document.getElementById('gmt-time').textContent = `GMT Time: ${gmtTime}`;
+            // Local time
+            const localHours = now.getHours().toString().padStart(2, '0');
+            const localMinutes = now.getMinutes().toString().padStart(2, '0');
+            const localSeconds = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('local-hours').textContent = localHours;
+            document.getElementById('local-minutes').textContent = localMinutes;
+            document.getElementById('local-seconds').textContent = localSeconds;
 
-            const selectedTimezone = document.getElementById('timezones').value;
-            const selectedTime = now.toLocaleTimeString('en-GB', { hour12: false, timeZone: selectedTimezone, timeZoneName: 'short' });
-            document.getElementById('selected-time').textContent = `Selected Time (${selectedTimezone}): ${selectedTime}`;
+            // GMT time
+            const gmtHours = now.getUTCHours().toString().padStart(2, '0');
+            const gmtMinutes = now.getUTCMinutes().toString().padStart(2, '0');
+            const gmtSeconds = now.getUTCSeconds().toString().padStart(2, '0');
+            document.getElementById('gmt-hours').textContent = gmtHours;
+            document.getElementById('gmt-minutes').textContent = gmtMinutes;
+            document.getElementById('gmt-seconds').textContent = gmtSeconds;
+
+            // Selected timezone
+            const timezone = document.getElementById('timezones').value;
+            const selectedDate = new Date(now.toLocaleString("en-US", { timeZone: timezone }));
+            const selectedHours = selectedDate.getHours().toString().padStart(2, '0');
+            const selectedMinutes = selectedDate.getMinutes().toString().padStart(2, '0');
+            const selectedSeconds = selectedDate.getSeconds().toString().padStart(2, '0');
+            document.getElementById('selected-hours').textContent = selectedHours;
+            document.getElementById('selected-minutes').textContent = selectedMinutes;
+            document.getElementById('selected-seconds').textContent = selectedSeconds;
+
+            // Update day
+            const dayIndex = now.getDay();
+            const days = document.querySelectorAll('.day');
+            days.forEach((day, index) => {
+                day.classList.toggle('selected-day', index === dayIndex);
+            });
         }
 
-        setInterval(updateClock, 1000);
-
         document.getElementById('timezones').addEventListener('change', updateClock);
+
+        setInterval(updateClock, 1000);
         updateClock();
     </script>
 </body>
