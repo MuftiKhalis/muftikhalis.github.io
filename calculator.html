@@ -4,53 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator - Mufti Khalis</title>
-    <!-- Include Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #ffccff, #ffb3ff);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            background: linear-gradient(to right, #ffccff, #ffb3ff);
-        }
-        #content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
             align-items: center;
-            padding: 20px;
+            justify-content: center;
         }
-        .hidden {
-            display: none;
+        header {
+            background-color: #ffd1dc;
+            color: #333;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
         }
-        .hamburger div {
-            width: 25px;
+        .hamburger {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+        }
+        .bar1, .bar2, .bar3 {
+            width: 100%;
             height: 3px;
             background-color: #333;
-            margin: 4px 0;
             transition: 0.4s;
         }
-        .change .bar1 {
-            transform: rotate(-45deg) translate(-5px, 5px);
+        #sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
         }
-        .change .bar2 {
-            opacity: 0;
+        #sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #333;
+            display: block;
+            transition: 0.3s;
         }
-        .change .bar3 {
-            transform: rotate(45deg) translate(-5px, -5px);
+        #sidebar a:hover {
+            color: #f1f1f1;
         }
-        .sidebar-open {
-            transform: translateX(0);
-            opacity: 0.8;
+        #sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
         }
         #calculator {
+            width: 90%;
+            max-width: 400px;
             background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 15px; /* Menyesuaikan border-radius */
+            border-radius: 10px;
             padding: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
-            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         #calc-display {
             width: 100%;
@@ -58,11 +89,12 @@
             font-size: 1.5em;
             text-align: right;
             border: 1px solid #ccc;
-            border-radius: 10px; /* Menyesuaikan border-radius */
+            border-radius: 5px;
             margin-bottom: 15px;
             box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
         }
         .buttons {
+            width: 100%;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 10px;
@@ -72,140 +104,116 @@
             font-size: 1.2em;
             text-align: center;
             border: none;
-            border-radius: 15px; /* Menyesuaikan border-radius */
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+            transition: background-color 0.3s, color 0.3s;
         }
         .buttons button:hover {
-            transform: scale(1.05); /* Menyesuaikan efek hover */
+            background-color: #ffd1dc;
+            color: #333;
         }
-        .bg-add {
-            background-color: #64dfdf; /* Warna untuk operasi penambahan */
+        .buttons button.function {
+            background-color: #ffccff;
         }
-        .bg-subtract {
-            background-color: #ffa94d; /* Warna untuk operasi pengurangan */
-        }
-        .bg-multiply {
-            background-color: #ff99cc; /* Warna untuk operasi perkalian */
-        }
-        .bg-divide {
-            background-color: #cc99ff; /* Warna untuk operasi pembagian */
-        }
-        .bg-equal {
-            background-color: #00b894; /* Warna untuk tombol sama dengan */
-        }
-        .bg-clear {
-            background-color: #ff4757; /* Warna untuk tombol clear (C) */
-        }
-        .bg-delete {
-            background-color: #747d8c; /* Warna untuk tombol delete (X) */
+        .buttons button.equal {
+            background-color: #ff99cc;
+            color: white;
         }
         footer {
             background-color: #ffd1dc;
             color: #333;
             text-align: center;
             padding: 1rem;
+            width: 100%;
         }
     </style>
 </head>
 <body>
-    <!-- Sidebar -->
-    <div class="fixed left-0 top-0 w-64 h-full bg-pink-100 shadow-lg p-4 transform -translate-x-full opacity-0 ease-in-out transition-all duration-300" id="sidebar">
-        <button class="text-2xl text-gray-700 absolute top-2 right-2" onclick="toggleSidebar()">&times;</button>
-        <ul class="mt-10">
-            <li><a href="index.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Home</a></li>
-            <li><a href="about.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">About</a></li>
-            <li><a href="blog.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Blog</a></li>
-            <li><a href="contact.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Contact</a></li>
-            <li><a href="calendar.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calendar</a></li>
-        </ul>
-    </div>
-
-    <!-- Hamburger Menu -->
-    <div class="fixed left-4 top-4 z-50 cursor-pointer hamburger" onclick="toggleSidebar()">
-        <div class="bar1 bg-gray-700 rounded-full"></div>
-        <div class="bar2 bg-gray-700 rounded-full"></div>
-        <div class="bar3 bg-gray-700 rounded-full"></div>
-    </div>
-
-    <!-- Header -->
-    <header class="bg-pink-100 w-full py-4 text-center">
-        <h1 class="text-2xl font-bold text-gray-700">Calculator</h1>
+    <header>
+        <div class="hamburger" onclick="toggleSidebar()">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+        </div>
+        <h1>Mufti Khalis</h1>
     </header>
-
-    <!-- Content -->
-    <div id="content">
+    <nav id="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="toggleSidebar()">&times;</a>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+        <a href="calculator.html">Calculator</a>
+        <a href="calendar.html">Calendar</a>
+    </nav>
+    <main>
         <div id="calculator">
             <input type="text" id="calc-display" readonly>
-            <div class="buttons grid grid-cols-4 gap-4">
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('7')">7</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('8')">8</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('9')">9</button>
-                <button class="bg-divide hover:bg-purple-400 rounded-full" onclick="appendToDisplay(' / ')">/</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('4')">4</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('5')">5</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('6')">6</button>
-                <button class="bg-multiply hover:bg-pink-400 rounded-full" onclick="appendToDisplay(' * ')">*</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('1')">1</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('2')">2</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('3')">3</button>
-                <button class="bg-subtract hover:bg-orange-400 rounded-full" onclick="appendToDisplay(' - ')">-</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('0')">0</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('.')">.</button>
-                <button class="bg-clear hover:bg-red-500 rounded-full" onclick="clearDisplay()">C</button>
-                <button class="bg-add hover:bg-green-400 rounded-full" onclick="appendToDisplay(' + ')">+</button>
-                <button class="bg-equal hover:bg-teal-400 rounded-full col-span-2" onclick="calculateResult()">=</button>
-                <button class="bg-delete hover:bg-gray-500 rounded-full" onclick="deleteLast()">X</button>
+            <div class="buttons">
+                <button onclick="appendToDisplay('7')">7</button>
+                <button onclick="appendToDisplay('8')">8</button>
+                <button onclick="appendToDisplay('9')">9</button>
+                <button class="function" onclick="appendToDisplay('/')">/</button>
+                <button onclick="appendToDisplay('4')">4</button>
+                <button onclick="appendToDisplay('5')">5</button>
+                <button onclick="appendToDisplay('6')">6</button>
+                <button class="function" onclick="appendToDisplay('*')">×</button>
+                <button onclick="appendToDisplay('1')">1</button>
+                <button onclick="appendToDisplay('2')">2</button>
+                <button onclick="appendToDisplay('3')">3</button>
+                <button class="function" onclick="appendToDisplay('-')">-</button>
+                <button onclick="appendToDisplay('0')">0</button>
+                <button onclick="appendToDisplay('.')">.</button>
+                <button onclick="clearDisplay()">C</button>
+                <button class="function" onclick="appendToDisplay('+')">+</button>
+                <button class="equal" onclick="calculateResult()" style="grid-column: span 4;">=</button>
             </div>
         </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="bg-pink-100 w-full py-4 text-center">
-        <p class="text-gray-700">&copy; 2024 Mufti Khalis</p>
+    </main>
+    <footer>
+        <p>&copy; 2024 Mufti Khalis</p>
     </footer>
 
     <script>
-        // Function to toggle sidebar
         function toggleSidebar() {
             const sidebar = document.getElementById("sidebar");
-            const hamburger = document.querySelector(".hamburger");
-            sidebar.classList.toggle("-translate-x-full");
-            sidebar.classList.toggle("sidebar-open");
-            hamburger.classList.toggle("change");
+            if (sidebar.style.width === "250px") {
+                sidebar.style.width = "0";
+                document.body.style.backgroundColor = "rgba(0,0,0,0)";
+            } else {
+                sidebar.style.width = "250px";
+                document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+            }
         }
 
         const calcDisplay = document.getElementById('calc-display');
 
-        // Function to append value to display
         function appendToDisplay(value) {
             calcDisplay.value += value;
         }
 
-        // Function to clear display
         function clearDisplay() {
             calcDisplay.value = '';
         }
 
-        // Function to delete last character from display
-        function deleteLast() {
-            calcDisplay.value = calcDisplay.value.slice(0, -1);
-        }
-
-        // Function to calculate result
         function calculateResult() {
             try {
-                let result = eval(calcDisplay.value);
+                let result = eval(calcDisplay.value.replace('×', '*'));
                 calcDisplay.value = result;
             } catch (error) {
                 calcDisplay.value = 'Error';
             }
         }
 
-        // Function to handle keyboard enter key
-        calcDisplay.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
+        document.addEventListener('keydown', function(event) {
+            if ((event.key >= '0' && event.key <= '9') || event.key === '.' || event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/') {
+                appendToDisplay(event.key);
+            } else if (event.key === 'Enter') {
                 calculateResult();
+            } else if (event.key === 'Backspace') {
+                calcDisplay.value = calcDisplay.value.slice(0, -1);
+            } else if (event.key === 'Escape') {
+                clearDisplay();
             }
         });
     </script>
