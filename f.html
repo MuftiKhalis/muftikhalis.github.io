@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funny Answers - Mufti Khalis</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #ffccff, #ffb3ff);
+        }
+        .hidden {
+            display: none;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            margin: 4px 0;
+            transition: 0.4s;
+        }
+        .change .bar1 {
+            transform: rotate(-45deg) translate(-5px, 5px);
+        }
+        .change .bar2 {
+            opacity: 0;
+        }
+        .change .bar3 {
+            transform: rotate(45deg) translate(-5px, -5px);
+        }
+        .sidebar-open {
+            transform: translateX(0);
+            opacity: 0.8;
+        }
+    </style>
+    <!-- Include franc-min library from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/franc-min@6.1.0/franc-min.min.js"></script>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center">
+    <!-- Sidebar -->
+    <div class="fixed left-0 top-0 w-64 h-full bg-pink-100 shadow-lg p-4 transform -translate-x-full opacity-0 ease-in-out transition-all duration-300" id="sidebar">
+        <button class="text-2xl text-gray-700 absolute top-2 right-2" onclick="toggleSidebar()">&times;</button>
+        <ul class="mt-10">
+            <li><a href="index.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Home</a></li>
+            <li><a href="about.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">About</a></li>
+            <li><a href="blog.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Blog</a></li>
+            <li><a href="contact.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Contact</a></li>
+            <li><a href="calendar.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calendar</a></li>
+            <li><a href="calculator.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calculator</a></li>
+            <li><a href="tic_tac_toe.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Tic Tac Toe</a></li>
+            <li><a href="qrcode_reader.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">QR Code Reader</a></li>
+            <li><a href="clock.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Clock</a></li>
+        </ul>
+    </div>
+
+    <!-- Hamburger Menu -->
+    <div class="fixed left-4 top-4 z-50 cursor-pointer hamburger" onclick="toggleSidebar()">
+        <div class="bar1 bg-gray-700 rounded-full"></div>
+        <div class="bar2 bg-gray-700 rounded-full"></div>
+        <div class="bar3 bg-gray-700 rounded-full"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-pink-100 w-full py-4 text-center">
+        <h1 class="text-2xl font-bold text-gray-700">Funny Answers</h1>
+    </header>
+
+    <!-- Content -->
+    <div id="content" class="flex flex-col items-center justify-center flex-1 w-full px-4">
+        <input type="text" id="question" placeholder="Type your question here" class="w-full max-w-md p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
+        <button onclick="giveFunnyAnswer()" class="px-4 py-2 text-white bg-pink-500 rounded-lg hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500">Ask</button>
+        <div id="response" class="mt-4 text-lg text-gray-700"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-pink-100 w-full py-4 text-center">
+        <p class="text-gray-700">&copy; 2024 Mufti Khalis</p>
+    </footer>
+
+    <script>
+        // Function to toggle sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            const hamburger = document.querySelector(".hamburger");
+            sidebar.classList.toggle("-translate-x-full");
+            sidebar.classList.toggle("sidebar-open");
+            hamburger.classList.toggle("change");
+        }
+
+        // Function to provide funny answers
+        function giveFunnyAnswer() {
+            const question = document.getElementById('question').value;
+            const lang = franc(question);
+
+            const responses = {
+                en: [
+                    "I'm not sure, but have you tried asking your pet?",
+                    "That's a secret only known to cats!",
+                    "42, always 42."
+                ],
+                id: [
+                    "Saya tidak yakin, sudah coba tanya hewan peliharaan Anda?",
+                    "Itu rahasia yang hanya diketahui kucing!",
+                    "Jawabannya selalu 42."
+                ],
+                es: [
+                    "No estoy seguro, ¿has intentado preguntar a tu mascota?",
+                    "¡Es un secreto que solo conocen los gatos!",
+                    "42, siempre 42."
+                ]
+            };
+
+            let response = "Sorry, I don't understand that language.";
+            if (responses[lang]) {
+                const randomIndex = Math.floor(Math.random() * responses[lang].length);
+                response = responses[lang][randomIndex];
+            }
+
+            document.getElementById('response').innerText = response;
+        }
+    </script>
+</body>
+</html>
