@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Funny Answers - Mufti Khalis</title>
+    <title>English - Mufti Khalis</title>
     <!-- Include Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
@@ -34,8 +34,6 @@
             opacity: 0.8;
         }
     </style>
-    <!-- Include franc-min library from CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/franc-min@6.1.0/franc-min.min.js"></script>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center">
     <!-- Sidebar -->
@@ -63,14 +61,72 @@
 
     <!-- Header -->
     <header class="bg-pink-100 w-full py-4 text-center">
-        <h1 class="text-2xl font-bold text-gray-700">Funny Answers</h1>
+        <h1 class="text-2xl font-bold text-gray-700">Reading List</h1>
     </header>
 
     <!-- Content -->
     <div id="content" class="flex flex-col items-center justify-center flex-1 w-full px-4">
-        <input type="text" id="question" placeholder="Type your question here" class="w-full max-w-md p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
-        <button onclick="giveFunnyAnswer()" class="px-4 py-2 text-white bg-pink-500 rounded-lg hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500">Ask</button>
-        <div id="response" class="mt-4 text-lg text-gray-700"></div>
+        <div class="w-full max-w-md">
+            <h2 class="text-xl font-bold text-gray-700 mb-4">📚 Reading List 📚</h2>
+
+            <h3 class="text-lg font-semibold text-gray-700 mb-2">✅️ Grammar</h3>
+            <p class="text-gray-700 mb-2">🇮🇩 Bahasa</p>
+            <ul class="list-disc pl-5 text-gray-700 mb-4">
+                <li><a href="https://www.fabelia.com/belajar-grammar/" class="text-blue-500 hover:underline">Fabelia</a></li>
+                <li><a href="https://grammarbahasainggris.net/" class="text-blue-500 hover:underline">Grammar Bahasa Inggris</a></li>
+            </ul>
+
+            <p class="text-gray-700 mb-2">🇬🇧 English</p>
+            <ul class="list-disc pl-5 text-gray-700 mb-4">
+                <li><a href="https://7esl.com/grammar/" class="text-blue-500 hover:underline">7ESL</a></li>
+                <li><a href="https://www.talkenglish.com/grammar/grammar.aspx" class="text-blue-500 hover:underline">Talk English</a></li>
+                <li><a href="https://learnenglish.britishcouncil.org/grammar" class="text-blue-500 hover:underline">Learn English</a></li>
+            </ul>
+
+            <h3 class="text-lg font-semibold text-gray-700 mb-2">✅️ Simple Structure</h3>
+            <p class="text-gray-700 mb-2">🇮🇩 Bahasa</p>
+            <ul class="list-disc pl-5 text-gray-700 mb-4">
+                <li><a href="https://grammarbahasainggris.net/sentence-structure" class="text-blue-500 hover:underline">Grammar Bahasa Inggris</a></li>
+                <li><a href="https://www.sederet.com/tutorial/sentence-structure-simple-sentence/" class="text-blue-500 hover:underline">Sederet</a></li>
+            </ul>
+
+            <p class="text-gray-700 mb-2">🇬🇧 English</p>
+            <ul class="list-disc pl-5 text-gray-700 mb-4">
+                <li><a href="https://www.unr.edu/writing-speaking-center/student-resources/writing-speaking-resources/basic-sentence-pattern-in-english" class="text-blue-500 hover:underline">UNR</a></li>
+                <li><a href="https://www.wordy.com/writers-workshop/basic-english-sentence-structure/" class="text-blue-500 hover:underline">Wordy</a></li>
+                <li><a href="https://academicguides.waldenu.edu/writingcenter/grammar/sentencestructure" class="text-blue-500 hover:underline">Academic Guides</a></li>
+            </ul>
+
+            <h3 class="text-lg font-semibold text-gray-700 mb-2">✅️ FREE Practice TEST TOEFL & IELTS</h3>
+            <p class="text-gray-700 mb-2">🇬🇧 English</p>
+            <ul class="list-disc pl-5 text-gray-700 mb-4">
+                <li><a href="https://takeielts.britishcouncil.org/take-ielts/prepare/free-ielts-practice-tests" class="text-blue-500 hover:underline">Take IELTS</a></li>
+                <li><a href="https://www.testglider.com/" class="text-blue-500 hover:underline">Test Glider</a></li>
+                <li><a href="https://www.testden.com/challenge/free-toefl.asp" class="text-blue-500 hover:underline">Test Den</a></li>
+                <li><a href="https://www.bestmytest.com/toefl/practice-test" class="text-blue-500 hover:underline">Best My Test</a></li>
+                <li><a href="https://www.ielts-writing.info/EXAM/" class="text-blue-500 hover:underline">IELTS Writing</a></li>
+                <li><a href="https://www.esl-lounge.com/toefl.php" class="text-blue-500 hover:underline">ESL Lounge</a></li>
+            </ul>
+
+            <h3 class="text-lg font-semibold text-gray-700 mb-2">✅️ Post Graduate & Scholarship Preparation</h3>
+            <p class="text-gray-700 mb-2">🇬🇧 English</p>
+            <ul class="list-disc pl-5 text-gray-700 mb-4">
+                <li><a href="http://www.scholars4dev.com" class="text-blue-500 hover:underline">Scholars 4 Dev</a></li>
+                <li><a href="http://www.motivationalletter.com" class="text-blue-500 hover:underline">Motivational Letter</a></li>
+                <li><a href="http://www.topuniversities.com" class="text-blue-500 hover:underline">Top Universities</a></li>
+                <li><a href="http://www.bestmastersdegrees.com" class="text-blue-500 hover:underline">Best Masters Degrees</a></li>
+                <li><a href="http://www.masterstudies.com" class="text-blue-500 hover:underline">Master Studies</a></li>
+                <li><a href="http://www.mastersportal.com" class="text-blue-500 hover:underline">Masters Portal</a></li>
+                <li><a href="http://www.findamasters.com" class="text-blue-500 hover:underline">Find A Masters</a></li>
+            </ul>
+
+            <h3 class="text-lg font-semibold text-gray-700 mb-2">🔮 Free eBooks 🔮</h3>
+            <ul class="list-disc pl-5 text-gray-700 mb-4">
+                <li><a href="http://www.basicenglishspeaking.com" class="text-blue-500 hover:underline">Basic English</a></li>
+                <li><a href="http://www.free-toefl.com" class="text-blue-500 hover:underline">TOEFL</a></li>
+                <li><a href="http://www.free-ielts.com" class="text-blue-500 hover:underline">IELTS</a></li>
+            </ul>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -86,38 +142,6 @@
             sidebar.classList.toggle("-translate-x-full");
             sidebar.classList.toggle("sidebar-open");
             hamburger.classList.toggle("change");
-        }
-
-        // Function to provide funny answers
-        function giveFunnyAnswer() {
-            const question = document.getElementById('question').value;
-            const lang = franc(question);
-
-            const responses = {
-                en: [
-                    "I'm not sure, but have you tried asking your pet?",
-                    "That's a secret only known to cats!",
-                    "42, always 42."
-                ],
-                id: [
-                    "Saya tidak yakin, sudah coba tanya hewan peliharaan Anda?",
-                    "Itu rahasia yang hanya diketahui kucing!",
-                    "Jawabannya selalu 42."
-                ],
-                es: [
-                    "No estoy seguro, ¿has intentado preguntar a tu mascota?",
-                    "¡Es un secreto que solo conocen los gatos!",
-                    "42, siempre 42."
-                ]
-            };
-
-            let response = "Sorry, I don't understand that language.";
-            if (responses[lang]) {
-                const randomIndex = Math.floor(Math.random() * responses[lang].length);
-                response = responses[lang][randomIndex];
-            }
-
-            document.getElementById('response').innerText = response;
         }
     </script>
 </body>
