@@ -34,23 +34,21 @@
             opacity: 0.8;
         }
     </style>
-    <!-- Include franc-min library from CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/franc-min@6.1.0/franc-min.min.js"></script>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center">
     <!-- Sidebar -->
     <div class="fixed left-0 top-0 w-64 h-full bg-pink-100 shadow-lg p-4 transform -translate-x-full opacity-0 ease-in-out transition-all duration-300" id="sidebar">
         <button class="text-2xl text-gray-700 absolute top-2 right-2" onclick="toggleSidebar()">&times;</button>
         <ul class="mt-10">
-            <li><a href="index.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Home</a></li>
-            <li><a href="about.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">About</a></li>
-            <li><a href="blog.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Blog</a></li>
-            <li><a href="contact.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Contact</a></li>
-            <li><a href="calendar.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calendar</a></li>
-            <li><a href="calculator.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calculator</a></li>
-            <li><a href="tic_tac_toe.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Tic Tac Toe</a></li>
-            <li><a href="qrcode_reader.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">QR Code Reader</a></li>
-            <li><a href="clock.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Clock</a></li>
+            <li><a href="index.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200" target="_blank">Home</a></li>
+            <li><a href="about.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200" target="_blank">About</a></li>
+            <li><a href="blog.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200" target="_blank">Blog</a></li>
+            <li><a href="contact.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200" target="_blank">Contact</a></li>
+            <li><a href="calendar.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200" target="_blank">Calendar</a></li>
+            <li><a href="calculator.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200" target="_blank">Calculator</a></li>
+            <li><a href="tic_tac_toe.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200" target="_blank">Tic Tac Toe</a></li>
+            <li><a href="qrcode_reader.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200" target="_blank">QR Code Reader</a></li>
+            <li><a href="clock.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200" target="_blank">Clock</a></li>
         </ul>
     </div>
 
@@ -115,22 +113,21 @@
                 <h3 class="text-lg font-semibold text-gray-700 mb-2">Post Graduate & Scholarship Preparation</h3>
                 <ul class="list-disc pl-5 text-gray-700 mb-4">
                     <li><a href="http://www.scholars4dev.com" class="text-blue-500 hover:underline" target="_blank">Scholars 4 Dev</a></li>
-                    <li><a href="https://id.linkedin.com/company/yayasan-scholarship-connection" class="text-blue-500 hover:underline" target="_blank">Scholarship Connection</a></li>
-                    <li><a href="https://www.scholarships.com" class="text-blue-500 hover:underline" target="_blank">Scholarships.com</a></li>
-                    <li><a href="https://www.scholarshipportal.com" class="text-blue-500 hover:underline" target="_blank">Scholarship Portal</a></li>
-                    <li><a href="https://www.wemakescholars.com" class="text-blue-500 hover:underline" target="_blank">We Make Scholars</a></li>
-                    <li><a href="https://www.coursera.org" class="text-blue-500 hover:underline" target="_blank">Coursera</a></li>
+                    <li><a href="http://www.motivationalletter.com" class="text-blue-500 hover:underline" target="_blank">Motivational Letter</a></li>
+                    <li><a href="http://www.topuniversities.com" class="text-blue-500 hover:underline" target="_blank">Top Universities</a></li>
+                    <li><a href="http://www.bestmastersdegrees.com" class="text-blue-500 hover:underline" target="_blank">Best Masters Degrees</a></li>
+                    <li><a href="http://www.masterstudies.com" class="text-blue-500 hover:underline" target="_blank">Master Studies</a></li>
+                    <li><a href="http://www.mastersportal.eu" class="text-blue-500 hover:underline" target="_blank">Masters Portal</a></li>
+                    <li><a href="http://www.findamasters.com" class="text-blue-500 hover:underline" target="_blank">Find A Masters</a></li>
                 </ul>
             </div>
 
             <div id="ebooks" class="hidden">
                 <h3 class="text-lg font-semibold text-gray-700 mb-2">Free eBooks</h3>
                 <ul class="list-disc pl-5 text-gray-700 mb-4">
-                    <li><a href="https://b-ok.cc/" class="text-blue-500 hover:underline" target="_blank">Z-Library</a></li>
-                    <li><a href="https://www.gutenberg.org/" class="text-blue-500 hover:underline" target="_blank">Project Gutenberg</a></li>
-                    <li><a href="https://manybooks.net/" class="text-blue-500 hover:underline" target="_blank">Many Books</a></li>
-                    <li><a href="https://openlibrary.org/" class="text-blue-500 hover:underline" target="_blank">Open Library</a></li>
-                    <li><a href="https://www.free-ebooks.net/" class="text-blue-500 hover:underline" target="_blank">Free eBooks</a></li>
+                    <li><a href="https://drive.google.com/drive/folders/1ZBW50jq5NX2IyKmHaXFKMlbBCdFZvtlr?usp=share_link" class="text-blue-500 hover:underline" target="_blank">Basic English</a></li>
+                    <li><a href="https://drive.google.com/drive/folders/1XhrgklnDDXMpkD8SDDvGzk_VfVsjKhFU?usp=sharing" class="text-blue-500 hover:underline" target="_blank">TOEFL</a></li>
+                    <li><a href="https://drive.google.com/drive/folders/1yLP6C8OKhDsY8ML3WhR3Ihpkx4fmhadA?usp=share_link" class="text-blue-500 hover:underline" target="_blank">IELTS</a></li>
                 </ul>
             </div>
         </div>
