@@ -52,6 +52,7 @@
             width: 100%;
             margin: 0 auto;
             text-align: center;
+            animation: fadeIn 1s ease-in-out;
         }
         footer {
             background-color: #ffd1dc;
@@ -59,22 +60,46 @@
             text-align: center;
             padding: 1rem;
         }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .nav-item {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .nav-item:hover {
+            background-color: #ffb3b3;
+            color: white;
+        }
+        .sidebar-enter-active, .sidebar-leave-active {
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        .sidebar-enter, .sidebar-leave-to /* .sidebar-leave-active in <2.1.8 */ {
+            opacity: 0;
+            transform: translateX(-100%);
+        }
     </style>
 </head>
 <body>
     
 <!-- Sidebar -->
-<div class="fixed left-0 top-0 w-64 h-full bg-pink-200 shadow-lg p-4 transform -translate-x-full opacity-0 ease-in-out transition-all duration-300" id="sidebar">        
+<div class="fixed left-0 top-0 w-64 h-full bg-pink-200 shadow-lg p-4 transform -translate-x-full opacity-0 ease-in-out transition-all duration-500" id="sidebar">        
     <ul class="mt-10">
-        <li><a href="index.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200">Home</a></li>
-        <li><a href="about.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200">About</a></li>
-        <li><a href="blog.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200">Blog</a></li>
-        <li><a href="contact.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200">Contact</a></li>
-        <li><a href="calendar.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200">Calendar</a></li>
-        <li><a href="calculator.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200">Calculator</a></li>
-        <li><a href="tic_tac_toe.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200">Tic Tac Toe</a></li>
-        <li><a href="english.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200">English</a></li>
-        <li><a href="clock.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200">Clock</a></li>
+        <li><a href="index.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200 nav-item">Home</a></li>
+        <li><a href="about.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200 nav-item">About</a></li>
+        <li><a href="blog.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200 nav-item">Blog</a></li>
+        <li><a href="contact.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200 nav-item">Contact</a></li>
+        <li><a href="calendar.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200 nav-item">Calendar</a></li>
+        <li><a href="calculator.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200 nav-item">Calculator</a></li>
+        <li><a href="tic_tac_toe.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200 nav-item">Tic Tac Toe</a></li>
+        <li><a href="english.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200 nav-item">English</a></li>
+        <li><a href="clock.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200 nav-item">Clock</a></li>
     </ul>
 </div>
     
