@@ -24,28 +24,39 @@
             display: none;
         }
         .hamburger div {
-            width: 25px;
+            width: 30px;
             height: 3px;
-            background-color: #333;
-            margin: 4px 0;
+            background-color: #fff;
+            margin: 6px 0;
             transition: 0.4s;
         }
         .change .bar1 {
-            transform: rotate(-45deg) translate(-5px, 5px);
+            transform: rotate(-45deg) translate(-6px, 6px);
         }
         .change .bar2 {
             opacity: 0;
         }
         .change .bar3 {
-            transform: rotate(45deg) translate(-5px, -5px);
+            transform: rotate(45deg) translate(-6px, -6px);
         }
         .sidebar-open {
             transform: translateX(0);
-            opacity: 0.8;
+            opacity: 1;
+        }
+        .section {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
         }
         #calculator {
             background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 15px; /* Menyesuaikan border-radius */
+            border-radius: 15px;
             padding: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             max-width: 400px;
@@ -58,7 +69,7 @@
             font-size: 1.5em;
             text-align: right;
             border: 1px solid #ccc;
-            border-radius: 10px; /* Menyesuaikan border-radius */
+            border-radius: 10px;
             margin-bottom: 15px;
             box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
         }
@@ -72,33 +83,33 @@
             font-size: 1.2em;
             text-align: center;
             border: none;
-            border-radius: 15px; /* Menyesuaikan border-radius */
+            border-radius: 15px;
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s, transform 0.3s;
         }
         .buttons button:hover {
-            transform: scale(1.05); /* Menyesuaikan efek hover */
+            transform: scale(1.05);
         }
         .bg-add {
-            background-color: #64dfdf; /* Warna untuk operasi penambahan */
+            background-color: #64dfdf;
         }
         .bg-subtract {
-            background-color: #ffa94d; /* Warna untuk operasi pengurangan */
+            background-color: #ffa94d;
         }
         .bg-multiply {
-            background-color: #ff99cc; /* Warna untuk operasi perkalian */
+            background-color: #ff99cc;
         }
         .bg-divide {
-            background-color: #cc99ff; /* Warna untuk operasi pembagian */
+            background-color: #cc99ff;
         }
         .bg-equal {
-            background-color: #00b894; /* Warna untuk tombol sama dengan */
+            background-color: #00b894;
         }
         .bg-clear {
-            background-color: #ff4757; /* Warna untuk tombol clear (C) */
+            background-color: #ff4757;
         }
         .bg-delete {
-            background-color: #747d8c; /* Warna untuk tombol delete (X) */
+            background-color: #747d8c;
         }
         footer {
             background-color: #ffd1dc;
@@ -106,24 +117,47 @@
             text-align: center;
             padding: 1rem;
         }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .nav-item {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .nav-item:hover {
+            background-color: #ffb3b3;
+            color: white;
+        }
+        .sidebar-enter-active, .sidebar-leave-active {
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        .sidebar-enter, .sidebar-leave-to {
+            opacity: 0;
+            transform: translateX(-100%);
+        }
     </style>
 </head>
 <body>
-    
     <!-- Sidebar -->
-<div class="fixed left-0 top-0 w-64 h-full bg-pink-100 shadow-lg p-4 transform -translate-x-full opacity-0 ease-in-out transition-all duration-300" id="sidebar">        
-    <ul class="mt-10">
-        <li><a href="index.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Home</a></li>
-        <li><a href="about.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">About</a></li>
-        <li><a href="blog.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Blog</a></li>
-        <li><a href="contact.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Contact</a></li>
-        <li><a href="calendar.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calendar</a></li>
-        <li><a href="calculator.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calculator</a></li>
-        <li><a href="tic_tac_toe.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Tic Tac Toe</a></li>
-        <li><a href="english.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">English</a></li>
-        <li><a href="clock.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Clock</a></li>
-    </ul>
-</div>
+    <div class="fixed left-0 top-0 w-64 h-full bg-pink-200 shadow-lg p-4 transform -translate-x-full opacity-0 ease-in-out transition-all duration-300" id="sidebar">
+        <ul class="mt-10">
+            <li><a href="index.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Home</a></li>
+            <li><a href="about.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">About</a></li>
+            <li><a href="blog.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Blog</a></li>
+            <li><a href="contact.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Contact</a></li>
+            <li><a href="calendar.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calendar</a></li>
+            <li><a href="calculator.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calculator</a></li>
+            <li><a href="tic_tac_toe.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Tic Tac Toe</a></li>
+            <li><a href="english.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">English</a></li>
+            <li><a href="clock.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Clock</a></li>
+        </ul>
+    </div>
     
     <!-- Hamburger Menu -->
     <div class="fixed left-4 top-4 z-50 cursor-pointer hamburger" onclick="toggleSidebar()">
@@ -156,90 +190,47 @@
                 <button class="bg-subtract hover:bg-orange-400 rounded-full" onclick="appendToDisplay('-')">-</button>
                 <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('0')">0</button>
                 <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('.')">.</button>
-                <button class="bg-clear hover:bg-red-500 rounded-full" onclick="clearDisplay()">C</button>
-                <button class="bg-add hover:bg-green-400 rounded-full" onclick="appendToDisplay('+')">+</button>
-                <button class="bg-equal hover:bg-teal-400 rounded-full col-span-2" onclick="calculateResult()">=</button>
-                <button class="bg-delete hover:bg-gray-500 rounded-full" onclick="deleteLast()">X</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('(')">(</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay(')')">)</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('%')">%</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('**')">^</button>
+                <button class="bg-clear hover:bg-red-400 rounded-full" onclick="clearDisplay()">C</button>
+                <button class="bg-add hover:bg-cyan-400 rounded-full" onclick="appendToDisplay('+')">+</button>
+                <button class="bg-delete hover:bg-gray-500 rounded-full col-span-2" onclick="deleteLast()">DEL</button>
+                <button class="bg-equal hover:bg-green-400 rounded-full col-span-2" onclick="calculateResult()">=</button>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="bg-pink-100 w-full py-4 text-center">
-        <p class="text-gray-700">&copy; 2024 Mufti Khalis</p>
+    <footer>
+        <p>&copy; 2024 Mufti Khalis. All rights reserved.</p>
     </footer>
 
     <script>
-        // Function to toggle sidebar
+        const sidebar = document.getElementById('sidebar');
         function toggleSidebar() {
-            const sidebar = document.getElementById("sidebar");
-            const hamburger = document.querySelector(".hamburger");
-            sidebar.classList.toggle("-translate-x-full");
-            sidebar.classList.toggle("sidebar-open");
-            hamburger.classList.toggle("change");
+            sidebar.classList.toggle('sidebar-open');
         }
 
-        const calcDisplay = document.getElementById('calc-display');
-
-        // Function to append value to display
         function appendToDisplay(value) {
-            calcDisplay.value += value;
+            const display = document.getElementById('calc-display');
+            display.value += value;
         }
 
-        // Function to clear display
         function clearDisplay() {
-            calcDisplay.value = '';
+            document.getElementById('calc-display').value = '';
         }
 
-        // Function to delete last character from display
         function deleteLast() {
-            calcDisplay.value = calcDisplay.value.slice(0, -1);
+            const display = document.getElementById('calc-display');
+            display.value = display.value.slice(0, -1);
         }
 
-        // Function to calculate result
         function calculateResult() {
+            const display = document.getElementById('calc-display');
             try {
-                let result = eval(calcDisplay.value);
-                calcDisplay.value = result;
+                display.value = eval(display.value);
             } catch (error) {
-                calcDisplay.value = 'Error';
+                display.value = 'Error';
             }
         }
-
-        // Function to handle keyboard input
-        document.addEventListener('keydown', function(event) {
-            if (event.key >= 0 && event.key <= 9) {
-                appendToDisplay(event.key);
-            } else if (event.key === '+') {
-                appendToDisplay('+');
-            } else if (event.key === '-') {
-                appendToDisplay('-');
-            } else if (event.key === '*') {
-                appendToDisplay('*');
-            } else if (event.key === '/') {
-                appendToDisplay('/');
-            } else if (event.key === '.') {
-                appendToDisplay('.');
-            } else if (event.key === '(') {
-                appendToDisplay('(');
-            } else if (event.key === ')') {
-                appendToDisplay(')');
-            } else if (event.key === '%') {
-                appendToDisplay('%');
-            } else if (event.key === '^') {
-                appendToDisplay('**');
-            } else if (event.key === 'Enter') {
-                calculateResult();
-            } else if (event.key === 'Backspace') {
-                deleteLast();
-            } else if (event.key === 'Escape') {
-                clearDisplay();
-            }
-        });
     </script>
 </body>
 </html>
