@@ -24,24 +24,24 @@
             display: none;
         }
         .hamburger div {
-            width: 25px;
+            width: 30px;
             height: 3px;
-            background-color: #333;
-            margin: 4px 0;
+            background-color: #fff;
+            margin: 6px 0;
             transition: 0.4s;
         }
         .change .bar1 {
-            transform: rotate(-45deg) translate(-5px, 5px);
+            transform: rotate(-45deg) translate(-6px, 6px);
         }
         .change .bar2 {
             opacity: 0;
         }
         .change .bar3 {
-            transform: rotate(45deg) translate(-5px, -5px);
+            transform: rotate(45deg) translate(-6px, -6px);
         }
         .sidebar-open {
             transform: translateX(0);
-            opacity: 0.8;
+            opacity: 1;
         }
         .section {
             background-color: rgba(255, 255, 255, 0.9);
@@ -51,6 +51,7 @@
             max-width: 400px;
             width: 100%;
             margin: 0 auto;
+            text-align: center;
         }
         footer {
             background-color: #ffd1dc;
@@ -63,17 +64,17 @@
 <body>
     
 <!-- Sidebar -->
-<div class="fixed left-0 top-0 w-64 h-full bg-pink-100 shadow-lg p-4 transform -translate-x-full opacity-0 ease-in-out transition-all duration-300" id="sidebar">        
+<div class="fixed left-0 top-0 w-64 h-full bg-pink-200 shadow-lg p-4 transform -translate-x-full opacity-0 ease-in-out transition-all duration-300" id="sidebar">        
     <ul class="mt-10">
-        <li><a href="index.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Home</a></li>
-        <li><a href="about.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">About</a></li>
-        <li><a href="blog.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Blog</a></li>
-        <li><a href="contact.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Contact</a></li>
-        <li><a href="calendar.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calendar</a></li>
-        <li><a href="calculator.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calculator</a></li>
-        <li><a href="tic_tac_toe.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Tic Tac Toe</a></li>
-        <li><a href="english.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">English</a></li>
-        <li><a href="clock.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Clock</a></li>
+        <li><a href="index.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200">Home</a></li>
+        <li><a href="about.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200">About</a></li>
+        <li><a href="blog.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200">Blog</a></li>
+        <li><a href="contact.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200">Contact</a></li>
+        <li><a href="calendar.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200">Calendar</a></li>
+        <li><a href="calculator.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200">Calculator</a></li>
+        <li><a href="tic_tac_toe.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200">Tic Tac Toe</a></li>
+        <li><a href="english.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200">English</a></li>
+        <li><a href="clock.html" class="block py-2 px-4 text-gray-700 hover:bg-pink-300 rounded transition duration-200">Clock</a></li>
     </ul>
 </div>
     
@@ -85,20 +86,20 @@
 </div>
 
     <!-- Header -->
-    <header class="bg-pink-100 w-full py-4 text-center">
-        <h1 class="text-2xl font-bold text-gray-700">Home</h1>
+    <header class="bg-pink-200 w-full py-4 text-center shadow">
+        <h1 class="text-3xl font-bold text-gray-700">Home</h1>
     </header>
 
     <!-- Content -->
     <div id="content">
         <div class="section">
-            <p class="text-lg text-gray-700">Welcome to Mufti Khalis' website!</p>
+            <h2 class="text-2xl font-bold text-gray-700">Welcome to Mufti Khalis' website!</h2>
             <p class="mt-4 text-gray-700">Explore the different sections using the sidebar.</p>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="bg-pink-100 w-full py-4 text-center">
+    <footer class="bg-pink-200 w-full py-4 text-center shadow-inner">
         <p class="text-gray-700">&copy; 2024 Mufti Khalis</p>
     </footer>
 
