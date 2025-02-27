@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Improved Website - Mufti Khalis</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            background-color: #34495e;
+            padding-top: 60px;
+            transition: all 0.5s ease;
+            z-index: 10;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+        }
+        .nav-menu.active { right: 0; }
+        .hamburger span { transition: all 0.5s ease; }
+        .hamburger.active span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+            z-index: 5;
+        }
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-100">
+    <header class="bg-gray-900 text-white p-4">
+        <nav class="flex justify-between items-center">
+            <div class="text-lg font-bold">Mufti Khalis</div>
+            <div class="hamburger cursor-pointer z-20">
+                <span class="block w-8 h-1 bg-white mb-2"></span>
+                <span class="block w-8 h-1 bg-white mb-2"></span>
+                <span class="block w-8 h-1 bg-white"></span>
+            </div>
+            <div class="nav-menu fixed top-0 right-0 w-64 h-full bg-gray-800 text-white p-6 transform translate-x-full transition-transform duration-300">
+                <ul class="space-y-4">
+                    <li><a href="index.html" class="block p-2 hover:bg-gray-700">Home</a></li>
+                    <li><a href="about.html" class="block p-2 hover:bg-gray-700">About</a></li>
+                    <li><a href="blog.html" class="block p-2 hover:bg-gray-700">Blog</a></li>
+                    <li><a href="contact.html" class="block p-2 hover:bg-gray-700">Contact</a></li>
+                    <li><a href="calendar.html" class="block p-2 hover:bg-gray-700">Calendar</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="overlay"></div>
+    <main class="p-6">
+        <h1 class="text-3xl font-bold">Welcome to Mufti Khalis' Website</h1>
+        <p class="mt-4">Explore the different sections using the menu.</p>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            const overlay = document.querySelector('.overlay');
+            function toggleMenu() {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('translate-x-full');
+                overlay.classList.toggle('active');
+                document.body.style.overflow = navMenu.classList.contains('translate-x-full') ? 'auto' : 'hidden';
+            }
+            hamburger.addEventListener('click', toggleMenu);
+            overlay.addEventListener('click', toggleMenu);
+        });
+    </script>
+</body>
+</html>

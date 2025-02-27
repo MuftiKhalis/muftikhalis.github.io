@@ -1,253 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator - Mufti Khalis</title>
-    <!-- Include Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        body {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background: linear-gradient(to right, #ffccff, #ffb3ff);
-        }
-        #content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .hidden {
-            display: none;
-        }
-        .hamburger div {
-            width: 30px;
-            height: 3px;
-            background-color: #fff;
-            margin: 6px 0;
-            transition: 0.4s;
-        }
-        .change .bar1 {
-            transform: rotate(-45deg) translate(-6px, 6px);
-        }
-        .change .bar2 {
-            opacity: 0;
-        }
-        .change .bar3 {
-            transform: rotate(45deg) translate(-6px, -6px);
-        }
-        .sidebar-open {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        .section {
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
-            margin: 0 auto;
-            text-align: center;
-            animation: fadeIn 1s ease-in-out;
-        }
-        #calculator {
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
-            margin: 0 auto;
-        }
-        #calc-display {
-            width: 100%;
-            padding: 15px;
-            font-size: 1.5em;
-            text-align: right;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
-        }
-        #calc-display-operations {
-            font-size: 1em;
-            color: gray;
-        }
-        #calc-display-result {
-            font-size: 1.5em;
-            color: black;
-        }
-        .buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-        .buttons button {
-            padding: 15px;
-            font-size: 1.2em;
-            text-align: center;
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s, transform 0.3s;
-        }
-        .buttons button:hover {
-            transform: scale(1.05);
-        }
-        .bg-add {
-            background-color: #64dfdf;
-        }
-        .bg-subtract {
-            background-color: #ffa94d;
-        }
-        .bg-multiply {
-            background-color: #ff99cc;
-        }
-        .bg-divide {
-            background-color: #cc99ff;
-        }
-        .bg-equal {
-            background-color: #00b894;
-        }
-        .bg-clear {
-            background-color: #ff4757;
-        }
-        .bg-delete {
-            background-color: #747d8c;
-        }
-        footer {
-            background-color: #ffd1dc;
-            color: #333;
-            text-align: center;
-            padding: 1rem;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .nav-item {
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        .nav-item:hover {
-            background-color: #ffb3b3;
-            color: white;
-        }
-        .sidebar-enter-active, .sidebar-leave-active {
-            transition: opacity 0.5s, transform 0.5s;
-        }
-        .sidebar-enter, .sidebar-leave-to {
-            opacity: 0;
-            transform: translateX(-100%);
-        }
-    </style>
-</head>
-<body>
-    <!-- Sidebar -->
-    <div class="fixed left-0 top-0 w-64 h-full bg-pink-200 shadow-lg p-4 transform -translate-x-full opacity-0 ease-in-out transition-all duration-300" id="sidebar">
-        <ul class="mt-10">
-            <li><a href="index.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Home</a></li>
-            <li><a href="about.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">About</a></li>
-            <li><a href="blog.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Blog</a></li>
-            <li><a href="contact.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Contact</a></li>
-            <li><a href="calendar.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calendar</a></li>
-            <li><a href="calculator.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calculator</a></li>
-            <li><a href="tic_tac_toe.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Tic Tac Toe</a></li>
-            <li><a href="english.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">English</a></li>
-            <li><a href="clock.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Clock</a></li>
-        </ul>
-    </div>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator - Mufti Khalis</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    /* Animated Hamburger Menu Styles */
+    .nav-menu {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100vh;
+      background-color: #34495e;
+      padding-top: 60px;
+      transition: all 0.5s ease;
+      z-index: 10;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+    }
+    .nav-menu.active { right: 0; }
+    .hamburger span {
+      display: block;
+      width: 2rem;
+      height: 0.25rem;
+      background-color: #fff;
+      margin-bottom: 0.5rem;
+      border-radius: 2px;
+      transition: all 0.5s ease;
+    }
+    .hamburger.active span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      opacity: 0; visibility: hidden;
+      transition: all 0.5s ease;
+      z-index: 5;
+    }
+    .overlay.active { opacity: 1; visibility: visible; }
     
-    <!-- Hamburger Menu -->
-    <div class="fixed left-4 top-4 z-50 cursor-pointer hamburger" onclick="toggleSidebar()">
-        <div class="bar1 bg-gray-700 rounded-full"></div>
-        <div class="bar2 bg-gray-700 rounded-full"></div>
-        <div class="bar3 bg-gray-700 rounded-full"></div>
+    /* Calculator Styles */
+    #calculator {
+      background-color: #fff;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+      margin: 20px auto;
+    }
+    #calc-display {
+      width: 100%;
+      padding: 15px;
+      font-size: 1.5rem;
+      text-align: right;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: inset 0 1px 1px rgba(0,0,0,0.1);
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .buttons button {
+      padding: 15px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    .buttons button:hover { transform: scale(1.05); }
+  </style>
+</head>
+<body class="min-h-screen bg-gray-100">
+  <!-- Header with Animated Hamburger Menu -->
+  <header class="bg-gray-900 text-white p-4">
+    <nav class="flex justify-between items-center">
+      <div class="text-lg font-bold">Mufti Khalis</div>
+      <div class="hamburger cursor-pointer z-20" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="nav-menu" id="nav-menu">
+        <ul class="space-y-4">
+          <li><a href="index.html" class="block p-2 hover:bg-gray-700">Home</a></li>
+          <li><a href="about.html" class="block p-2 hover:bg-gray-700">About</a></li>
+          <li><a href="blog.html" class="block p-2 hover:bg-gray-700">Blog</a></li>
+          <li><a href="contact.html" class="block p-2 hover:bg-gray-700">Contact</a></li>
+          <li><a href="calendar.html" class="block p-2 hover:bg-gray-700">Calendar</a></li>
+          <li><a href="calculator.html" class="block p-2 hover:bg-gray-700">Calculator</a></li>
+          <li><a href="tic_tac_toe.html" class="block p-2 hover:bg-gray-700">Tic Tac Toe</a></li>
+          <li><a href="english.html" class="block p-2 hover:bg-gray-700">English</a></li>
+          <li><a href="clock.html" class="block p-2 hover:bg-gray-700">Clock</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <div class="overlay" id="overlay"></div>
+  
+  <!-- Main Content for Calculator -->
+  <main class="p-6">
+    <div id="calculator">
+      <div id="calc-display">0</div>
+      <div class="buttons">
+        <button onclick="appendValue('7')" class="bg-yellow-300 hover:bg-yellow-400 rounded-full">7</button>
+        <button onclick="appendValue('8')" class="bg-yellow-300 hover:bg-yellow-400 rounded-full">8</button>
+        <button onclick="appendValue('9')" class="bg-yellow-300 hover:bg-yellow-400 rounded-full">9</button>
+        <button onclick="appendValue('/')" class="bg-purple-300 hover:bg-purple-400 rounded-full">/</button>
+        <button onclick="appendValue('4')" class="bg-yellow-300 hover:bg-yellow-400 rounded-full">4</button>
+        <button onclick="appendValue('5')" class="bg-yellow-300 hover:bg-yellow-400 rounded-full">5</button>
+        <button onclick="appendValue('6')" class="bg-yellow-300 hover:bg-yellow-400 rounded-full">6</button>
+        <button onclick="appendValue('*')" class="bg-purple-300 hover:bg-purple-400 rounded-full">*</button>
+        <button onclick="appendValue('1')" class="bg-yellow-300 hover:bg-yellow-400 rounded-full">1</button>
+        <button onclick="appendValue('2')" class="bg-yellow-300 hover:bg-yellow-400 rounded-full">2</button>
+        <button onclick="appendValue('3')" class="bg-yellow-300 hover:bg-yellow-400 rounded-full">3</button>
+        <button onclick="appendValue('-')" class="bg-purple-300 hover:bg-purple-400 rounded-full">-</button>
+        <button onclick="appendValue('0')" class="bg-yellow-300 hover:bg-yellow-400 rounded-full">0</button>
+        <button onclick="appendValue('.')" class="bg-yellow-300 hover:bg-yellow-400 rounded-full">.</button>
+        <button onclick="clearDisplay()" class="bg-red-300 hover:bg-red-400 rounded-full">C</button>
+        <button onclick="appendValue('+')" class="bg-purple-300 hover:bg-purple-400 rounded-full">+</button>
+        <button onclick="deleteLast()" class="bg-gray-300 hover:bg-gray-400 rounded-full">DEL</button>
+        <button onclick="calculateResult()" class="bg-green-300 hover:bg-green-400 rounded-full">=</button>
+      </div>
     </div>
-
-    <!-- Header -->
-    <header class="bg-pink-100 w-full py-4 text-center">
-        <h1 class="text-2xl font-bold text-gray-700">Calculator</h1>
-    </header>
-
-    <!-- Content -->
-    <div id="content">
-        <div id="calculator">
-            <div id="calc-display" class="flex flex-col items-end">
-                <span id="calc-display-operations"></span>
-                <span id="calc-display-result"></span>
-            </div>
-            <div class="buttons grid grid-cols-4 gap-4">
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('7')">7</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('8')">8</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('9')">9</button>
-                <button class="bg-divide hover:bg-purple-400 rounded-full" onclick="appendToDisplay('/')">/</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('4')">4</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('5')">5</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('6')">6</button>
-                <button class="bg-multiply hover:bg-pink-400 rounded-full" onclick="appendToDisplay('*')">×</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('1')">1</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('2')">2</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('3')">3</button>
-                <button class="bg-subtract hover:bg-orange-400 rounded-full" onclick="appendToDisplay('-')">-</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('0')">0</button>
-                <button class="bg-yellow-300 hover:bg-yellow-400 rounded-full" onclick="appendToDisplay('.')">.</button>
-                <button class="bg-clear hover:bg-red-400 rounded-full" onclick="clearDisplay()">C</button>
-                <button class="bg-add hover:bg-cyan-400 rounded-full" onclick="appendToDisplay('+')">+</button>
-                <button class="bg-delete hover:bg-gray-500 rounded-full col-span-2" onclick="deleteLast()">DEL</button>
-                <button class="bg-equal hover:bg-green-400 rounded-full col-span-2" onclick="calculateResult()">=</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 Mufti Khalis. All rights reserved.</p>
-    </footer>
-
-    <script>
-        const sidebar = document.getElementById('sidebar');
-        const hamburger = document.querySelector('.hamburger');
-
-        function toggleSidebar() {
-            sidebar.classList.toggle('sidebar-open');
-            hamburger.classList.toggle('change');
-        }
-
-        function appendToDisplay(value) {
-            const operationsDisplay = document.getElementById('calc-display-operations');
-            const resultDisplay = document.getElementById('calc-display-result');
-            operationsDisplay.textContent += value;
-        }
-
-        function clearDisplay() {
-            document.getElementById('calc-display-operations').textContent = '';
-            document.getElementById('calc-display-result').textContent = '';
-        }
-
-        function deleteLast() {
-            const operationsDisplay = document.getElementById('calc-display-operations');
-            operationsDisplay.textContent = operationsDisplay.textContent.slice(0, -1);
-        }
-
-        function calculateResult() {
-            const operationsDisplay = document.getElementById('calc-display-operations');
-            const resultDisplay = document.getElementById('calc-display-result');
-            try {
-                resultDisplay.textContent = eval(operationsDisplay.textContent);
-            } catch (error) {
-                resultDisplay.textContent = 'Error';
-            }
-        }
-    </script>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="bg-gray-200 text-center p-4">
+    <p class="text-gray-700">&copy; 2024 Mufti Khalis</p>
+  </footer>
+  
+  <script>
+    // Toggle Hamburger Menu
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    const overlay = document.getElementById('overlay');
+    function toggleMenu() {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+      overlay.classList.toggle('active');
+      document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+    }
+    hamburger.addEventListener('click', toggleMenu);
+    overlay.addEventListener('click', toggleMenu);
+    
+    // Calculator Functions
+    const display = document.getElementById('calc-display');
+    function appendValue(val) {
+      if (display.textContent === '0') {
+        display.textContent = val;
+      } else {
+        display.textContent += val;
+      }
+    }
+    function clearDisplay() {
+      display.textContent = '0';
+    }
+    function deleteLast() {
+      display.textContent = display.textContent.slice(0, -1) || '0';
+    }
+    function calculateResult() {
+      try {
+        display.textContent = eval(display.textContent) || '0';
+      } catch (e) {
+        display.textContent = 'Error';
+      }
+    }
+  </script>
 </body>
 </html>

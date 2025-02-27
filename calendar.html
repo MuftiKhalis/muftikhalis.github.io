@@ -1,219 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendar - Mufti Khalis</title>
-    <!-- Include Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        body {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background: linear-gradient(to right, #ffccff, #ffb3ff);
-        }
-        #content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .hidden {
-            display: none;
-        }
-        .hamburger div {
-            width: 25px;
-            height: 3px;
-            background-color: #333;
-            margin: 4px 0;
-            transition: 0.4s;
-        }
-        .change .bar1 {
-            transform: rotate(-45deg) translate(-5px, 5px);
-        }
-        .change .bar2 {
-            opacity: 0;
-        }
-        .change .bar3 {
-            transform: rotate(45deg) translate(-5px, -5px);
-        }
-        .sidebar-open {
-            transform: translateX(0);
-            opacity: 0.8;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calendar - Mufti Khalis</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    /* Animated Hamburger Menu Styles */
+    .nav-menu {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100vh;
+      background-color: #34495e;
+      padding-top: 60px;
+      transition: all 0.5s ease;
+      z-index: 10;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+    }
+    .nav-menu.active { right: 0; }
+    .hamburger span {
+      display: block;
+      width: 2rem;
+      height: 0.25rem;
+      background-color: #fff;
+      margin-bottom: 0.5rem;
+      border-radius: 2px;
+      transition: all 0.5s ease;
+    }
+    .hamburger.active span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      opacity: 0; visibility: hidden;
+      transition: all 0.5s ease;
+      z-index: 5;
+    }
+    .overlay.active { opacity: 1; visibility: visible; }
+    /* Calendar Styles */
+    .calendar-container { max-width: 600px; margin: 20px auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .calendar-header h2 { font-size: 1.5rem; font-weight: bold; }
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; }
+    .calendar-grid div { padding: 10px; }
+    .calendar-day { background: #f3f4f6; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
+    .calendar-day:hover { background: #e5e7eb; }
+  </style>
 </head>
-<body>
+<body class="min-h-screen bg-gray-100">
+  <!-- Header -->
+  <header class="bg-gray-900 text-white p-4">
+    <nav class="flex justify-between items-center">
+      <div class="text-lg font-bold">Mufti Khalis</div>
+      <div class="hamburger cursor-pointer z-20" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="nav-menu" id="nav-menu">
+        <ul class="space-y-4">
+          <li><a href="index.html" class="block p-2 hover:bg-gray-700">Home</a></li>
+          <li><a href="about.html" class="block p-2 hover:bg-gray-700">About</a></li>
+          <li><a href="blog.html" class="block p-2 hover:bg-gray-700">Blog</a></li>
+          <li><a href="contact.html" class="block p-2 hover:bg-gray-700">Contact</a></li>
+          <li><a href="calendar.html" class="block p-2 hover:bg-gray-700">Calendar</a></li>
+          <li><a href="calculator.html" class="block p-2 hover:bg-gray-700">Calculator</a></li>
+          <li><a href="tic_tac_toe.html" class="block p-2 hover:bg-gray-700">Tic Tac Toe</a></li>
+          <li><a href="english.html" class="block p-2 hover:bg-gray-700">English</a></li>
+          <li><a href="clock.html" class="block p-2 hover:bg-gray-700">Clock</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <div class="overlay" id="overlay"></div>
+  
+  <!-- Main Content for Calendar -->
+  <main class="p-6">
+    <div class="calendar-container">
+      <div class="calendar-header">
+        <button id="prevMonth" class="bg-gray-300 p-2 rounded">&lt;&lt;</button>
+        <h2 id="monthYear">Month Year</h2>
+        <button id="nextMonth" class="bg-gray-300 p-2 rounded">&gt;&gt;</button>
+      </div>
+      <div class="calendar-grid" id="calendarGrid">
+        <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
+        <!-- Days will be generated dynamically -->  
+      </div>
+      <p id="dayDifference" class="mt-4 text-center text-gray-700 font-semibold"></p>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="bg-gray-200 text-center p-4">
+    <p class="text-gray-700">&copy; 2024 Mufti Khalis</p>
+  </footer>
+  
+  <script>
+    // Toggle Hamburger Menu
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    const overlay = document.getElementById('overlay');
+    function toggleMenu() {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+      overlay.classList.toggle('active');
+      document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+    }
+    hamburger.addEventListener('click', toggleMenu);
+    overlay.addEventListener('click', toggleMenu);
     
-    <!-- Sidebar -->
-<div class="fixed left-0 top-0 w-64 h-full bg-pink-100 shadow-lg p-4 transform -translate-x-full opacity-0 ease-in-out transition-all duration-300" id="sidebar">        
-    <ul class="mt-10">
-        <li><a href="index.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Home</a></li>
-        <li><a href="about.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">About</a></li>
-        <li><a href="blog.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Blog</a></li>
-        <li><a href="contact.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Contact</a></li>
-        <li><a href="calendar.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calendar</a></li>
-        <li><a href="calculator.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calculator</a></li>
-        <li><a href="tic_tac_toe.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Tic Tac Toe</a></li>
-        <li><a href="english.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">English</a></li>
-        <li><a href="clock.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Clock</a></li>
-    </ul>
-</div>
-
-    <!-- Hamburger Menu -->
-    <div class="fixed left-4 top-4 z-50 cursor-pointer hamburger" onclick="toggleSidebar()">
-        <div class="bar1"></div>
-        <div class="bar2"></div>
-        <div class="bar3"></div>
-    </div>
-
-    <!-- Header -->
-    <header class="bg-pink-100 w-full py-4 text-center">
-        <h1 class="text-2xl font-bold text-gray-700">Calendar</h1>
-    </header>
-
-    <!-- Content -->
-    <div id="content">
-        <div class="bg-white rounded-lg p-8 max-w-xl w-full mx-4">
-            <!-- Month Navigation -->
-            <div class="flex items-center justify-between mb-4">
-                <button class="text-xl text-gray-700" onclick="navigateToPreviousMonth()">&lt;&lt;</button>
-                <h2 class="text-xl font-bold text-gray-800" id="monthYearDisplay"></h2>
-                <button class="text-xl text-gray-700" onclick="navigateToNextMonth()">&gt;&gt;</button>
-            </div>
-            
-            <!-- Days of the Week -->
-            <div class="flex justify-between font-semibold text-sm text-gray-700 mb-2">
-                <div class="w-1/7 text-center">Mon</div>
-                <div class="w-1/7 text-center">Tue</div>
-                <div class="w-1/7 text-center">Wed</div>
-                <div class="w-1/7 text-center">Thu</div>
-                <div class="w-1/7 text-center">Fri</div>
-                <div class="w-1/7 text-center">Sat</div>
-                <div class="w-1/7 text-center">Sun</div>
-            </div>
-            
-            <!-- Calendar Days -->
-            <div class="grid grid-cols-7 gap-2" id="calendarDays">
-                <!-- Days will be dynamically generated with JavaScript -->
-            </div>
-
-            <!-- Day Difference Display -->
-            <div class="text-center mt-4 text-gray-700 font-semibold" id="dayDifference"></div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="bg-pink-100 w-full py-4 text-center">
-        <p class="text-gray-700">&copy; 2024 Mufti Khalis</p>
-    </footer>
-
-    <script>
-        let currentDate = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" }));
-        let currentYear = currentDate.getFullYear();
-        let currentMonth = currentDate.getMonth();
-        const originalDate = new Date(currentDate);
-
-        // Function to toggle sidebar
-        function toggleSidebar() {
-            const sidebar = document.getElementById("sidebar");
-            const hamburger = document.querySelector(".hamburger");
-            sidebar.classList.toggle("-translate-x-full");
-            sidebar.classList.toggle("sidebar-open");
-            hamburger.classList.toggle("change");
-        }
-
-        // Function to generate calendar
-        function generateCalendar(year, month) {
-            const today = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" }));
-            const daysInMonth = new Date(year, month + 1, 0).getDate(); // Total days in the month
-            const firstDay = (new Date(year, month, 1).getDay() + 6) % 7; // Day of the week of the first day
-
-            const monthYearDisplay = document.getElementById("monthYearDisplay");
-            monthYearDisplay.textContent = getMonthName(month) + " " + year;
-
-            const daysContainer = document.getElementById("calendarDays");
-            daysContainer.innerHTML = ""; // Clear previous days
-
-            // Create days for the calendar
-            for (let i = 0; i < firstDay; i++) {
-                const emptyDay = document.createElement("div");
-                emptyDay.classList.add("text-center", "py-2", "bg-transparent");
-                daysContainer.appendChild(emptyDay);
-            }
-
-            for (let date = 1; date <= daysInMonth; date++) {
-                const day = document.createElement("div");
-                day.textContent = date;
-                day.classList.add("text-center", "py-2", "bg-white", "rounded-lg", "cursor-pointer", "hover:bg-gray-200");
-                if (year === originalDate.getFullYear() && month === originalDate.getMonth() && date === originalDate.getDate()) {
-                    day.classList.add("bg-pink-200");
-                }
-                // Add click event listener to highlight selected date
-                day.addEventListener("click", function() {
-                    const selectedDate = new Date(year, month, date);
-                    const diffDays = getDifferenceInDays(selectedDate, today);
-                    highlightSelectedDate(this, diffDays, selectedDate);
-                });
-                daysContainer.appendChild(day);
-            }
-        }
-
-        // Function to get month name
-        function getMonthName(month) {
-            const monthNames = ["January", "February", "March", "April", "May", "June",
-                                "July", "August", "September", "October", "November", "December"];
-            return monthNames[month];
-        }
-
-        // Function to highlight selected date and display days difference
-        function highlightSelectedDate(day, diffDays, selectedDate) {
-            const days = document.querySelectorAll(".bg-white");
-            days.forEach(d => d.classList.remove("bg-gray-200"));
-            if (!(selectedDate.getFullYear() === originalDate.getFullYear() && selectedDate.getMonth() === originalDate.getMonth() && selectedDate.getDate() === originalDate.getDate())) {
-                day.classList.add("bg-gray-200");
-            }
-            const dayDifferenceDisplay = document.getElementById("dayDifference");
-            if (diffDays === 0) {
-                dayDifferenceDisplay.textContent = "Today is the selected date.";
-            } else if (diffDays > 0) {
-                dayDifferenceDisplay.textContent = Math.abs(diffDays) + " days ahead from today.";
-            } else {
-                dayDifferenceDisplay.textContent = Math.abs(diffDays) + " days ago from today.";
-            }
-        }
-
-        // Function to calculate difference in days between two dates
-        function getDifferenceInDays(date1, date2) {
-            const timeDiff = date1.setHours(0,0,0,0) - date2.setHours(0,0,0,0);
-return Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-}
-
-    // Function to navigate to the previous month
-    function navigateToPreviousMonth() {
-        currentMonth--;
-        if (currentMonth < 0) {
-            currentMonth = 11;
-            currentYear--;
-        }
-        generateCalendar(currentYear, currentMonth);
+    // Calendar Script with day difference
+    let currentDate = new Date();
+    let currentYear = currentDate.getFullYear();
+    let currentMonth = currentDate.getMonth();
+    
+    function renderCalendar(year, month) {
+      const monthYearElem = document.getElementById('monthYear');
+      const calendarGrid = document.getElementById('calendarGrid');
+      const dayDifferenceElem = document.getElementById('dayDifference');
+      monthYearElem.textContent = new Date(year, month).toLocaleString('default', { month: 'long', year: 'numeric' });
+      calendarGrid.innerHTML = '<div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>';
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      let offset = (firstDay === 0) ? 6 : firstDay - 1;
+      for(let i = 0; i < offset; i++) {
+        calendarGrid.innerHTML += '<div></div>';
+      }
+      for(let day = 1; day <= daysInMonth; day++) {
+        calendarGrid.innerHTML += `<div class="calendar-day cursor-pointer" data-day="${day}">${day}</div>`;
+      }
+      // Add click event to each calendar day
+      document.querySelectorAll('.calendar-day').forEach(dayElem => {
+        dayElem.addEventListener('click', function() {
+          const selectedDay = parseInt(this.getAttribute('data-day'));
+          const selectedDate = new Date(year, month, selectedDay);
+          const diffTime = selectedDate - new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+          const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+          let diffText = '';
+          if(diffDays === 0) {
+            diffText = 'Today';
+          } else if(diffDays > 0) {
+            diffText = diffDays + ' day(s) ahead';
+          } else {
+            diffText = Math.abs(diffDays) + ' day(s) ago';
+          }
+          dayDifferenceElem.textContent = diffText;
+        });
+      });
     }
-
-    // Function to navigate to the next month
-    function navigateToNextMonth() {
-        currentMonth++;
-        if (currentMonth > 11) {
-            currentMonth = 0;
-            currentYear++;
-        }
-        generateCalendar(currentYear, currentMonth);
-    }
-
-    // Initialize calendar for the current month
-    generateCalendar(currentYear, currentMonth);
-</script>
-
+    
+    document.getElementById('prevMonth').addEventListener('click', () => {
+      currentMonth--; if(currentMonth < 0){ currentMonth = 11; currentYear--; } renderCalendar(currentYear, currentMonth);
+    });
+    document.getElementById('nextMonth').addEventListener('click', () => {
+      currentMonth++; if(currentMonth > 11){ currentMonth = 0; currentYear++; } renderCalendar(currentYear, currentMonth);
+    });
+    
+    renderCalendar(currentYear, currentMonth);
+  </script>
 </body>
 </html>

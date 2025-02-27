@@ -1,383 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic Tac Toe - Mufti Khalis</title>
-    <!-- Include Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        body {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background: linear-gradient(to right, #ffccff, #ffb3ff);
-        }
-        #content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .hidden {
-            display: none;
-        }
-        .hamburger div {
-            width: 25px;
-            height: 3px;
-            background-color: #333;
-            margin: 4px 0;
-            transition: 0.4s;
-        }
-        .change .bar1 {
-            transform: rotate(-45deg) translate(-5px, 5px);
-        }
-        .change .bar2 {
-            opacity: 0;
-        }
-        .change .bar3 {
-            transform: rotate(45deg) translate(-5px, -5px);
-        }
-        .sidebar-open {
-            transform: translateX(0);
-            opacity: 0.8;
-        }
-        .section {
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
-            margin: 0 auto;
-        }
-        footer {
-            background-color: #ffd1dc;
-            color: #333;
-            text-align: center;
-            padding: 1rem;
-        }
-        .board {
-            display: grid;
-            grid-template-columns: repeat(3, 100px);
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .cell {
-            width: 100%;
-            height: 100px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #f0f0f0;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 3em;
-            transition: background-color 0.3s;
-        }
-        .cell:hover {
-            background-color: #e0e0e0;
-        }
-        .cell.X {
-            color: #ff6347;
-        }
-        .cell.O {
-            color: #4682b4;
-        }
-        .win {
-            background-color: #b4f1b4 !important;
-        }
-        .draw {
-            background-color: #f5f5b4 !important;
-        }
-        .btn {
-            background-color: #ffccff;
-            color: #333;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .btn:hover {
-            background-color: #ffb3ff;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tic Tac Toe - Mufti Khalis</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    /* Animated Hamburger Menu Styles */
+    .nav-menu {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100vh;
+      background-color: #34495e;
+      padding-top: 60px;
+      transition: all 0.5s ease;
+      z-index: 10;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+    }
+    .nav-menu.active { right: 0; }
+    .hamburger span {
+      display: block;
+      width: 2rem;
+      height: 0.25rem;
+      background-color: #fff;
+      margin-bottom: 0.5rem;
+      border-radius: 2px;
+      transition: all 0.5s ease;
+    }
+    .hamburger.active span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.5s ease;
+      z-index: 5;
+    }
+    .overlay.active { opacity: 1; visibility: visible; }
+    /* Board styles */
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      gap: 10px;
+      justify-content: center;
+      margin: 20px auto;
+    }
+    .cell {
+      width: 100px;
+      height: 100px;
+      background-color: #f9fafb;
+      border: 2px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-size: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .cell:hover { background-color: #f3f4f6; }
+  </style>
 </head>
-<body>
-<!-- Sidebar -->
-<div class="fixed left-0 top-0 w-64 h-full bg-pink-100 shadow-lg p-4 transform -translate-x-full opacity-0 ease-in-out transition-all duration-300" id="sidebar">        
-    <ul class="mt-10">
-        <li><a href="index.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Home</a></li>
-        <li><a href="about.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">About</a></li>
-        <li><a href="blog.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Blog</a></li>
-        <li><a href="contact.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Contact</a></li>
-        <li><a href="calendar.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calendar</a></li>
-        <li><a href="calculator.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calculator</a></li>
-        <li><a href="tic_tac_toe.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Tic Tac Toe</a></li>
-        <li><a href="english.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">English</a></li>
-        <li><a href="clock.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Clock</a></li>
-    </ul>
-</div>
-
-    <!-- Hamburger Menu -->
-    <div class="fixed left-4 top-4 z-50 cursor-pointer hamburger" onclick="toggleSidebar()">
-        <div class="bar1 bg-gray-700 rounded-full"></div>
-        <div class="bar2 bg-gray-700 rounded-full"></div>
-        <div class="bar3 bg-gray-700 rounded-full"></div>
+<body class="min-h-screen bg-gray-100">
+  <!-- Header with Animated Hamburger Menu -->
+  <header class="bg-gray-900 text-white p-4">
+    <nav class="flex justify-between items-center">
+      <div class="text-lg font-bold">Mufti Khalis</div>
+      <div class="hamburger cursor-pointer z-20" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="nav-menu" id="nav-menu">
+        <ul class="space-y-4">
+          <li><a href="index.html" class="block p-2 hover:bg-gray-700">Home</a></li>
+          <li><a href="about.html" class="block p-2 hover:bg-gray-700">About</a></li>
+          <li><a href="blog.html" class="block p-2 hover:bg-gray-700">Blog</a></li>
+          <li><a href="contact.html" class="block p-2 hover:bg-gray-700">Contact</a></li>
+          <li><a href="calendar.html" class="block p-2 hover:bg-gray-700">Calendar</a></li>
+          <li><a href="calculator.html" class="block p-2 hover:bg-gray-700">Calculator</a></li>
+          <li><a href="tic_tac_toe.html" class="block p-2 hover:bg-gray-700">Tic Tac Toe</a></li>
+          <li><a href="english.html" class="block p-2 hover:bg-gray-700">English</a></li>
+          <li><a href="clock.html" class="block p-2 hover:bg-gray-700">Clock</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <div class="overlay" id="overlay"></div>
+  
+  <!-- Main Content -->
+  <main class="p-6">
+    <div class="section bg-white p-8 rounded shadow-lg max-w-md mx-auto text-center">
+      <h2 class="text-2xl font-bold mb-4">Tic Tac Toe</h2>
+      
+      <!-- Mode & Options -->
+      <div class="mb-4">
+        <label class="mr-2">Mode:</label>
+        <select id="mode-select" class="border rounded p-1">
+          <option value="pvai">Player vs AI</option>
+          <option value="pvp">Player vs Player</option>
+        </select>
+      </div>
+      <div class="mb-4" id="pvai-options">
+        <label class="mr-2">AI Level:</label>
+        <select id="level-select" class="border rounded p-1 mr-4">
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+          <option value="expert">Expert</option>
+          <option value="impossible">Impossible</option>
+        </select>
+        <label class="mr-2">First Move:</label>
+        <select id="first-move-select" class="border rounded p-1">
+          <option value="player">Player First</option>
+          <option value="ai">AI First</option>
+        </select>
+      </div>
+      
+      <!-- Game Board -->
+      <div class="board" id="board">
+        <!-- 9 cells -->
+        <div class="cell" data-index="0"></div>
+        <div class="cell" data-index="1"></div>
+        <div class="cell" data-index="2"></div>
+        <div class="cell" data-index="3"></div>
+        <div class="cell" data-index="4"></div>
+        <div class="cell" data-index="5"></div>
+        <div class="cell" data-index="6"></div>
+        <div class="cell" data-index="7"></div>
+        <div class="cell" data-index="8"></div>
+      </div>
+      
+      <p id="result" class="mt-4 text-gray-700"></p>
+      <button class="mt-4 bg-gray-300 p-2 rounded" onclick="resetGame()">Restart</button>
     </div>
-
-    <!-- Header -->
-    <header class="bg-pink-100 w-full py-4 text-center">
-        <h1 class="text-2xl font-bold text-gray-700">Tic Tac Toe</h1>
-    </header>
-
-    <!-- Content -->
-    <div id="content">
-        <div class="section">
-            <div class="flex items-center justify-between mb-4">
-                <div>
-                    <label for="level">Select Difficulty:</label>
-                    <select id="level" class="ml-2 px-2 py-1 border border-gray-300 rounded">
-                        <option value="easy">Easy</option>
-                        <option value="medium">Medium</option>
-                        <option value="hard">Hard</option>
-                        <option value="expert">Expert</option>
-                        <option value="impossible">Impossible</option>
-                    </select>
-                </div>
-            </div>
-            <div class="board">
-                <div class="cell" onclick="cellClick(0)"></div>
-                <div class="cell" onclick="cellClick(1)"></div>
-                <div class="cell" onclick="cellClick(2)"></div>
-                <div class="cell" onclick="cellClick(3)"></div>
-                <div class="cell" onclick="cellClick(4)"></div>
-                <div class="cell" onclick="cellClick(5)"></div>
-                <div class="cell" onclick="cellClick(6)"></div>
-                <div class="cell" onclick="cellClick(7)"></div>
-                <div class="cell" onclick="cellClick(8)"></div>
-            </div>
-            <div id="result" class="mt-4 text-gray-700 hidden">
-                <p id="result-text"></p>
-                <button class="btn" onclick="resetGame()">Play Again</button>
-            </div>
-            <div class="flex justify-between">
-                <button class="btn" onclick="resetGame()">Reset</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="bg-pink-100 w-full py-4 text-center">
-        <p class="text-gray-700">&copy; 2024 Mufti Khalis</p>
-    </footer>
-
-    <script>
-        let board = ['', '', '', '', '', '', '', '', ''];
-        let currentPlayer = 'X';
-        let gameOver = false;
-        let difficulty = 'easy'; // Default difficulty
-
-        // Function to toggle sidebar
-        function toggleSidebar() {
-            const sidebar = document.getElementById("sidebar");
-            const hamburger = document.querySelector(".hamburger");
-            sidebar.classList.toggle("-translate-x-full");
-            sidebar.classList.toggle("sidebar-open");
-            hamburger.classList.toggle("change");
+  </main>
+  
+  <!-- Footer -->
+  <footer class="bg-gray-200 text-center p-4">
+    <p class="text-gray-700">&copy; 2024 Mufti Khalis</p>
+  </footer>
+  
+  <script>
+    // Toggle Hamburger Menu
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    const overlay = document.getElementById('overlay');
+    function toggleMenu() {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+      overlay.classList.toggle('active');
+      document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+    }
+    hamburger.addEventListener('click', toggleMenu);
+    overlay.addEventListener('click', toggleMenu);
+    
+    // Game Variables
+    let board = Array(9).fill('');
+    let gameOver = false;
+    let currentPlayer = 'X'; // Dalam mode PvAI, 'X' = pemain, 'O' = AI
+    const cells = document.querySelectorAll('.cell');
+    
+    // Mode & Options
+    const modeSelect = document.getElementById('mode-select');
+    const levelSelect = document.getElementById('level-select');
+    const firstMoveSelect = document.getElementById('first-move-select');
+    const pvaiOptions = document.getElementById('pvai-options');
+    
+    // Tampilkan opsi PvAI jika mode PvAI dipilih, sembunyikan jika PvP
+    modeSelect.addEventListener('change', () => {
+      if (modeSelect.value === 'pvai') {
+        pvaiOptions.style.display = 'block';
+      } else {
+        pvaiOptions.style.display = 'none';
+      }
+      resetGame();
+    });
+    
+    // Tambahkan event listener pada setiap sel
+    cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+    
+    function handleCellClick(e) {
+      if (gameOver) return;
+      const index = e.target.getAttribute('data-index');
+      // Pada mode PvAI, hanya respon jika giliran pemain (X)
+      if (board[index] === '' && (modeSelect.value === 'pvp' || (modeSelect.value === 'pvai' && currentPlayer === 'X'))) {
+        board[index] = currentPlayer;
+        e.target.textContent = currentPlayer;
+        if (checkWin()) {
+          document.getElementById('result').textContent = currentPlayer + ' wins!';
+          gameOver = true;
+        } else if (board.every(cell => cell !== '')) {
+          document.getElementById('result').textContent = "It's a draw!";
+          gameOver = true;
+        } else {
+          // Alternasi giliran
+          currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+          // Jika mode PvAI dan giliran AI, jalankan AI move
+          if (modeSelect.value === 'pvai' && currentPlayer === 'O') {
+            setTimeout(aiMove, 500);
+          }
         }
-
-        // Function to handle cell click
-        function cellClick(index) {
-            if (!gameOver && board[index] === '') {
-                board[index] = currentPlayer;
-                document.querySelectorAll('.cell')[index].textContent = currentPlayer;
-                document.querySelectorAll('.cell')[index].classList.add(currentPlayer === 'X' ? 'X' : 'O');
-                if (checkWin()) {
-                    document.getElementById('result-text').textContent = `${currentPlayer} wins!`;
-                    document.getElementById('result').classList.remove('hidden');
-                    gameOver = true;
-                } else if (checkDraw()) {
-                    document.getElementById('result-text').textContent = `It's a draw!`;
-                    document.getElementById('result').classList.remove('hidden');
-                    gameOver = true;
-                } else {
-                    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-                    setTimeout(computerMove, 500); // Delay computer move for better UX
-                }
-            }
-        }
-
-        // Function to handle computer move
-        function computerMove() {
-            if (!gameOver) {
-                let index;
-                switch (difficulty) {
-                    case 'easy':
-                        index = getRandomEmptyCell();
-                        break;
-                    case 'medium':
-                        index = getMediumComputerMove();
-                        break;
-                    case 'hard':
-                        index = getHardComputerMove();
-                        break;
-                    case 'expert':
-                        index = getExpertComputerMove();
-                        break;
-                    case 'impossible':
-                        index = getImpossibleComputerMove();
-                        break;
-                    default:
-                        index = getRandomEmptyCell();
-                }
-                board[index] = currentPlayer;
-                document.querySelectorAll('.cell')[index].textContent = currentPlayer;
-                document.querySelectorAll('.cell')[index].classList.add(currentPlayer === 'X' ? 'X' : 'O');
-                if (checkWin()) {
-                    document.getElementById('result-text').textContent = `${currentPlayer} wins!`;
-                    document.getElementById('result').classList.remove('hidden');
-                    gameOver = true;
-                } else if (checkDraw()) {
-                    document.getElementById('result-text').textContent = `It's a draw!`;
-                    document.getElementById('result').classList.remove('hidden');
-                    gameOver = true;
-                } else {
-                    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-                }
-            }
-        }
-
-        // Function to get a random empty cell for easy difficulty
-        function getRandomEmptyCell() {
-            let emptyCells = board.map((cell, index) => cell === '' ? index : null).filter(val => val !== null);
-            return emptyCells[Math.floor(Math.random() * emptyCells.length)];
-        }
-
-        // Function to get a medium difficulty move
-        function getMediumComputerMove() {
-            return getSmartMove() || getRandomEmptyCell();
-        }
-
-        // Function to get a hard difficulty move
-        function getHardComputerMove() {
-            return minimax('O').index;
-        }
-
-        // Function to get an expert difficulty move
-        function getExpertComputerMove() {
-            return minimax('O').index;
-        }
-
-        // Function to get an impossible difficulty move
-        function getImpossibleComputerMove() {
-            return minimax('O').index;
-        }
-
-        // Minimax algorithm implementation
-        function minimax(player) {
-            const emptyCells = board.map((cell, index) => cell === '' ? index : null).filter(val => val !== null);
-            if (checkWin()) {
-                return { score: (currentPlayer === 'O' ? 100000 : -100000) };
-            } else if (checkDraw()) {
-                return { score: 0 };
-            }
-            const moves = [];
-            for (let i = 0; i < emptyCells.length; i++) {
-                const move = {};
-                move.index = emptyCells[i];
-                board[emptyCells[i]] = player;
-                const result = minimax(player === 'O' ? 'X' : 'O');
-                move.score = result.score;
-                board[emptyCells[i]] = '';
-                moves.push(move);
-            }
-            let bestMove;
-            if (player === 'O') {
-                let bestScore = -Infinity;
-                for (let i = 0; i < moves.length; i++) {
-                    if (moves[i].score > bestScore) {
-                        bestScore = moves[i].score;
-                        bestMove = moves[i];
-                    }
-                }
-            } else {
-                let bestScore = Infinity;
-                for (let i = 0; i < moves.length; i++) {
-                    if (moves[i].score < bestScore) {
-                        bestScore = moves[i].score;
-                        bestMove = moves[i];
-                    }
-                }
-            }
-            return bestMove;
-        }
-
-        // Function to get a smart move for medium difficulty
-        function getSmartMove() {
-            for (let i = 0; i < board.length; i++) {
-                if (board[i] === '') {
-                    board[i] = 'O';
-                    if (checkWin()) {
-                        board[i] = '';
-                        return i;
-                    }
-                    board[i] = '';
-                }
-            }
-            for (let i = 0; i < board.length; i++) {
-                if (board[i] === '') {
-                    board[i] = 'X';
-                    if (checkWin()) {
-                        board[i] = '';
-                        return i;
-                    }
-                    board[i] = '';
-                }
-            }
-            return null;
-        }
-
-        // Function to check for a win
-        function checkWin() {
-            const winPatterns = [
-                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-                [0, 4, 8], [2, 4, 6] // Diagonals
-            ];
-            return winPatterns.some(pattern => {
-                return pattern.every(index => board[index] === currentPlayer);
-            });
-        }
-
-        // Function to check for a draw
-        function checkDraw() {
-            return board.every(cell => cell !== '');
-        }
-
-        // Function to reset the game
-        function resetGame() {
-            board = ['', '', '', '', '', '', '', '', ''];
-            currentPlayer = 'X';
-            gameOver = false;
-            document.querySelectorAll('.cell').forEach(cell => {
-                cell.textContent = '';
-                cell.classList.remove('X', 'O', 'win', 'draw');
-            });
-            document.getElementById('result').classList.add('hidden');
-            setTimeout(computerMove, 500); // Computer plays first after reset
-        }
-
-        // Event listener to update difficulty
-        document.getElementById('level').addEventListener('change', function() {
-            difficulty = this.value;
-        });
-
-        // Initialize the game
-        resetGame();
-    </script>
+      }
+    }
+    
+    function aiMove() {
+      // Pilih langkah acak (contoh sederhana; level bisa dikembangkan lebih lanjut)
+      let emptyCells = board.map((cell, i) => cell === '' ? i : null).filter(i => i !== null);
+      let move = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+      board[move] = 'O';
+      cells[move].textContent = 'O';
+      if (checkWin()) {
+        document.getElementById('result').textContent = 'O wins!';
+        gameOver = true;
+      } else if (board.every(cell => cell !== '')) {
+        document.getElementById('result').textContent = "It's a draw!";
+        gameOver = true;
+      } else {
+        currentPlayer = 'X';
+      }
+    }
+    
+    function checkWin() {
+      const wins = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+      ];
+      return wins.some(combo => combo.every(i => board[i] === currentPlayer));
+    }
+    
+    function resetGame() {
+      board.fill('');
+      gameOver = false;
+      // Set giliran awal: jika mode PvAI dan opsi First Move = AI, mulai dengan 'O'
+      if (modeSelect.value === 'pvai' && firstMoveSelect.value === 'ai') {
+        currentPlayer = 'O';
+      } else {
+        currentPlayer = 'X';
+      }
+      cells.forEach(cell => cell.textContent = '');
+      document.getElementById('result').textContent = '';
+      // Jika mode PvAI dan AI harus main terlebih dahulu, jalankan AI move
+      if (modeSelect.value === 'pvai' && currentPlayer === 'O') {
+        setTimeout(aiMove, 500);
+      }
+    }
+    
+    // Inisialisasi tampilan opsi berdasarkan mode default
+    if (modeSelect.value === 'pvai') {
+      pvaiOptions.style.display = 'block';
+    } else {
+      pvaiOptions.style.display = 'none';
+    }
+  </script>
 </body>
 </html>

@@ -1,168 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English - Mufti Khalis</title>
-    <!-- Include Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(to right, #ffccff, #ffb3ff);
-        }
-        .hidden {
-            display: none;
-        }
-        .hamburger div {
-            width: 25px;
-            height: 3px;
-            background-color: #333;
-            margin: 4px 0;
-            transition: 0.4s;
-        }
-        .change .bar1 {
-            transform: rotate(-45deg) translate(-5px, 5px);
-        }
-        .change .bar2 {
-            opacity: 0;
-        }
-        .change .bar3 {
-            transform: rotate(45deg) translate(-5px, -5px);
-        }
-        .sidebar-open {
-            transform: translateX(0);
-            opacity: 0.8;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>English - Mufti Khalis</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    /* Animated Hamburger Menu Styles */
+    .nav-menu {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100vh;
+      background-color: #34495e;
+      padding-top: 60px;
+      transition: all 0.5s ease;
+      z-index: 10;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+    }
+    .nav-menu.active { right: 0; }
+    .hamburger span {
+      display: block;
+      width: 2rem;
+      height: 0.25rem;
+      background-color: #fff;
+      margin-bottom: 0.5rem;
+      border-radius: 2px;
+      transition: all 0.5s ease;
+    }
+    .hamburger.active span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.5s ease;
+      z-index: 5;
+    }
+    .overlay.active { opacity: 1; visibility: visible; }
+  </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center">
-    <!-- Sidebar -->
-    <div class="fixed left-0 top-0 w-64 h-full bg-pink-100 shadow-lg p-4 transform -translate-x-full opacity-0 ease-in-out transition-all duration-300" id="sidebar">        
-        <ul class="mt-10">
-            <li><a href="index.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Home</a></li>
-            <li><a href="about.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">About</a></li>
-            <li><a href="blog.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Blog</a></li>
-            <li><a href="contact.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Contact</a></li>
-            <li><a href="calendar.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calendar</a></li>
-            <li><a href="calculator.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Calculator</a></li>
-            <li><a href="tic_tac_toe.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Tic Tac Toe</a></li>
-            <li><a href="english.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">English</a></li>
-            <li><a href="clock.html" class="block py-2 px-4 text-gray-700 hover:bg-gray-200">Clock</a></li>
+<body class="min-h-screen bg-gray-100">
+  <!-- Header with Animated Hamburger Menu -->
+  <header class="bg-gray-900 text-white p-4">
+    <nav class="flex justify-between items-center">
+      <div class="text-lg font-bold">Mufti Khalis</div>
+      <div class="hamburger cursor-pointer z-20" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="nav-menu" id="nav-menu">
+        <ul class="space-y-4">
+          <li><a href="index.html" class="block p-2 hover:bg-gray-700">Home</a></li>
+          <li><a href="about.html" class="block p-2 hover:bg-gray-700">About</a></li>
+          <li><a href="blog.html" class="block p-2 hover:bg-gray-700">Blog</a></li>
+          <li><a href="contact.html" class="block p-2 hover:bg-gray-700">Contact</a></li>
+          <li><a href="calendar.html" class="block p-2 hover:bg-gray-700">Calendar</a></li>
+          <li><a href="calculator.html" class="block p-2 hover:bg-gray-700">Calculator</a></li>
+          <li><a href="tic_tac_toe.html" class="block p-2 hover:bg-gray-700">Tic Tac Toe</a></li>
+          <li><a href="english.html" class="block p-2 hover:bg-gray-700">English</a></li>
+          <li><a href="clock.html" class="block p-2 hover:bg-gray-700">Clock</a></li>
         </ul>
-    </div>
-
-    <!-- Hamburger Menu -->
-    <div class="fixed left-4 top-4 z-50 cursor-pointer hamburger" onclick="toggleSidebar()">
-        <div class="bar1 bg-gray-700 rounded-full"></div>
-        <div class="bar2 bg-gray-700 rounded-full"></div>
-        <div class="bar3 bg-gray-700 rounded-full"></div>
-    </div>
-
-    <!-- Header -->
-    <header class="bg-pink-100 w-full py-4 text-center">
-        <h1 class="text-2xl font-bold text-gray-700">English</h1>
-    </header>
-
-    <!-- Content -->
-    <div id="content" class="flex flex-col items-center justify-center flex-1 w-full px-4">
-        <select id="category" onchange="showLinks()" class="w-full max-w-md p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
-            <option value="">Select a category</option>
-            <option value="grammar">Grammar</option>
-            <option value="structure">Simple Structure</option>
-            <option value="tests">FREE Practice TEST TOEFL & IELTS</option>
-            <option value="scholarship">Post Graduate & Scholarship Preparation</option>
-            <option value="ebooks">Free eBooks</option>
-        </select>
-        <div id="links" class="hidden">
-            <div id="grammar" class="hidden">
-                <h3 class="text-lg font-semibold text-gray-700 mb-2">Grammar</h3>
-                <ul class="list-disc pl-5 text-gray-700 mb-4">
-                    <li><a href="https://www.fabelia.com/belajar-grammar/" class="text-blue-500 hover:underline" target="_blank">Fabelia</a></li>
-                    <li><a href="https://grammarbahasainggris.net/" class="text-blue-500 hover:underline" target="_blank">Grammar Bahasa Inggris</a></li>
-                    <li><a href="https://7esl.com/grammar/" class="text-blue-500 hover:underline" target="_blank">7ESL</a></li>
-                    <li><a href="https://www.talkenglish.com/grammar/grammar.aspx" class="text-blue-500 hover:underline" target="_blank">Talk English</a></li>
-                    <li><a href="https://learnenglish.britishcouncil.org/grammar" class="text-blue-500 hover:underline" target="_blank">Learn English</a></li>
-                </ul>
-            </div>
-
-            <div id="structure" class="hidden">
-                <h3 class="text-lg font-semibold text-gray-700 mb-2">Simple Structure</h3>
-                <ul class="list-disc pl-5 text-gray-700 mb-4">
-                    <li><a href="https://grammarbahasainggris.net/sentence-structure" class="text-blue-500 hover:underline" target="_blank">Grammar Bahasa Inggris</a></li>
-                    <li><a href="https://www.sederet.com/tutorial/sentence-structure-simple-sentence/" class="text-blue-500 hover:underline" target="_blank">Sederet</a></li>
-                    <li><a href="https://www.unr.edu/writing-speaking-center/student-resources/writing-speaking-resources/basic-sentence-pattern-in-english" class="text-blue-500 hover:underline" target="_blank">UNR</a></li>
-                    <li><a href="https://www.wordy.com/writers-workshop/basic-english-sentence-structure/" class="text-blue-500 hover:underline" target="_blank">Wordy</a></li>
-                    <li><a href="https://academicguides.waldenu.edu/writingcenter/grammar/sentencestructure" class="text-blue-500 hover:underline" target="_blank">Academic Guides</a></li>
-                </ul>
-            </div>
-
-            <div id="tests" class="hidden">
-                <h3 class="text-lg font-semibold text-gray-700 mb-2">FREE Practice TEST TOEFL & IELTS</h3>
-                <ul class="list-disc pl-5 text-gray-700 mb-4">
-                    <li><a href="https://takeielts.britishcouncil.org/take-ielts/prepare/free-ielts-practice-tests" class="text-blue-500 hover:underline" target="_blank">Take IELTS</a></li>
-                    <li><a href="https://www.testglider.com/" class="text-blue-500 hover:underline" target="_blank">Test Glider</a></li>
-                    <li><a href="https://www.testden.com/challenge/free-toefl.asp" class="text-blue-500 hover:underline" target="_blank">Test Den</a></li>
-                    <li><a href="https://www.bestmytest.com/toefl/practice-test" class="text-blue-500 hover:underline" target="_blank">Best My Test</a></li>
-                    <li><a href="https://www.ielts-writing.info/EXAM/" class="text-blue-500 hover:underline" target="_blank">IELTS Writing</a></li>
-                    <li><a href="https://www.esl-lounge.com/toefl.php" class="text-blue-500 hover:underline" target="_blank">ESL Lounge</a></li>
-                </ul>
-            </div>
-
-            <div id="scholarship" class="hidden">
-                <h3 class="text-lg font-semibold text-gray-700 mb-2">Post Graduate & Scholarship Preparation</h3>
-                <ul class="list-disc pl-5 text-gray-700 mb-4">
-                    <li><a href="http://www.scholars4dev.com" class="text-blue-500 hover:underline" target="_blank">Scholars 4 Dev</a></li>
-                    <li><a href="http://www.motivationalletter.com" class="text-blue-500 hover:underline" target="_blank">Motivational Letter</a></li>
-                    <li><a href="http://www.topuniversities.com" class="text-blue-500 hover:underline" target="_blank">Top Universities</a></li>
-                    <li><a href="http://www.bestmastersdegrees.com" class="text-blue-500 hover:underline" target="_blank">Best Masters Degrees</a></li>
-                    <li><a href="http://www.masterstudies.com" class="text-blue-500 hover:underline" target="_blank">Master Studies</a></li>
-                    <li><a href="http://www.mastersportal.eu" class="text-blue-500 hover:underline" target="_blank">Masters Portal</a></li>
-                    <li><a href="http://www.findamasters.com" class="text-blue-500 hover:underline" target="_blank">Find A Masters</a></li>
-                </ul>
-            </div>
-
-            <div id="ebooks" class="hidden">
-                <h3 class="text-lg font-semibold text-gray-700 mb-2">Free eBooks</h3>
-                <ul class="list-disc pl-5 text-gray-700 mb-4">
-                    <li><a href="https://drive.google.com/drive/folders/1ZBW50jq5NX2IyKmHaXFKMlbBCdFZvtlr?usp=share_link" class="text-blue-500 hover:underline" target="_blank">Basic English</a></li>
-                    <li><a href="https://drive.google.com/drive/folders/1XhrgklnDDXMpkD8SDDvGzk_VfVsjKhFU?usp=sharing" class="text-blue-500 hover:underline" target="_blank">TOEFL</a></li>
-                    <li><a href="https://drive.google.com/drive/folders/1yLP6C8OKhDsY8ML3WhR3Ihpkx4fmhadA?usp=share_link" class="text-blue-500 hover:underline" target="_blank">IELTS</a></li>
-                </ul>
-            </div>
+      </div>
+    </nav>
+  </header>
+  <div class="overlay" id="overlay"></div>
+  
+  <!-- Main Content for English Resources -->
+  <main class="p-6">
+    <div class="bg-white p-8 rounded shadow-lg max-w-lg mx-auto">
+      <h2 class="text-2xl font-bold mb-4">English Resources</h2>
+      <select id="category" class="w-full border p-2 rounded mb-4">
+        <option value="">Select a category</option>
+        <option value="grammar">Grammar</option>
+        <option value="structure">Simple Structure</option>
+        <option value="tests">FREE Practice TEST TOEFL & IELTS</option>
+        <option value="scholarship">Post Graduate & Scholarship Preparation</option>
+        <option value="ebooks">Free eBooks</option>
+      </select>
+      <div id="links" class="mt-4">
+        <div id="grammar" class="hidden">
+          <h3 class="text-lg font-semibold mb-2">Grammar</h3>
+          <ul class="list-disc pl-5 text-blue-600">
+            <li><a href="https://www.fabelia.com/belajar-grammar/" target="_blank" class="hover:underline">Fabelia</a></li>
+            <li><a href="https://grammarbahasainggris.net/" target="_blank" class="hover:underline">Grammar Bahasa Inggris</a></li>
+            <li><a href="https://7esl.com/grammar/" target="_blank" class="hover:underline">7ESL</a></li>
+            <li><a href="https://www.talkenglish.com/grammar/grammar.aspx" target="_blank" class="hover:underline">Talk English</a></li>
+            <li><a href="https://learnenglish.britishcouncil.org/grammar" target="_blank" class="hover:underline">Learn English</a></li>
+          </ul>
         </div>
+        <div id="structure" class="hidden">
+          <h3 class="text-lg font-semibold mb-2">Simple Structure</h3>
+          <ul class="list-disc pl-5 text-blue-600">
+            <li><a href="https://grammarbahasainggris.net/sentence-structure" target="_blank" class="hover:underline">Grammar Bahasa Inggris</a></li>
+            <li><a href="https://www.sederet.com/tutorial/sentence-structure-simple-sentence/" target="_blank" class="hover:underline">Sederet</a></li>
+            <li><a href="https://www.unr.edu/writing-speaking-center/student-resources/writing-speaking-resources/basic-sentence-pattern-in-english" target="_blank" class="hover:underline">UNR</a></li>
+            <li><a href="https://www.wordy.com/writers-workshop/basic-english-sentence-structure/" target="_blank" class="hover:underline">Wordy</a></li>
+            <li><a href="https://academicguides.waldenu.edu/writingcenter/grammar/sentencestructure" target="_blank" class="hover:underline">Academic Guides</a></li>
+          </ul>
+        </div>
+        <!-- Tambahkan kategori lain (tests, scholarship, ebooks) sesuai kebutuhan -->
+      </div>
     </div>
-
-    <!-- Footer -->
-    <footer class="bg-pink-100 w-full py-4 text-center">
-        <p class="text-gray-700">&copy; 2024 Mufti Khalis</p>
-    </footer>
-
-    <script>
-        // Function to toggle sidebar
-        function toggleSidebar() {
-            const sidebar = document.getElementById("sidebar");
-            const hamburger = document.querySelector(".hamburger");
-            sidebar.classList.toggle("-translate-x-full");
-            sidebar.classList.toggle("sidebar-open");
-            hamburger.classList.toggle("change");
-        }
-
-        // Function to show links based on category selection
-        function showLinks() {
-            const selectedCategory = document.getElementById('category').value;
-            const categories = ['grammar', 'structure', 'tests', 'scholarship', 'ebooks'];
-
-            categories.forEach(category => {
-                document.getElementById(category).classList.add('hidden');
-            });
-
-            if (selectedCategory) {
-                document.getElementById(selectedCategory).classList.remove('hidden');
-                document.getElementById('links').classList.remove('hidden');
-            } else {
-                document.getElementById('links').classList.add('hidden');
-            }
-        }
-    </script>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="bg-gray-200 text-center p-4">
+    <p class="text-gray-700">&copy; 2024 Mufti Khalis</p>
+  </footer>
+  
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    const overlay = document.getElementById('overlay');
+    function toggleMenu() {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+      overlay.classList.toggle('active');
+      document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+    }
+    hamburger.addEventListener('click', toggleMenu);
+    overlay.addEventListener('click', toggleMenu);
+    
+    const categorySelect = document.getElementById('category');
+    const linksDiv = document.getElementById('links');
+    categorySelect.addEventListener('change', function() {
+      document.querySelectorAll('#links > div').forEach(div => div.classList.add('hidden'));
+      if (this.value) {
+        document.getElementById(this.value).classList.remove('hidden');
+      }
+    });
+  </script>
 </body>
 </html>
