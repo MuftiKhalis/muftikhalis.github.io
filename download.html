@@ -1,86 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Improved Website - Mufti Khalis</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        .nav-menu {
-            position: fixed;
-            top: 0;
-            right: -300px;
-            width: 300px;
-            height: 100vh;
-            background-color: #34495e;
-            padding-top: 60px;
-            transition: all 0.5s ease;
-            z-index: 10;
-            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
-        }
-        .nav-menu.active { right: 0; }
-        .hamburger span { transition: all 0.5s ease; }
-        .hamburger.active span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
-        .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.5s ease;
-            z-index: 5;
-        }
-        .overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Downloads - Mufti Khalis</title>
+  <meta name="description" content="Downloads from Mufti Khalis.">
+  <meta name="theme-color" content="#f2f5ee" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e1a14" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400..700&display=swap">
+  <link rel="stylesheet" href="assets/style.css">
 </head>
-<body class="min-h-screen bg-gray-100">
-    <header class="bg-gray-900 text-white p-4">
-        <nav class="flex justify-between items-center">
-            <div class="text-lg font-bold">Mufti Khalis</div>
-            <div class="hamburger cursor-pointer z-20">
-                <span class="block w-8 h-1 bg-white mb-2"></span>
-                <span class="block w-8 h-1 bg-white mb-2"></span>
-                <span class="block w-8 h-1 bg-white"></span>
-            </div>
-            <div class="nav-menu fixed top-0 right-0 w-64 h-full bg-gray-800 text-white p-6 transform translate-x-full transition-transform duration-300">
-                <ul class="space-y-4">
-                    <li><a href="index.html" class="block p-2 hover:bg-gray-700">Home</a></li>
-                    <li><a href="about.html" class="block p-2 hover:bg-gray-700">About</a></li>
-                    <li><a href="blog.html" class="block p-2 hover:bg-gray-700">Blog</a></li>
-                    <li><a href="contact.html" class="block p-2 hover:bg-gray-700">Contact</a></li>
-                    <li><a href="calendar.html" class="block p-2 hover:bg-gray-700">Calendar</a></li>
-                </ul>
-            </div>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html">
+        <span class="mark" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+        Mufti Khalis
+      </a>
+      <div class="header-end">
+        <nav aria-label="Primary">
+          <ul class="nav-inline">
+          <li><a href="about.html">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="english.html">English</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          </ul>
         </nav>
-    </header>
-    <div class="overlay"></div>
-    <main class="p-6">
-        <h1 class="text-3xl font-bold">Welcome to Mufti Khalis' Website</h1>
-        <p class="mt-4">Explore the different sections using the menu.</p>
-    </main>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const hamburger = document.querySelector('.hamburger');
-            const navMenu = document.querySelector('.nav-menu');
-            const overlay = document.querySelector('.overlay');
-            function toggleMenu() {
-                hamburger.classList.toggle('active');
-                navMenu.classList.toggle('translate-x-full');
-                overlay.classList.toggle('active');
-                document.body.style.overflow = navMenu.classList.contains('translate-x-full') ? 'auto' : 'hidden';
-            }
-            hamburger.addEventListener('click', toggleMenu);
-            overlay.addEventListener('click', toggleMenu);
-        });
-    </script>
+        <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="menu-panel">Menu</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="scrim" id="scrim"></div>
+  <nav class="drawer" id="menu-panel" aria-label="All pages">
+    <div class="drawer-top"><button class="btn btn-quiet" id="menu-close" type="button">Close</button></div>
+    <h2>Pages</h2>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="english.html">English</a></li>
+          </ul>
+          <h2>Tools</h2>
+          <ul>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="calculator.html">Calculator</a></li>
+            <li><a href="clock.html">Clock</a></li>
+            <li><a href="tic_tac_toe.html">Tic Tac Toe</a></li>
+          </ul>
+  </nav>
+
+  <main id="main">
+    <div class="wrap">
+      <div class="page-head">
+        <h1>Downloads</h1>
+        <p>Files to save and keep.</p>
+      </div>
+
+      <div class="empty">
+        <h2>Nothing to download yet</h2>
+        <p>Files will be listed here once they are available.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">&copy; 2024–2026 Mufti Khalis</div>
+  </footer>
+
+  <script src="assets/site.js" defer></script>
 </body>
 </html>
