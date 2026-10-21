@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Map - Mufti Khalis</title>
+  <meta name="description" content="Interactive map with place search and coordinate search. Click anywhere to read latitude and longitude.">
+  <meta name="theme-color" content="#f2f5ee" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e1a14" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400..700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html">
+        <span class="mark" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+        Mufti Khalis
+      </a>
+      <div class="header-end">
+        <nav aria-label="Primary">
+          <ul class="nav-inline">
+          <li><a href="about.html">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="english.html">English</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="menu-panel">Menu</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="scrim" id="scrim"></div>
+  <nav class="drawer" id="menu-panel" aria-label="All pages">
+    <div class="drawer-top"><button class="btn btn-quiet" id="menu-close" type="button">Close</button></div>
+    <h2>Pages</h2>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="english.html">English</a></li>
+          </ul>
+          <h2>Tools</h2>
+          <ul>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="calculator.html">Calculator</a></li>
+            <li><a href="clock.html">Clock</a></li>
+            <li><a href="tic_tac_toe.html">Tic Tac Toe</a></li>
+            <li><a href="map.html" aria-current="page">Map</a></li>
+            <li><a href="converter.html">Converter</a></li>
+          </ul>
+  </nav>
+
+  <main id="main">
+    <div class="wrap">
+      <div class="page-head">
+        <h1>Map</h1>
+        <p>Search a place or a coordinate, or click the map to read its latitude and longitude.</p>
+      </div>
+
+      <form class="map-search" id="map-form" role="search">
+        <label class="sr" for="map-q">Place name or coordinates</label>
+        <input class="input" id="map-q" type="search" placeholder="Banda Aceh, or 5.5483, 95.3238, or 5°33′N 95°19′E" autocomplete="off">
+        <button class="btn" type="submit">Search</button>
+        <button class="btn btn-quiet" id="map-locate" type="button">My location</button>
+      </form>
+      <p class="map-status" id="map-status" role="status"></p>
+      <ul class="map-results" id="map-results"></ul>
+
+      <div class="map-frame"><div id="map" role="application" aria-label="Interactive map"></div></div>
+      <div class="map-info" id="map-info" aria-live="polite">Click the map or search to read coordinates.</div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">&copy; 2024–2026 Mufti Khalis</div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
+  <script src="assets/site.js" defer></script>
+  <script src="assets/map.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Converter - Mufti Khalis</title>
+  <meta name="description" content="Free PDF tools in your browser: merge PDFs, extract pages, images to PDF and basic Word to PDF. Files are never uploaded.">
+  <meta name="theme-color" content="#f2f5ee" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e1a14" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400..700&display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html">
+        <span class="mark" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+        Mufti Khalis
+      </a>
+      <div class="header-end">
+        <nav aria-label="Primary">
+          <ul class="nav-inline">
+          <li><a href="about.html">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="english.html">English</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="menu-panel">Menu</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="scrim" id="scrim"></div>
+  <nav class="drawer" id="menu-panel" aria-label="All pages">
+    <div class="drawer-top"><button class="btn btn-quiet" id="menu-close" type="button">Close</button></div>
+    <h2>Pages</h2>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="english.html">English</a></li>
+          </ul>
+          <h2>Tools</h2>
+          <ul>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="calculator.html">Calculator</a></li>
+            <li><a href="clock.html">Clock</a></li>
+            <li><a href="tic_tac_toe.html">Tic Tac Toe</a></li>
+            <li><a href="map.html">Map</a></li>
+            <li><a href="converter.html" aria-current="page">Converter</a></li>
+          </ul>
+  </nav>
+
+  <main id="main">
+    <div class="wrap">
+      <div class="page-head">
+        <h1>Converter</h1>
+        <p>PDF and document tools that run in your browser.</p>
+      </div>
+
+      <div class="filters" role="group" aria-label="Tool">
+        <button class="filter" type="button" data-conv="merge" aria-pressed="false">Merge PDFs</button>
+        <button class="filter" type="button" data-conv="extract" aria-pressed="false">Extract pages</button>
+        <button class="filter" type="button" data-conv="images" aria-pressed="false">Images to PDF</button>
+        <button class="filter" type="button" data-conv="word" aria-pressed="false">Word to PDF</button>
+      </div>
+
+      <section class="conv" id="merge" aria-labelledby="merge-h" hidden>
+        <h2 id="merge-h">Merge PDFs</h2>
+        <p>Combine several PDFs into one. Reorder them with the arrows.</p>
+        <input class="input" type="file" id="merge-input" accept="application/pdf,.pdf" multiple aria-label="Choose files">
+        <ol class="filelist" id="merge-list"></ol>
+        <div class="conv-actions">
+          <button class="btn" id="merge-run" type="button" disabled>Merge</button>
+          <a class="btn btn-quiet" id="merge-dl" download="merged.pdf" hidden></a>
+        </div>
+        <p class="form-status" id="merge-status" role="status"></p>
+        <p class="privacy">Files stay on your device. Nothing is uploaded.</p>
+      </section>
+      <section class="conv" id="extract" aria-labelledby="extract-h" hidden>
+        <h2 id="extract-h">Extract pages</h2>
+        <p>Keep only some pages of a PDF. Pages can be repeated or reordered.</p>
+        <input class="input" type="file" id="extract-input" accept="application/pdf,.pdf" aria-label="Choose files">
+        <ol class="filelist" id="extract-list"></ol>
+        <div class="conv-opts">
+          <div class="field">
+            <label for="extract-range">Pages to keep</label>
+            <input class="input" id="extract-range" type="text" value="1" placeholder="1-3, 5, 8-" autocomplete="off">
+          </div>
+        </div>
+        <div class="conv-actions">
+          <button class="btn" id="extract-run" type="button" disabled>Extract</button>
+          <a class="btn btn-quiet" id="extract-dl" download="extracted.pdf" hidden></a>
+        </div>
+        <p class="form-status" id="extract-status" role="status"></p>
+        <p class="privacy">Files stay on your device. Nothing is uploaded.</p>
+      </section>
+      <section class="conv" id="images" aria-labelledby="images-h" hidden>
+        <h2 id="images-h">Images to PDF</h2>
+        <p>Turn JPG, PNG or other images into one PDF, one image per page.</p>
+        <input class="input" type="file" id="images-input" accept="image/*" multiple aria-label="Choose files">
+        <ol class="filelist" id="images-list"></ol>
+        <div class="conv-opts">
+          <div class="field">
+            <label for="images-fit">Page size</label>
+            <select class="select" id="images-fit">
+              <option value="image">Same as each image</option>
+              <option value="a4">A4 with margins</option>
+            </select>
+          </div>
+        </div>
+        <div class="conv-actions">
+          <button class="btn" id="images-run" type="button" disabled>Create PDF</button>
+          <a class="btn btn-quiet" id="images-dl" download="images.pdf" hidden></a>
+        </div>
+        <p class="form-status" id="images-status" role="status"></p>
+        <p class="privacy">Files stay on your device. Nothing is uploaded.</p>
+      </section>
+      <section class="conv" id="word" aria-labelledby="word-h" hidden>
+        <h2 id="word-h">Word to PDF (basic)</h2>
+        <p>Converts a .docx file to a preview, then use your browser&rsquo;s print dialog and choose &ldquo;Save as PDF&rdquo;. Fonts, headers and complex layout may differ from Word.</p>
+        <input class="input" type="file" id="word-input" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document" aria-label="Choose a Word file">
+        <ol class="filelist" id="word-list"></ol>
+        <div class="conv-actions">
+          <button class="btn" id="word-run" type="button" disabled>Convert</button>
+          <button class="btn btn-quiet" id="word-print" type="button" disabled>Print or save as PDF</button>
+        </div>
+        <p class="form-status" id="word-status" role="status"></p>
+        <div class="docx-preview" id="word-preview" hidden></div>
+        <p class="privacy">Files stay on your device. Nothing is uploaded.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">&copy; 2024–2026 Mufti Khalis</div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js" defer></script>
+  <script src="assets/site.js" defer></script>
+  <script src="assets/converter.js" defer></script>
+</body>
+</html>
