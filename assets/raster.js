@@ -11,7 +11,7 @@
   var COLS = 40;
   var ROWS = 30;
   var SEED = 20190;
-  var PROMPT = "Point at a pixel to read its NDVI.";
+  var PROMPT = t("raster.prompt");
 
   function hash(x, y) {
     var h = Math.imul(x, 374761393) ^ Math.imul(y, 668265263) ^ SEED;
@@ -82,11 +82,11 @@
   }
 
   function label(v) {
-    if (v < 0) return "Water";
-    if (v < 0.1) return "Bare ground or built-up";
-    if (v < 0.3) return "Sparse vegetation";
-    if (v < 0.5) return "Moderate vegetation";
-    return "Dense vegetation";
+    if (v < 0) return t("raster.water");
+    if (v < 0.1) return t("raster.bare");
+    if (v < 0.3) return t("raster.sparse");
+    if (v < 0.5) return t("raster.moderate");
+    return t("raster.dense");
   }
 
   canvas.width = COLS;

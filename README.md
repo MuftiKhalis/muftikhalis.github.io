@@ -1,41 +1,45 @@
-# Project Title
+# muftikhalis.github.io
 
-Briefly describe what your project does and what problem it solves.
+Situs pribadi Mufti Khalis dalam dua bahasa: Inggris (alamat utama) dan Indonesia (`/id/`). Isinya penjelasan NDVI yang mudah dipahami, banyak alat kecil, permainan, dan tautan belajar bahasa Inggris. Statis, gratis, jalan di GitHub Pages, dan bisa di-install seperti aplikasi (PWA).
 
-## Table of Contents
+## Isi
 
-- [Project Title](#project-title)
-- [Description](#description)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+- **Peta dan lokasi:** peta (cari tempat atau koordinat, ukur jarak dan luas), konverter koordinat (desimal, DMS, UTM), konverter satuan.
+- **Sehari-hari:** kalkulator, kalender, jam, Pomodoro, catatan dan tugas.
+- **Berkas dan teks:** konverter PDF (gabung, ambil halaman, gambar ke PDF, Word ke PDF), kompres gambar, editor Markdown, kode QR, pembuat kata sandi.
+- **Belajar:** tautan English dan kuis grammar/kosakata.
+- **Permainan:** Tic Tac Toe, 2048, Minesweeper, Tebak kata.
+- Tekan **Ctrl+K** untuk mencari halaman atau alat. Tema (palet dan mode terang/gelap) ada di menu.
 
-## Description
+Semua alat jalan di browser. Tidak ada file atau data yang dikirim ke server.
 
-Provide a more detailed explanation of what your project does and how it solves the problem. Include any relevant background information, technical details, or examples.
+## Menulis blog
 
-## Installation
+1. Tulisan Inggris: buat file di folder `posts/`. Tulisan Indonesia: folder `posts/id/`.
+2. Beri nama, misalnya `hitung-ndvi.md`. Nama file jadi alamat tulisan.
+3. Isi seperti `posts/_template.md`: blok `---` di atas (title, date, summary) lalu isi dengan Markdown.
+4. Commit. Sekitar 1 menit kemudian tulisan muncul di halaman Blog.
 
-Explain how to install your project and any dependencies it has. Provide clear instructions that anyone can follow, and include any relevant code snippets or links to external resources.
+Kalau dua tulisan (Inggris dan Indonesia) memakai nama file yang sama, tombol EN/ID menghubungkan keduanya. `draft: true` menyembunyikan tulisan. File berawalan `_` tidak dipublikasikan.
 
-## Usage
+## Statistik pengunjung (GoatCounter)
 
-Provide instructions on how to use your project, including any command-line arguments, input/output formats, or other relevant details. Provide examples and screenshots if possible.
+1. Daftar gratis di goatcounter.com, pilih kode situs, misalnya `mufti`.
+2. Buka `tools/config.json`, isi `"goatcounter": "mufti"`, commit.
 
-## Contributing
+## Cara kerja
 
-Explain how others can contribute to your project, including guidelines for submitting bug reports, feature requests, or pull requests. Provide clear instructions for setting up a development environment, and explain any coding standards or conventions that contributors should follow.
+`tools/build.py` membuat semua halaman (dua bahasa), daftar blog, `sitemap.xml`, `robots.txt`, `404.html`, `manifest.webmanifest`, dan `sw.js` (offline). GitHub Actions (`.github/workflows/static.yml`) menjalankannya setiap push, lalu deploy. Di Settings → Pages, **Source** harus **GitHub Actions**.
 
-## License
+Jalankan lokal (opsional):
 
-Specify the license under which your project is released, and include any relevant copyright or attribution notices. If you're using a third-party library or tool, include information on its license as well.
+```bash
+pip install markdown
+python tools/build.py
+```
 
-## Additional Sections
+## Menambah atau mengubah teks
 
-Depending on the nature of your project, you may want to include additional sections in your `README.md` file, such as:
-
-- **Acknowledgments:** Thank any individuals or organizations that contributed to your project, provided feedback or support, or inspired you in some way.
-- **FAQ:** Answer common questions that users might have about your project.
-- **Changelog:** Provide a history of changes to your project, including version numbers, release dates, and a summary of changes.
-- **Roadmap:** Outline your plans for future development, including features, improvements, or bug fixes that you plan to implement.
+- Teks halaman: `tools/pages_a.py` dan `tools/pages_b.py` (Inggris dan Indonesia berdampingan).
+- Teks di dalam alat (pesan, tombol): `tools/js_strings.py`.
+- Alamat situs: `tools/config.json`. Warna dan tema: `assets/style.css` dan `assets/theme.js`.

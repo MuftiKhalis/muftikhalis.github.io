@@ -1,75 +1,7 @@
-/* Interactive map: search by coordinates or place name, click to read coordinates. */
+/* Interactive map: search by coordinates or place name, click to read coordinates, measure distance and area. */
 (function () {
-  /* ---------- Coordinate helpers (pure, also used by tests) ---------- */
-
-  function inRange(lat, lng) {
-    return isFinite(lat) && isFinite(lng) && Math.abs(lat) <= 90 && Math.abs(lng) <= 180;
-  }
-
-  /* Accepts: "5.5483, 95.3238", "5.5483 95.3238", "5.5483N 95.3238E",
-     "5°33'N 95°19'E", "5°33'0.5\"N 95°19'25\"E". Latitude first unless letters say otherwise. */
-  function parseCoords(input) {
-    var s = String(input || "").trim().replace(/[\u2032\u2019]/g, "'").replace(/[\u2033\u201d]/g, '"');
-    if (!s) return null;
-
-    var dms = /(\d+(?:\.\d+)?)\s*(?:\u00b0|d)\s*(?:(\d+(?:\.\d+)?)\s*'\s*)?(?:(\d+(?:\.\d+)?)\s*"\s*)?([NSEW])/gi;
-    var found = [];
-    var m;
-    while ((m = dms.exec(s)) !== null) {
-      var v = parseFloat(m[1]) + (m[2] ? parseFloat(m[2]) / 60 : 0) + (m[3] ? parseFloat(m[3]) / 3600 : 0);
-      var h = m[4].toUpperCase();
-      if (h === "S" || h === "W") v = -v;
-      found.push({ v: v, h: h });
-    }
-    if (found.length === 2) return fromPair(found[0], found[1]);
-
-    var dec = /^([+-]?\d+(?:\.\d+)?)\s*\u00b0?\s*([NSEW])?\s*[,;\s]\s*([+-]?\d+(?:\.\d+)?)\s*\u00b0?\s*([NSEW])?$/i.exec(s);
-    if (!dec) return null;
-    var a = { v: parseFloat(dec[1]), h: dec[2] ? dec[2].toUpperCase() : "" };
-    var b = { v: parseFloat(dec[3]), h: dec[4] ? dec[4].toUpperCase() : "" };
-    if (a.h === "S" || a.h === "W") a.v = -Math.abs(a.v);
-    if (b.h === "S" || b.h === "W") b.v = -Math.abs(b.v);
-    return fromPair(a, b);
-  }
-
-  function fromPair(a, b) {
-    var lat, lng;
-    var aLng = a.h === "E" || a.h === "W";
-    var bLat = b.h === "N" || b.h === "S";
-    if (aLng || bLat) {
-      lat = b.v;
-      lng = a.v;
-    } else {
-      lat = a.v;
-      lng = b.v;
-    }
-    return inRange(lat, lng) ? { lat: lat, lng: lng } : null;
-  }
-
-  function toDMS(value, isLat) {
-    var hemi = isLat ? (value >= 0 ? "N" : "S") : value >= 0 ? "E" : "W";
-    var abs = Math.abs(value);
-    var d = Math.floor(abs);
-    var mFull = (abs - d) * 60;
-    var min = Math.floor(mFull);
-    var sec = ((mFull - min) * 60).toFixed(1);
-    if (sec === "60.0") {
-      sec = "0.0";
-      min += 1;
-    }
-    if (min === 60) {
-      min = 0;
-      d += 1;
-    }
-    return d + "\u00b0" + min + "\u2032" + sec + "\u2033" + hemi;
-  }
-
-  if (typeof module !== "undefined") {
-    module.exports = { parseCoords: parseCoords, toDMS: toDMS };
-  }
-  if (typeof document === "undefined" || typeof L === "undefined") return;
-
-  /* ---------- Map ---------- */
+  if (typeof document === "undefined" || typeof L === "undefined" || !window.Geo) return;
+  var G = window.Geo;
 
   var mapEl = document.getElementById("map");
   if (!mapEl) return;
@@ -80,8 +12,24 @@
   var info = document.getElementById("map-info");
   var statusEl = document.getElementById("map-status");
   var locateBtn = document.getElementById("map-locate");
+  var measureBtn = document.getElementById("map-measure-btn");
+  var measureBox = document.getElementById("map-measure");
 
-  var map = L.map(mapEl).setView([5.5483, 95.3238], 12);
+  var map = L.map(mapEl, { zoomControl: false }).setView([5.5483, 95.3238], 12);
+  L.control.zoom({ position: "bottomright" }).addTo(map);
+
+  function baseUrl() {
+    var dark = document.documentElement.getAttribute("data-mode") === "dark";
+    return "https://{s}.basemaps.cartocdn.com/" + (dark ? "dark_all" : "light_all") + "/{z}/{x}/{y}{r}.png";
+  }
+  var base = L.tileLayer(baseUrl(), {
+    subdomains: "abcd",
+    maxZoom: 20,
+    attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
+  });
+  document.addEventListener("themechange", function () {
+    base.setUrl(baseUrl());
+  });
   var street = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
     attribution: "&copy; OpenStreetMap contributors",
@@ -90,10 +38,23 @@
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
     { maxZoom: 19, attribution: "Tiles &copy; Esri, Maxar, Earthstar Geographics" }
   );
-  street.addTo(map);
-  L.control.layers({ Street: street, Satellite: satellite }).addTo(map);
-  L.control.scale({ imperial: false }).addTo(map);
+  base.addTo(map);
+  var layers = {};
+  layers[t("map.layer.map")] = base;
+  layers[t("map.layer.street")] = street;
+  layers[t("map.layer.satellite")] = satellite;
+  L.control.layers(layers, null, { position: "topright" }).addTo(map);
+  L.control.scale({ imperial: false, position: "bottomleft" }).addTo(map);
 
+  ["map-ui", "map-info", "map-measure"].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el && L.DomEvent) {
+      L.DomEvent.disableClickPropagation(el);
+      L.DomEvent.disableScrollPropagation(el);
+    }
+  });
+
+  var pinIcon = L.divIcon({ className: "pin", html: "<span></span>", iconSize: [24, 24], iconAnchor: [12, 12] });
   var marker = null;
 
   function fmt(n) {
@@ -102,12 +63,11 @@
 
   function place(lat, lng, name, zoom) {
     if (marker) marker.setLatLng([lat, lng]);
-    else marker = L.marker([lat, lng]).addTo(map);
+    else marker = L.marker([lat, lng], { icon: pinIcon, keyboard: false }).addTo(map);
     if (zoom) map.setView([lat, lng], zoom);
 
     var decimal = fmt(lat) + ", " + fmt(lng);
     info.textContent = "";
-
     if (name) {
       var title = document.createElement("strong");
       title.textContent = name;
@@ -117,7 +77,7 @@
     dec.textContent = decimal;
     var dms = document.createElement("div");
     dms.className = "map-dms";
-    dms.textContent = toDMS(lat, true) + " " + toDMS(lng, false);
+    dms.textContent = G.toDMS(lat, true) + " " + G.toDMS(lng, false);
     info.appendChild(dec);
     info.appendChild(dms);
 
@@ -126,34 +86,123 @@
     var copy = document.createElement("button");
     copy.type = "button";
     copy.className = "btn btn-quiet";
-    copy.textContent = "Copy coordinates";
+    copy.textContent = t("map.copy");
     copy.addEventListener("click", function () {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(decimal).then(
-          function () { copy.textContent = "Copied"; },
-          function () { copy.textContent = "Copy failed"; }
+          function () { copy.textContent = t("map.copied"); },
+          function () { copy.textContent = t("map.copyfail"); }
         );
       } else {
-        copy.textContent = "Copy not supported";
+        copy.textContent = t("map.copyunsupported");
       }
-      setTimeout(function () { copy.textContent = "Copy coordinates"; }, 1500);
+      setTimeout(function () { copy.textContent = t("map.copy"); }, 1500);
     });
     var osm = document.createElement("a");
     osm.href = "https://www.openstreetmap.org/?mlat=" + lat + "&mlon=" + lng + "#map=16/" + lat + "/" + lng;
     osm.target = "_blank";
     osm.rel = "noopener noreferrer";
-    osm.textContent = "Open in OpenStreetMap";
+    osm.textContent = t("map.osm");
     row.appendChild(copy);
     row.appendChild(osm);
     info.appendChild(row);
   }
 
+  /* ---------- Measure ---------- */
+
+  var measuring = false;
+  var pts = [];
+  var shape = L.layerGroup().addTo(map);
+  var COLOR = "#d97706";
+
+  function fmtDist(m) {
+    return m < 1000 ? m.toFixed(1) + " m" : (m / 1000).toFixed(2) + " km";
+  }
+  function fmtArea(m2) {
+    if (m2 < 10000) return m2.toFixed(1) + " m\u00b2";
+    if (m2 < 1e6) return (m2 / 10000).toFixed(2) + " ha (" + Math.round(m2).toLocaleString(document.documentElement.lang) + " m\u00b2)";
+    return (m2 / 1e6).toFixed(3) + " km\u00b2 (" + (m2 / 10000).toLocaleString(document.documentElement.lang, { maximumFractionDigits: 0 }) + " ha)";
+  }
+
+  function drawMeasure() {
+    shape.clearLayers();
+    var ll = pts.map(function (p) { return [p.lat, p.lng]; });
+    if (pts.length >= 3) L.polygon(ll, { color: COLOR, weight: 3, fillOpacity: 0.18, interactive: false }).addTo(shape);
+    else if (pts.length === 2) L.polyline(ll, { color: COLOR, weight: 3, interactive: false }).addTo(shape);
+    pts.forEach(function (p) {
+      L.circleMarker([p.lat, p.lng], { radius: 5, color: "#fff", weight: 2, fillColor: COLOR, fillOpacity: 1, interactive: false }).addTo(shape);
+    });
+
+    measureBox.textContent = "";
+    function line(label, value) {
+      var d = document.createElement("div");
+      var a = document.createElement("span");
+      a.className = "map-dms";
+      a.textContent = label + " ";
+      var b = document.createElement("strong");
+      b.textContent = value;
+      d.appendChild(a);
+      d.appendChild(b);
+      measureBox.appendChild(d);
+    }
+    if (!pts.length) {
+      var hint = document.createElement("div");
+      hint.textContent = t("map.measure.hint");
+      measureBox.appendChild(hint);
+    } else {
+      line(t("map.points"), String(pts.length));
+      line(t("map.distance"), fmtDist(G.pathLength(pts, false)));
+      if (pts.length >= 3) {
+        line(t("map.perimeter"), fmtDist(G.pathLength(pts, true)));
+        line(t("map.area"), fmtArea(G.polygonArea(pts)));
+      }
+    }
+    var row = document.createElement("div");
+    row.className = "map-actions";
+    [["map.undo", function () { pts.pop(); drawMeasure(); }], ["map.clear", function () { pts = []; drawMeasure(); }], ["map.done", function () { setMeasuring(false); }]].forEach(function (a) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "btn btn-quiet";
+      b.textContent = t(a[0]);
+      b.addEventListener("click", a[1]);
+      row.appendChild(b);
+    });
+    measureBox.appendChild(row);
+  }
+
+  function setMeasuring(on) {
+    measuring = on;
+    measureBtn.setAttribute("aria-pressed", String(on));
+    measureBox.hidden = !on;
+    info.hidden = on;
+    mapEl.classList.toggle("measuring", on);
+    if (on) {
+      map.doubleClickZoom.disable();
+      drawMeasure();
+    } else {
+      map.doubleClickZoom.enable();
+      pts = [];
+      shape.clearLayers();
+    }
+  }
+
+  measureBtn.addEventListener("click", function () {
+    setMeasuring(!measuring);
+  });
+
   map.on("click", function (e) {
     var p = e.latlng.wrap();
+    if (measuring) {
+      pts.push({ lat: p.lat, lng: p.lng });
+      drawMeasure();
+      return;
+    }
     results.textContent = "";
     statusEl.textContent = "";
     place(p.lat, p.lng, null, null);
   });
+
+  /* ---------- Search ---------- */
 
   function showResults(list) {
     results.textContent = "";
@@ -175,19 +224,17 @@
     var q = input.value.trim();
     results.textContent = "";
     if (!q) {
-      statusEl.textContent = "Type a place name or coordinates.";
+      statusEl.textContent = t("map.typeprompt");
       return;
     }
-
-    var c = parseCoords(q);
+    var c = G.parseCoords(q);
     if (c) {
       statusEl.textContent = "";
       place(c.lat, c.lng, null, 15);
       return;
     }
-
-    statusEl.textContent = "Searching\u2026";
-    fetch("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&q=" + encodeURIComponent(q), {
+    statusEl.textContent = t("map.searching");
+    fetch("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=" + document.documentElement.lang + "&q=" + encodeURIComponent(q), {
       headers: { Accept: "application/json" },
     })
       .then(function (r) {
@@ -196,34 +243,38 @@
       })
       .then(function (list) {
         if (!list.length) {
-          statusEl.textContent = "No place found. Try coordinates like 5.5483, 95.3238.";
+          statusEl.textContent = t("map.notfound");
           return;
         }
-        statusEl.textContent = list.length + (list.length === 1 ? " result." : " results.");
+        statusEl.textContent = t(list.length === 1 ? "map.results.one" : "map.results.other", { n: list.length });
         showResults(list);
         place(parseFloat(list[0].lat), parseFloat(list[0].lon), list[0].display_name, 14);
       })
       .catch(function () {
-        statusEl.textContent = "Place search is unavailable right now. Coordinates still work.";
+        statusEl.textContent = t("map.unavailable");
       });
   });
 
   locateBtn.addEventListener("click", function () {
     if (!navigator.geolocation) {
-      statusEl.textContent = "Location is not supported by this browser.";
+      statusEl.textContent = t("map.nolocation");
       return;
     }
-    statusEl.textContent = "Finding your location\u2026";
+    statusEl.textContent = t("map.finding");
     navigator.geolocation.getCurrentPosition(
       function (pos) {
         statusEl.textContent = "";
         results.textContent = "";
-        place(pos.coords.latitude, pos.coords.longitude, "Your location", 15);
+        place(pos.coords.latitude, pos.coords.longitude, t("map.yourloc"), 15);
       },
       function () {
-        statusEl.textContent = "Could not get your location. Check the browser permission.";
+        statusEl.textContent = t("map.locfail");
       },
       { enableHighAccuracy: true, timeout: 10000 }
     );
   });
+
+  /* Open at a coordinate from the link map.html#lat,lng */
+  var fromHash = G.parseCoords(decodeURIComponent(location.hash.slice(1)));
+  if (fromHash) place(fromHash.lat, fromHash.lng, null, 15);
 })();

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tic Tac Toe - Mufti Khalis</title>
+  <meta name="description" content="Lawan komputer di lima level, atau lawan teman.">
+  <link rel="canonical" href="https://muftikhalis.github.io/id/tic_tac_toe.html">
+  <link rel="alternate" hreflang="en" href="https://muftikhalis.github.io/tic_tac_toe.html">
+  <link rel="alternate" hreflang="id" href="https://muftikhalis.github.io/id/tic_tac_toe.html">
+  <link rel="alternate" hreflang="x-default" href="https://muftikhalis.github.io/tic_tac_toe.html">
+  <meta property="og:site_name" content="Mufti Khalis">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Tic Tac Toe - Mufti Khalis">
+  <meta property="og:description" content="Lawan komputer di lima level, atau lawan teman.">
+  <meta property="og:url" content="https://muftikhalis.github.io/id/tic_tac_toe.html">
+  <meta property="og:locale" content="id_ID">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta property="og:image" content="https://muftikhalis.github.io/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#f0f4f8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0c1622" media="(prefers-color-scheme: dark)">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../assets/icon-192.png">
+  <script src="../assets/theme.js"></script>
+  <link rel="icon" href="../favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400..700&display=swap">
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Lewati ke konten</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html">
+        <span class="mark" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+        Mufti Khalis
+      </a>
+      <div class="header-end">
+        <nav aria-label="Utama">
+          <ul class="nav-inline">
+          <li><a href="about.html">Tentang</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="english.html">English</a></li>
+          <li><a href="contact.html">Kontak</a></li>
+          </ul>
+        </nav>
+        <a class="lang-switch" href="../tic_tac_toe.html" hreflang="en" lang="en" title="English" aria-label="English">EN</a>
+        <button class="icon-btn" id="search-btn" type="button" aria-label="Cari halaman dan alat (Ctrl+K)" title="Cari (Ctrl+K)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></button>
+        <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="menu-panel">Menu</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="scrim" id="scrim"></div>
+  <nav class="drawer" id="menu-panel" aria-label="Semua halaman">
+    <div class="drawer-top">
+      <button class="btn btn-quiet" id="install-btn" type="button" hidden>Pasang aplikasi</button>
+      <button class="btn btn-quiet" id="menu-close" type="button">Tutup</button>
+    </div>
+    <h2>Halaman</h2>
+          <ul class="cols big">
+            <li><a href="index.html" data-desc="Kembali ke halaman awal." data-k="home beranda start">Beranda</a></li>
+            <li><a href="about.html" data-desc="Siapa aku dan apa yang sedang kupelajari." data-k="about tentang profil">Tentang</a></li>
+            <li><a href="blog.html" data-desc="Catatan dan tulisan." data-k="blog posts tulisan artikel">Blog</a></li>
+            <li><a href="contact.html" data-desc="Kirim pesan kepadaku." data-k="contact kontak pesan email">Kontak</a></li>
+          </ul>
+          <h2>Belajar</h2>
+          <ul class="cols">
+            <li><a href="english.html" data-desc="Tautan grammar, latihan TOEFL dan IELTS, beasiswa, dan eBook." data-k="toefl ielts grammar belajar inggris beasiswa ebook">English</a></li>
+            <li><a href="quiz.html" data-desc="Putaran 10 soal grammar dan kosakata dengan penjelasan." data-k="quiz kuis soal grammar vocabulary kosakata latihan">Kuis English</a></li>
+          </ul>
+          <h2>Peta</h2>
+          <ul class="cols">
+            <li><a href="map.html" data-desc="Cari tempat atau koordinat, ukur jarak dan luas." data-k="map peta lokasi jarak luas ukur gis">Peta</a></li>
+            <li><a href="coordinates.html" data-desc="Konversi desimal, derajat-menit-detik, dan UTM." data-k="utm dms lat long koordinat gps konversi">Koordinat</a></li>
+            <li><a href="units.html" data-desc="Panjang, luas, massa, volume, kecepatan, data, dan suhu." data-k="unit satuan konversi convert hektar acre">Satuan</a></li>
+          </ul>
+          <h2>Sehari-hari</h2>
+          <ul class="cols">
+            <li><a href="calculator.html" data-desc="Empat operasi hitung, bisa lewat keyboard." data-k="calculator kalkulator hitung">Kalkulator</a></li>
+            <li><a href="calendar.html" data-desc="Hitung selisih hari dari hari ini ke tanggal mana pun." data-k="calendar kalender tanggal hari">Kalender</a></li>
+            <li><a href="clock.html" data-desc="Jam lokal langsung, tanggal, hari, dan UTC." data-k="clock jam waktu utc">Jam</a></li>
+            <li><a href="pomodoro.html" data-desc="Timer fokus dengan istirahat singkat dan panjang." data-k="pomodoro timer fokus belajar">Pomodoro</a></li>
+            <li><a href="notes.html" data-desc="Catatan cepat dan daftar tugas, tersimpan di browser." data-k="notes catatan todo tugas checklist">Catatan dan tugas</a></li>
+          </ul>
+          <h2>Berkas dan teks</h2>
+          <ul class="cols">
+            <li><a href="converter.html" data-desc="Gabung, pisah, dan konversi PDF, gambar, dan Word di browser." data-k="pdf word docx merge split gabung pisah konversi">Konverter PDF</a></li>
+            <li><a href="images.html" data-desc="Kecilkan dan ubah ukuran foto tanpa mengunggah." data-k="image gambar foto compress kompres resize jpg png webp">Kompres gambar</a></li>
+            <li><a href="markdown.html" data-desc="Tulis dengan toolbar, pratinjau langsung, unduh sebagai .md." data-k="markdown md editor tulis">Editor Markdown</a></li>
+            <li><a href="qr.html" data-desc="Buat kode QR dari teks atau tautan apa saja." data-k="qr code kode barcode tautan link">Kode QR</a></li>
+            <li><a href="password.html" data-desc="Kata sandi acak dengan perkiraan kekuatan." data-k="password sandi generator acak kuat">Pembuat kata sandi</a></li>
+          </ul>
+          <h2>Permainan</h2>
+          <ul class="cols">
+            <li><a href="tic_tac_toe.html" aria-current="page" data-desc="Lawan komputer di lima level, atau lawan teman." data-k="tic tac toe xo game permainan">Tic Tac Toe</a></li>
+            <li><a href="2048.html" data-desc="Geser dan gabungkan ubin sampai 2048." data-k="2048 game puzzle angka">2048</a></li>
+            <li><a href="minesweeper.html" data-desc="Bersihkan papan tanpa menginjak ranjau." data-k="minesweeper ranjau game">Minesweeper</a></li>
+            <li><a href="wordle.html" data-desc="Tebak kata 5 huruf dalam enam kesempatan." data-k="wordle tebak kata word game">Tebak kata</a></li>
+          </ul>
+          <h2>Tampilan</h2>
+          <div class="theme-picker">
+            <div class="swatches" role="group" aria-label="Palet warna"><button class="swatch" type="button" data-palette-btn="ocean" aria-pressed="false" aria-label="Palet Ocean"><span class="swatch-chip" style="--a:#1d4e89;--b:#d6e4f2"></span>Ocean</button><button class="swatch" type="button" data-palette-btn="forest" aria-pressed="false" aria-label="Palet Forest"><span class="swatch-chip" style="--a:#1f5c3a;--b:#d5e3cf"></span>Forest</button><button class="swatch" type="button" data-palette-btn="stone" aria-pressed="false" aria-label="Palet Stone"><span class="swatch-chip" style="--a:#2a2a2e;--b:#dddde0"></span>Stone</button><button class="swatch" type="button" data-palette-btn="plum" aria-pressed="false" aria-label="Palet Plum"><span class="swatch-chip" style="--a:#6b2d7c;--b:#e6d3ea"></span>Plum</button></div>
+            <div class="seg" role="group" aria-label="Mode terang atau gelap"><button type="button" data-mode-btn="auto" aria-pressed="false">Otomatis</button><button type="button" data-mode-btn="light" aria-pressed="false">Terang</button><button type="button" data-mode-btn="dark" aria-pressed="false">Gelap</button></div>
+          </div>
+  </nav>
+
+  <main id="main">
+    <div class="wrap">
+      <div class="tool">
+        <div class="page-head">
+          <h1>Tic Tac Toe</h1>
+          <p>Lawan komputer di lima level, atau bergantian dengan teman. Kamu bermain sebagai X.</p>
+        </div>
+        <div class="panel">
+          <div class="ttt-options">
+            <div class="field">
+              <label for="mode-select">Mode</label>
+              <select class="select" id="mode-select">
+                <option value="pvai">Pemain vs AI</option>
+                <option value="pvp">Pemain vs Pemain</option>
+              </select>
+            </div>
+            <div id="pvai-options">
+              <div class="field">
+                <label for="level-select">Level AI</label>
+                <select class="select" id="level-select">
+                  <option value="easy">Mudah</option>
+                  <option value="medium">Sedang</option>
+                  <option value="hard">Sulit</option>
+                  <option value="expert">Ahli</option>
+                  <option value="impossible">Mustahil</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="first-move-select">Giliran pertama</label>
+                <select class="select" id="first-move-select">
+                  <option value="player">Pemain duluan</option>
+                  <option value="ai">AI duluan</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="board" id="board" role="group" aria-label="Papan permainan">
+            <button class="cell" type="button" data-index="0"></button>
+            <button class="cell" type="button" data-index="1"></button>
+            <button class="cell" type="button" data-index="2"></button>
+            <button class="cell" type="button" data-index="3"></button>
+            <button class="cell" type="button" data-index="4"></button>
+            <button class="cell" type="button" data-index="5"></button>
+            <button class="cell" type="button" data-index="6"></button>
+            <button class="cell" type="button" data-index="7"></button>
+            <button class="cell" type="button" data-index="8"></button>
+          </div>
+          <div class="ttt-foot">
+            <p class="ttt-status" id="ttt-status" role="status"></p>
+            <button class="btn btn-quiet" id="ttt-reset" type="button">Mulai ulang</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">&copy; 2024–2026 Mufti Khalis</div>
+  </footer>
+
+  <script src="../assets/i18n.js" defer></script>
+  <script src="../assets/site.js" defer></script>
+  <script src="../assets/tictactoe.js" defer></script>
+</body>
+</html>

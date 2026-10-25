@@ -132,7 +132,7 @@
       exprEl.textContent = render_expr(src) + " =";
       expr = "";
       done = true;
-      show("Error");
+      show(t("calc.error"));
     }
   }
 

@@ -4,14 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Home - Mufti Khalis</title>
-  <meta name="description" content="Mufti Khalis, biology graduate in Banda Aceh. Remote sensing and NDVI work, small web tools and English study links.">
-  <meta name="theme-color" content="#f2f5ee" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0e1a14" media="(prefers-color-scheme: dark)">
+  <meta name="description" content="Mufti Khalis, biology graduate in Banda Aceh. Small web tools, a plain-language NDVI explainer and English study links.">
+  <link rel="canonical" href="https://muftikhalis.github.io/">
+  <link rel="alternate" hreflang="en" href="https://muftikhalis.github.io/">
+  <link rel="alternate" hreflang="id" href="https://muftikhalis.github.io/id/">
+  <link rel="alternate" hreflang="x-default" href="https://muftikhalis.github.io/">
+  <meta property="og:site_name" content="Mufti Khalis">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Home - Mufti Khalis">
+  <meta property="og:description" content="Mufti Khalis, biology graduate in Banda Aceh. Small web tools, a plain-language NDVI explainer and English study links.">
+  <meta property="og:url" content="https://muftikhalis.github.io/">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="id_ID">
+  <meta property="og:image" content="https://muftikhalis.github.io/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#f0f4f8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0c1622" media="(prefers-color-scheme: dark)">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <script src="assets/theme.js"></script>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400..700&display=swap">
   <link rel="stylesheet" href="assets/style.css">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "name": "Mufti Khalis", "url": "https://muftikhalis.github.io/", "inLanguage": "en"}, {"@type": "Person", "name": "Mufti Khalis", "url": "https://muftikhalis.github.io/", "alumniOf": {"@type": "CollegeOrUniversity", "name": "Universitas Syiah Kuala"}}]}</script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -31,6 +50,8 @@
           <li><a href="contact.html">Contact</a></li>
           </ul>
         </nav>
+        <a class="lang-switch" href="id/index.html" hreflang="id" lang="id" title="Bahasa Indonesia" aria-label="Bahasa Indonesia">ID</a>
+        <button class="icon-btn" id="search-btn" type="button" aria-label="Search pages and tools (Ctrl+K)" title="Search (Ctrl+K)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></button>
         <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="menu-panel">Menu</button>
       </div>
     </div>
@@ -38,32 +59,64 @@
 
   <div class="scrim" id="scrim"></div>
   <nav class="drawer" id="menu-panel" aria-label="All pages">
-    <div class="drawer-top"><button class="btn btn-quiet" id="menu-close" type="button">Close</button></div>
+    <div class="drawer-top">
+      <button class="btn btn-quiet" id="install-btn" type="button" hidden>Install app</button>
+      <button class="btn btn-quiet" id="menu-close" type="button">Close</button>
+    </div>
     <h2>Pages</h2>
-          <ul>
-            <li><a href="index.html" aria-current="page">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="blog.html">Blog</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="english.html">English</a></li>
+          <ul class="cols big">
+            <li><a href="index.html" aria-current="page" data-desc="Back to the start page." data-k="home beranda start">Home</a></li>
+            <li><a href="about.html" data-desc="Who I am and what I am learning." data-k="about tentang profil">About</a></li>
+            <li><a href="blog.html" data-desc="Notes and write-ups." data-k="blog posts tulisan artikel">Blog</a></li>
+            <li><a href="contact.html" data-desc="Send me a message." data-k="contact kontak pesan email">Contact</a></li>
           </ul>
-          <h2>Tools</h2>
-          <ul>
-            <li><a href="calendar.html">Calendar</a></li>
-            <li><a href="calculator.html">Calculator</a></li>
-            <li><a href="clock.html">Clock</a></li>
-            <li><a href="tic_tac_toe.html">Tic Tac Toe</a></li>
-            <li><a href="map.html">Map</a></li>
-            <li><a href="converter.html">Converter</a></li>
+          <h2>Learn</h2>
+          <ul class="cols">
+            <li><a href="english.html" data-desc="Grammar, TOEFL and IELTS practice, scholarship and eBook links." data-k="toefl ielts grammar belajar inggris beasiswa ebook">English</a></li>
+            <li><a href="quiz.html" data-desc="Ten-question grammar and vocabulary rounds with explanations." data-k="quiz kuis soal grammar vocabulary kosakata latihan">English quiz</a></li>
           </ul>
+          <h2>Maps</h2>
+          <ul class="cols">
+            <li><a href="map.html" data-desc="Search places or coordinates, measure distance and area." data-k="map peta lokasi jarak luas ukur gis">Map</a></li>
+            <li><a href="coordinates.html" data-desc="Convert between decimal, degrees-minutes-seconds and UTM." data-k="utm dms lat long koordinat gps konversi">Coordinates</a></li>
+            <li><a href="units.html" data-desc="Length, area, mass, volume, speed, data and temperature." data-k="unit satuan konversi convert hektar acre">Units</a></li>
+          </ul>
+          <h2>Everyday</h2>
+          <ul class="cols">
+            <li><a href="calculator.html" data-desc="Four operations, with keyboard input." data-k="calculator kalkulator hitung">Calculator</a></li>
+            <li><a href="calendar.html" data-desc="Count the days from today to any date." data-k="calendar kalender tanggal hari">Calendar</a></li>
+            <li><a href="clock.html" data-desc="Live local time, date, weekday and UTC." data-k="clock jam waktu utc">Clock</a></li>
+            <li><a href="pomodoro.html" data-desc="Focus timer with short and long breaks." data-k="pomodoro timer fokus belajar">Pomodoro</a></li>
+            <li><a href="notes.html" data-desc="Quick notes and a to-do list, saved in your browser." data-k="notes catatan todo tugas checklist">Notes and tasks</a></li>
+          </ul>
+          <h2>Files and text</h2>
+          <ul class="cols">
+            <li><a href="converter.html" data-desc="Merge, split and convert PDF, image and Word files in your browser." data-k="pdf word docx merge split gabung pisah konversi">PDF converter</a></li>
+            <li><a href="images.html" data-desc="Shrink and resize photos without uploading them." data-k="image gambar foto compress kompres resize jpg png webp">Image compressor</a></li>
+            <li><a href="markdown.html" data-desc="Write with a toolbar, preview live, download as .md." data-k="markdown md editor tulis">Markdown editor</a></li>
+            <li><a href="qr.html" data-desc="Make a QR code from any text or link." data-k="qr code kode barcode tautan link">QR code</a></li>
+            <li><a href="password.html" data-desc="Random passwords with a strength estimate." data-k="password sandi generator acak kuat">Password generator</a></li>
+          </ul>
+          <h2>Games</h2>
+          <ul class="cols">
+            <li><a href="tic_tac_toe.html" data-desc="Play the computer at five levels, or a friend." data-k="tic tac toe xo game permainan">Tic Tac Toe</a></li>
+            <li><a href="2048.html" data-desc="Slide and merge tiles to reach 2048." data-k="2048 game puzzle angka">2048</a></li>
+            <li><a href="minesweeper.html" data-desc="Clear the board without hitting a mine." data-k="minesweeper ranjau game">Minesweeper</a></li>
+            <li><a href="wordle.html" data-desc="Guess the 5-letter word in six tries." data-k="wordle tebak kata word game">Word guess</a></li>
+          </ul>
+          <h2>Appearance</h2>
+          <div class="theme-picker">
+            <div class="swatches" role="group" aria-label="Color palette"><button class="swatch" type="button" data-palette-btn="ocean" aria-pressed="false" aria-label="Ocean palette"><span class="swatch-chip" style="--a:#1d4e89;--b:#d6e4f2"></span>Ocean</button><button class="swatch" type="button" data-palette-btn="forest" aria-pressed="false" aria-label="Forest palette"><span class="swatch-chip" style="--a:#1f5c3a;--b:#d5e3cf"></span>Forest</button><button class="swatch" type="button" data-palette-btn="stone" aria-pressed="false" aria-label="Stone palette"><span class="swatch-chip" style="--a:#2a2a2e;--b:#dddde0"></span>Stone</button><button class="swatch" type="button" data-palette-btn="plum" aria-pressed="false" aria-label="Plum palette"><span class="swatch-chip" style="--a:#6b2d7c;--b:#e6d3ea"></span>Plum</button></div>
+            <div class="seg" role="group" aria-label="Light or dark mode"><button type="button" data-mode-btn="auto" aria-pressed="false">Auto</button><button type="button" data-mode-btn="light" aria-pressed="false">Light</button><button type="button" data-mode-btn="dark" aria-pressed="false">Dark</button></div>
+          </div>
   </nav>
 
   <main id="main">
     <div class="wrap">
       <section class="hero">
         <div class="hero-text">
-          <h1>Reading vegetation from space, one 10-metre pixel at a time.</h1>
-          <p>I&rsquo;m Mufti Khalis, a biology graduate from Universitas Syiah Kuala in Banda Aceh. This site holds my remote sensing work, a few small tools, and English study links.</p>
+          <h1>Reading vegetation from space, one <span style="white-space: nowrap">10-metre</span> pixel at a time.</h1>
+          <p>I&rsquo;m Mufti Khalis, a biology graduate from Universitas Syiah Kuala in Banda Aceh. This is my small corner of the web: a few handy tools, a plain-language look at remote sensing, and English study links.</p>
         </div>
 
         <figure class="raster">
@@ -81,28 +134,21 @@
         </figure>
       </section>
 
-      <section class="section" aria-labelledby="finding-h">
+      <section class="section" aria-labelledby="ndvi-h">
         <div class="finding">
           <div>
-            <h2 id="finding-h">Banda Aceh&rsquo;s vegetation cover fell by one percentage point from 2019 to 2023.</h2>
-            <p>My thesis compared Sentinel-2A imagery from both years using NDVI. Vegetation covered 52% of the city in 2019 and 51% in 2023. Non-vegetation grew from 48% (2,729.27&nbsp;ha) to 49% (2,808.19&nbsp;ha).</p>
-            <p>Vegetation was lowest in the dense city centre and higher where green open space remained.</p>
-            <p><a href="about.html">How the analysis was done</a></p>
+            <h2 id="ndvi-h">NDVI, explained simply</h2>
+            <p>Healthy plants absorb red light for photosynthesis and reflect a lot of near-infrared light (NIR). NDVI compares the two, so a satellite can tell green, growing vegetation from bare ground or water.</p>
+            <p>The result runs from &minus;1 to 1. Roughly: water is below 0, bare ground and buildings sit close to 0, and dense, healthy vegetation is high, often above 0.5. Exact cut-offs depend on the sensor and the place.</p>
           </div>
           <div>
-            <dl class="bars">
-              <div class="bar">
-                <dt>2019</dt>
-                <dd role="img" aria-label="2019: vegetation 52%, non-vegetation 48%"><span class="bar-veg" style="width:52%">52%</span><span class="bar-non" style="width:48%">48%</span></dd>
-              </div>
-              <div class="bar">
-                <dt>2023</dt>
-                <dd role="img" aria-label="2023: vegetation 51%, non-vegetation 49%"><span class="bar-veg" style="width:51%">51%</span><span class="bar-non" style="width:49%">49%</span></dd>
-              </div>
-            </dl>
-            <ul class="bars-key">
-              <li>Vegetation</li>
-              <li>Non-vegetation</li>
+            <p class="formula">NDVI = (NIR &minus; Red) / (NIR + Red)</p>
+            <ul class="scale">
+              <li><span class="chip" style="background: var(--water)"></span><span>Water</span><span class="range">below 0</span></li>
+              <li><span class="chip" style="background: var(--bare)"></span><span>Bare ground, built-up</span><span class="range">0 to 0.1</span></li>
+              <li><span class="chip" style="background: var(--sparse)"></span><span>Sparse vegetation</span><span class="range">0.1 to 0.3</span></li>
+              <li><span class="chip" style="background: var(--mid)"></span><span>Moderate vegetation</span><span class="range">0.3 to 0.5</span></li>
+              <li><span class="chip" style="background: var(--dense)"></span><span>Dense vegetation</span><span class="range">above 0.5</span></li>
             </ul>
           </div>
         </div>
@@ -110,15 +156,53 @@
 
       <section class="section" aria-labelledby="tools-h">
         <h2 id="tools-h">Small tools</h2>
-        <ul class="index">
-          <li><a href="calendar.html"><span class="name">Calendar</span><span class="what">Count the days from today to any date.</span></a></li>
-          <li><a href="calculator.html"><span class="name">Calculator</span><span class="what">Four operations, with keyboard input.</span></a></li>
-          <li><a href="clock.html"><span class="name">Clock</span><span class="what">Live local time, date, weekday and UTC.</span></a></li>
-          <li><a href="tic_tac_toe.html"><span class="name">Tic Tac Toe</span><span class="what">Play the computer at five levels, or a friend.</span></a></li>
-          <li><a href="map.html"><span class="name">Map</span><span class="what">Search places or coordinates, click to read latitude and longitude.</span></a></li>
-          <li><a href="converter.html"><span class="name">Converter</span><span class="what">Merge, split and convert PDF, image and Word files in your browser.</span></a></li>
-          <li><a href="english.html"><span class="name">English</span><span class="what">Grammar, TOEFL and IELTS practice, scholarship and eBook links.</span></a></li>
-        </ul>
+        <p class="note" style="margin-bottom: var(--s-3);">Press Ctrl+K (or the search button) to jump to any tool.</p>
+        <div class="tool-groups">
+          <div>
+            <h3>Learn</h3>
+            <ul class="index">
+            <li><a href="english.html"><span class="name">English</span><span class="what">Grammar, TOEFL and IELTS practice, scholarship and eBook links.</span></a></li>
+            <li><a href="quiz.html"><span class="name">English quiz</span><span class="what">Ten-question grammar and vocabulary rounds with explanations.</span></a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Maps</h3>
+            <ul class="index">
+            <li><a href="map.html"><span class="name">Map</span><span class="what">Search places or coordinates, measure distance and area.</span></a></li>
+            <li><a href="coordinates.html"><span class="name">Coordinates</span><span class="what">Convert between decimal, degrees-minutes-seconds and UTM.</span></a></li>
+            <li><a href="units.html"><span class="name">Units</span><span class="what">Length, area, mass, volume, speed, data and temperature.</span></a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Everyday</h3>
+            <ul class="index">
+            <li><a href="calculator.html"><span class="name">Calculator</span><span class="what">Four operations, with keyboard input.</span></a></li>
+            <li><a href="calendar.html"><span class="name">Calendar</span><span class="what">Count the days from today to any date.</span></a></li>
+            <li><a href="clock.html"><span class="name">Clock</span><span class="what">Live local time, date, weekday and UTC.</span></a></li>
+            <li><a href="pomodoro.html"><span class="name">Pomodoro</span><span class="what">Focus timer with short and long breaks.</span></a></li>
+            <li><a href="notes.html"><span class="name">Notes and tasks</span><span class="what">Quick notes and a to-do list, saved in your browser.</span></a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Files and text</h3>
+            <ul class="index">
+            <li><a href="converter.html"><span class="name">PDF converter</span><span class="what">Merge, split and convert PDF, image and Word files in your browser.</span></a></li>
+            <li><a href="images.html"><span class="name">Image compressor</span><span class="what">Shrink and resize photos without uploading them.</span></a></li>
+            <li><a href="markdown.html"><span class="name">Markdown editor</span><span class="what">Write with a toolbar, preview live, download as .md.</span></a></li>
+            <li><a href="qr.html"><span class="name">QR code</span><span class="what">Make a QR code from any text or link.</span></a></li>
+            <li><a href="password.html"><span class="name">Password generator</span><span class="what">Random passwords with a strength estimate.</span></a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Games</h3>
+            <ul class="index">
+            <li><a href="tic_tac_toe.html"><span class="name">Tic Tac Toe</span><span class="what">Play the computer at five levels, or a friend.</span></a></li>
+            <li><a href="2048.html"><span class="name">2048</span><span class="what">Slide and merge tiles to reach 2048.</span></a></li>
+            <li><a href="minesweeper.html"><span class="name">Minesweeper</span><span class="what">Clear the board without hitting a mine.</span></a></li>
+            <li><a href="wordle.html"><span class="name">Word guess</span><span class="what">Guess the 5-letter word in six tries.</span></a></li>
+            </ul>
+          </div>
+        </div>
       </section>
     </div>
   </main>
@@ -127,6 +211,7 @@
     <div class="wrap">&copy; 2024–2026 Mufti Khalis</div>
   </footer>
 
+  <script src="assets/i18n.js" defer></script>
   <script src="assets/site.js" defer></script>
   <script src="assets/raster.js" defer></script>
 </body>

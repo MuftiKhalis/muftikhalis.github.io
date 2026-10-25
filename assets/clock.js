@@ -7,7 +7,8 @@
   var utcEl = document.getElementById("clock-utc");
   if (!timeEl) return;
 
-  var timeFmt = new Intl.DateTimeFormat(undefined, {
+  var LOC = document.documentElement.lang || undefined;
+  var timeFmt = new Intl.DateTimeFormat(LOC, {
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
@@ -19,10 +20,10 @@
     hourCycle: "h23",
     timeZone: "UTC",
   });
-  var dayFmt = new Intl.DateTimeFormat(undefined, { weekday: "long" });
-  var dateFmt = new Intl.DateTimeFormat(undefined, { day: "numeric", month: "long", year: "numeric" });
+  var dayFmt = new Intl.DateTimeFormat(LOC, { weekday: "long" });
+  var dateFmt = new Intl.DateTimeFormat(LOC, { day: "numeric", month: "long", year: "numeric" });
 
-  zoneEl.textContent = Intl.DateTimeFormat().resolvedOptions().timeZone || "Local";
+  zoneEl.textContent = Intl.DateTimeFormat().resolvedOptions().timeZone || t("clock.local");
 
   function tick() {
     var now = new Date();

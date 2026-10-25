@@ -135,7 +135,7 @@
       c.classList.toggle("win", !!winLine && winLine.indexOf(i) !== -1);
       var row = Math.floor(i / 3) + 1;
       var col = (i % 3) + 1;
-      c.setAttribute("aria-label", "Row " + row + ", column " + col + ", " + (mark || "empty"));
+      c.setAttribute("aria-label", t("ttt.cell", { r: row, c: col, v: mark || t("ttt.empty") }));
     });
   }
 
@@ -144,18 +144,18 @@
   }
 
   function turnText() {
-    if (vsAI()) return current === "X" ? "Your turn (X)" : "AI is thinking\u2026";
-    return current + "\u2019s turn";
+    if (vsAI()) return current === "X" ? t("ttt.yourturn") : t("ttt.thinking");
+    return t("ttt.turn", { m: current });
   }
 
   function finish(w) {
     over = true;
     if (w) {
-      var who = vsAI() ? (w.mark === "X" ? "You win!" : "AI wins.") : w.mark + " wins!";
+      var who = vsAI() ? (w.mark === "X" ? t("ttt.youwin") : t("ttt.aiwins")) : t("ttt.wins", { m: w.mark });
       say(who);
       paint(w.line);
     } else {
-      say("It\u2019s a draw.");
+      say(t("ttt.draw"));
       paint(null);
     }
   }

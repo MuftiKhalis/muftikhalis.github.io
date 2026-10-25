@@ -1,15 +1,26 @@
 /* PDF and Word tools. Everything runs in the browser; files never leave the device. */
 (function () {
+  var EN = {
+    "conv.err.empty": "Enter the pages to keep, for example 1-3, 5.",
+    "conv.err.read": "Cannot read \u201c{p}\u201d. Use numbers like 2, 3-5 or 8-.",
+    "conv.err.outside": "Page {n} is outside this PDF (1\u2013{total}).",
+    "conv.err.backwards": "Range \u201c{p}\u201d runs backwards.",
+  };
+  function T(key, vars) {
+    if (typeof window !== "undefined" && typeof window.t === "function") return window.t(key, vars);
+    return (EN[key] || key).replace(/\{(\w+)\}/g, function (m, k) { return vars && vars[k] !== undefined ? vars[k] : m; });
+  }
+
   /* ---------- Pure helpers (also used by tests) ---------- */
 
   /* "1-3, 5, 8-" with total=10 -> [0,1,2,4,7,8,9]. Throws Error with a readable message. */
   function parseRanges(src, total) {
     var parts = String(src || "").split(",").map(function (p) { return p.trim(); }).filter(Boolean);
-    if (!parts.length) throw new Error("Enter the pages to keep, for example 1-3, 5.");
+    if (!parts.length) throw new Error(T("conv.err.empty"));
     var out = [];
     parts.forEach(function (p) {
       var m = /^(\d+)?\s*(-)?\s*(\d+)?$/.exec(p);
-      if (!m || (!m[1] && !m[3])) throw new Error("Cannot read \u201c" + p + "\u201d. Use numbers like 2, 3-5 or 8-.");
+      if (!m || (!m[1] && !m[3])) throw new Error(T("conv.err.read", { p: p }));
       var a, b;
       if (!m[2]) {
         a = b = parseInt(m[1], 10);
@@ -17,8 +28,8 @@
         a = m[1] ? parseInt(m[1], 10) : 1;
         b = m[3] ? parseInt(m[3], 10) : total;
       }
-      if (a < 1 || b < 1 || a > total || b > total) throw new Error("Page " + (a > total || a < 1 ? a : b) + " is outside this PDF (1\u2013" + total + ").");
-      if (a > b) throw new Error("Range \u201c" + p + "\u201d runs backwards.");
+      if (a < 1 || b < 1 || a > total || b > total) throw new Error(T("conv.err.outside", { n: a > total || a < 1 ? a : b, total: total }));
+      if (a > b) throw new Error(T("conv.err.backwards", { p: p }));
       for (var i = a; i <= b; i++) out.push(i - 1);
     });
     return out;
@@ -96,7 +107,7 @@
 
   function libMissing(name, status) {
     if (window[name]) return false;
-    status.textContent = "A required library did not load. Check your connection and reload the page.";
+    status.textContent = T("conv.nolib");
     return true;
   }
 
@@ -184,9 +195,9 @@
 
   function fail(statusEl, e) {
     var msg = e && e.message ? e.message : "";
-    if (/encrypt/i.test(msg)) msg = "This PDF is password-protected. Remove the password first.";
-    else if (/No PDF header|Failed to parse|Invalid|Expected instance/i.test(msg)) msg = "This file could not be read as a PDF.";
-    statusEl.textContent = msg || "Something went wrong.";
+    if (/encrypt/i.test(msg)) msg = T("conv.encrypted");
+    else if (/No PDF header|Failed to parse|Invalid|Expected instance/i.test(msg)) msg = T("conv.notpdf");
+    statusEl.textContent = msg || T("conv.wrong");
   }
 
   /* Merge */
@@ -195,16 +206,16 @@
     var list = fileList($("merge-input"), $("merge-list"), function (f) {
       run.disabled = f.length < 2;
       dl.hidden = true;
-      st.textContent = f.length === 1 ? "Add at least one more PDF." : "";
+      st.textContent = f.length === 1 ? T("conv.addmore") : "";
     }, true);
     run.addEventListener("click", async function () {
       if (libMissing("PDFLib", st)) return;
-      st.textContent = "Merging\u2026";
+      st.textContent = T("conv.merging");
       try {
         var bufs = await Promise.all(list.get().map(readBuffer));
         var out = await mergePdfs(window.PDFLib, bufs);
         offer("merge-dl", out, "merged.pdf");
-        st.textContent = "Done. " + size(out.length) + ".";
+        st.textContent = T("conv.done.size", { s: size(out.length) });
       } catch (e) {
         fail(st, e);
       }
@@ -224,7 +235,7 @@
         try {
           var doc = await window.PDFLib.PDFDocument.load(await readBuffer(f[0]));
           pageCount = doc.getPageCount();
-          st.textContent = "This PDF has " + pageCount + (pageCount === 1 ? " page." : " pages.");
+          st.textContent = T(pageCount === 1 ? "conv.pages.one" : "conv.pages.other", { n: pageCount });
         } catch (e) {
           fail(st, e);
         }
@@ -233,12 +244,12 @@
     run.addEventListener("click", async function () {
       if (libMissing("PDFLib", st)) return;
       try {
-        if (!pageCount) throw new Error("Choose a readable PDF first.");
+        if (!pageCount) throw new Error(T("conv.choose"));
         var idx = parseRanges(range.value, pageCount);
-        st.textContent = "Working\u2026";
+        st.textContent = T("conv.working");
         var out = await extractPages(window.PDFLib, await readBuffer(list.get()[0]), idx);
         offer("extract-dl", out, "extracted.pdf");
-        st.textContent = "Done. " + idx.length + (idx.length === 1 ? " page" : " pages") + ", " + size(out.length) + ".";
+        st.textContent = T(idx.length === 1 ? "conv.done.one" : "conv.done.other", { n: idx.length, s: size(out.length) });
       } catch (e) {
         fail(st, e);
       }
@@ -265,13 +276,13 @@
           c.getContext("2d").drawImage(img, 0, 0);
           URL.revokeObjectURL(url);
           c.toBlob(function (blob) {
-            if (!blob) return reject(new Error("Could not convert " + file.name + "."));
+            if (!blob) return reject(new Error(T("conv.imgconv", { name: file.name })));
             readBuffer(blob).then(function (b) { resolve({ bytes: new Uint8Array(b), kind: "png" }); }, reject);
           }, "image/png");
         };
         img.onerror = function () {
           URL.revokeObjectURL(url);
-          reject(new Error("Could not read " + file.name + " as an image."));
+          reject(new Error(T("conv.imgread", { name: file.name })));
         };
         img.src = url;
       });
@@ -285,13 +296,13 @@
 
     run.addEventListener("click", async function () {
       if (libMissing("PDFLib", st)) return;
-      st.textContent = "Building PDF\u2026";
+      st.textContent = T("conv.building");
       try {
         var items = [];
         for (var f of list.get()) items.push(await prepare(f));
         var out = await imagesToPdf(window.PDFLib, items, fit.value);
         offer("images-dl", out, "images.pdf");
-        st.textContent = "Done. " + items.length + (items.length === 1 ? " page" : " pages") + ", " + size(out.length) + ".";
+        st.textContent = T(items.length === 1 ? "conv.done.one" : "conv.done.other", { n: items.length, s: size(out.length) });
       } catch (e) {
         fail(st, e);
       }
@@ -310,19 +321,19 @@
     }, false);
     run.addEventListener("click", async function () {
       if (libMissing("mammoth", st)) return;
-      st.textContent = "Converting\u2026";
+      st.textContent = T("conv.converting");
       try {
         var file = list.get()[0];
-        if (!/\.docx$/i.test(file.name)) throw new Error("Only .docx files are supported. Save older .doc files as .docx first.");
+        if (!/\.docx$/i.test(file.name)) throw new Error(T("conv.onlydocx"));
         var res = await window.mammoth.convertToHtml({ arrayBuffer: await readBuffer(file) });
         preview.innerHTML = res.value;
         preview.hidden = false;
         printBtn.disabled = false;
         st.textContent = res.messages.length
-          ? "Converted. Some formatting was simplified."
-          : "Converted. Check the preview, then print or save as PDF.";
+          ? T("conv.converted.simple")
+          : T("conv.converted.ok");
       } catch (e) {
-        st.textContent = e && e.message ? e.message : "Could not read this Word file.";
+        st.textContent = e && e.message ? e.message : T("conv.wordfail");
       }
     });
     printBtn.addEventListener("click", function () {

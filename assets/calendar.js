@@ -5,18 +5,19 @@
   var diffEl = document.getElementById("cal-diff");
   if (!grid || !title || !diffEl) return;
 
+  var LOC = document.documentElement.lang || undefined;
   var today = new Date();
   var year = today.getFullYear();
   var month = today.getMonth();
   var selected = null; // {y, m, d}
 
-  var fullDate = new Intl.DateTimeFormat(undefined, {
+  var fullDate = new Intl.DateTimeFormat(LOC, {
     weekday: "long",
     day: "numeric",
     month: "long",
     year: "numeric",
   });
-  var monthTitle = new Intl.DateTimeFormat(undefined, { month: "long", year: "numeric" });
+  var monthTitle = new Intl.DateTimeFormat(LOC, { month: "long", year: "numeric" });
 
   function dayNumber(y, m, d) {
     return Math.round(Date.UTC(y, m, d) / 86400000);
@@ -30,9 +31,9 @@
     var diff = dayNumber(y, m, d) - dayNumber(today.getFullYear(), today.getMonth(), today.getDate());
     var label = fullDate.format(new Date(y, m, d));
     var text;
-    if (diff === 0) text = "Today";
-    else if (diff > 0) text = plural(diff, "day") + " ahead";
-    else text = plural(-diff, "day") + " ago";
+    if (diff === 0) text = t("cal.today");
+    else if (diff > 0) text = t(diff === 1 ? "cal.ahead.one" : "cal.ahead.other", { n: diff });
+    else text = t(-diff === 1 ? "cal.ago.one" : "cal.ago.other", { n: -diff });
     diffEl.innerHTML = "";
     diffEl.appendChild(document.createTextNode(text));
     var small = document.createElement("small");
@@ -41,8 +42,8 @@
   }
 
   function weekdayLabels() {
-    var f = new Intl.DateTimeFormat(undefined, { weekday: "short" });
-    var long = new Intl.DateTimeFormat(undefined, { weekday: "long" });
+    var f = new Intl.DateTimeFormat(LOC, { weekday: "short" });
+    var long = new Intl.DateTimeFormat(LOC, { weekday: "long" });
     var out = [];
     for (var i = 0; i < 7; i++) {
       var d = new Date(2024, 0, 1 + i); // 1 Jan 2024 is a Monday

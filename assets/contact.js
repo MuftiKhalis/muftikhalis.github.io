@@ -9,10 +9,10 @@
     e.preventDefault();
     var endpoint = form.getAttribute("data-endpoint");
     if (!endpoint) {
-      status.textContent = "Sending isn\u2019t set up yet. Please try again later.";
+      status.textContent = t("contact.notset");
       return;
     }
-    status.textContent = "Sending\u2026";
+    status.textContent = t("contact.sending");
     fetch(endpoint, {
       method: "POST",
       body: new FormData(form),
@@ -21,10 +21,10 @@
       .then(function (r) {
         if (!r.ok) throw new Error("Request failed");
         form.reset();
-        status.textContent = "Message sent. Thank you.";
+        status.textContent = t("contact.sent");
       })
       .catch(function () {
-        status.textContent = "Message not sent. Check your connection and try again.";
+        status.textContent = t("contact.failed");
       });
   });
 })();
