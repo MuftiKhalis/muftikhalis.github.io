@@ -62,6 +62,23 @@ def canon(path):
     return SITE_URL + "/" + path
 
 
+ASSET_V = ""
+
+
+def asset_version():
+    """Short hash of all local JS/CSS, appended as ?v= so browsers (and the offline cache) fetch fresh files."""
+    h = hashlib.sha1()
+    base = os.path.join(OUT, "assets")
+    for dirpath, dirnames, filenames in os.walk(base):
+        dirnames.sort()
+        for fn in sorted(filenames):
+            if fn.endswith((".js", ".css")):
+                with open(os.path.join(dirpath, fn), "rb") as f:
+                    h.update(fn.encode())
+                    h.update(f.read())
+    return h.hexdigest()[:8]
+
+
 def write(path, text):
     full = os.path.join(OUT, path)
     os.makedirs(os.path.dirname(full), exist_ok=True)
@@ -73,7 +90,7 @@ def write(path, text):
 def shell(L, path, page, alt=None):
     T = lambda e, i: tr(L, e, i)
     title = page["title"] if page.get("full_title") else page["title"] + " - Mufti Khalis"
-    A = lambda p: rel(path, "assets/" + p)
+    A = lambda p: rel(path, "assets/" + p) + ("?v=" + ASSET_V if p.endswith((".js", ".css")) and ASSET_V else "")
     cur_slug = page.get("nav_slug") or page["slug"]
 
     inline_items = []
@@ -332,8 +349,10 @@ def build_i18n_js():
 
 
 def main():
+    global ASSET_V
     check_js_keys()
     build_i18n_js()
+    ASSET_V = asset_version()
     all_pages = PAGES_A + PAGES_B
     count = 0
     for L in LANGS:

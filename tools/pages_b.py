@@ -48,7 +48,7 @@ def calculator(L):
         key("7", "7", "7"), key("8", "8", "8"), key("9", "9", "9"), key("-", "&minus;", T("Subtract", "Kurang"), "key-op"),
         key("4", "4", "4"), key("5", "5", "5"), key("6", "6", "6"), key("+", "+", T("Add", "Tambah"), "key-op"),
         key("1", "1", "1"), key("2", "2", "2"), key("3", "3", "3"), key("=", "=", T("Equals", "Sama dengan"), "key-eq"),
-        key("0", "0", "0", "key-zero"), key(".", ".", T("Decimal point", "Titik desimal")),
+        key("0", "0", "0", "key-zero"), key(".", T(".", ","), T("Decimal point", "Koma desimal")),
     ]
     panel = f"""        <div class="panel">
           <div class="calc-screen">

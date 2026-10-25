@@ -44,8 +44,21 @@
     return String(Number(n.toPrecision(12)));
   }
 
+  /* "1234567.5" -> "1,234,567.5" (English) or "1.234.567,5" (Indonesian). Works on whole expressions. */
+  function groupNumbers(text, lang) {
+    if (/e/i.test(text)) return text;
+    var id = lang === "id";
+    var groupSep = id ? "." : ",";
+    var decSep = id ? "," : ".";
+    return text.replace(/\d+(?:\.\d*)?/g, function (m) {
+      var parts = m.split(".");
+      var whole = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, groupSep);
+      return parts.length > 1 ? whole + decSep + parts[1] : whole;
+    });
+  }
+
   if (typeof module !== "undefined") {
-    module.exports = { evaluate: evaluate, format: format };
+    module.exports = { evaluate: evaluate, format: format, groupNumbers: groupNumbers };
   }
   if (typeof document === "undefined") return;
 
@@ -53,21 +66,26 @@
   var resultEl = document.getElementById("calc-result");
   if (!exprEl || !resultEl) return;
 
+  var LANG = (document.documentElement.lang || "en").slice(0, 2);
   var expr = "";
   var done = false; // true right after "="
+
+  /* Expression -> display text: operator symbols and thousands separators. */
+  function pretty(src) {
+    if (/e/i.test(src)) return src.replace(/^-/, "\u2212");
+    return groupNumbers(src, LANG)
+      .replace(/[+\-*/]/g, function (c) {
+        return " " + SYMBOL[c] + " ";
+      })
+      .replace(/^ \u2212 /, "\u2212");
+  }
 
   function show(text) {
     resultEl.textContent = text;
   }
 
   function render() {
-    show(
-      expr === ""
-        ? "0"
-        : expr.replace(/[+\-*/]/g, function (c) {
-            return " " + SYMBOL[c] + " ";
-          }).replace(/^ \u2212 /, "\u2212")
-    );
+    show(expr === "" ? "0" : pretty(expr));
   }
 
   function press(val) {
@@ -127,7 +145,7 @@
       exprEl.textContent = render_expr(src) + " =";
       expr = out;
       done = true;
-      show(out.replace(/^-/, "\u2212"));
+      show(pretty(out));
     } catch (e) {
       exprEl.textContent = render_expr(src) + " =";
       expr = "";
@@ -137,11 +155,7 @@
   }
 
   function render_expr(src) {
-    return src
-      .replace(/[+\-*/]/g, function (c) {
-        return " " + SYMBOL[c] + " ";
-      })
-      .replace(/^ \u2212 /, "\u2212");
+    return pretty(src);
   }
 
   document.querySelectorAll("[data-key]").forEach(function (b) {
@@ -159,6 +173,7 @@
     var t = e.target;
     if (t && (t.tagName === "INPUT" || t.tagName === "SELECT" || t.tagName === "TEXTAREA")) return;
     var k = e.key;
+    if (k === "," && LANG === "id") k = ".";
     if (k === "Enter" && t && t.tagName === "BUTTON") return;
     if (/^[0-9]$/.test(k) || k === "." || OPS.indexOf(k) !== -1) {
       e.preventDefault();

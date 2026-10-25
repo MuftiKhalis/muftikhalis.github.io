@@ -15,23 +15,25 @@
   var measureBtn = document.getElementById("map-measure-btn");
   var measureBox = document.getElementById("map-measure");
 
-  var map = L.map(mapEl, { zoomControl: false }).setView([5.5483, 95.3238], 12);
+  var map = L.map(mapEl, { zoomControl: false, maxZoom: 19 }).setView([5.5483, 95.3238], 12);
   L.control.zoom({ position: "bottomright" }).addTo(map);
 
   /* OpenStreetMap needs no API key. In dark mode its tiles are inverted with CSS (class "tiles-themed"). */
   var base = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
+    maxNativeZoom: 19,
     className: "tiles-themed",
     attribution: "&copy; OpenStreetMap contributors",
   });
   var terrain = L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
     subdomains: "abc",
-    maxZoom: 17,
+    maxZoom: 19,
+    maxNativeZoom: 17,
     attribution: 'Map data &copy; OpenStreetMap contributors, SRTM | Style &copy; <a href="https://opentopomap.org" target="_blank" rel="noopener noreferrer">OpenTopoMap</a> (CC-BY-SA)',
   });
   var satellite = L.tileLayer(
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    { maxZoom: 19, attribution: "Tiles &copy; Esri, Maxar, Earthstar Geographics" }
+    { maxZoom: 19, maxNativeZoom: 17, attribution: "Tiles &copy; Esri, Maxar, Earthstar Geographics" }
   );
   base.addTo(map);
   var layers = {};
