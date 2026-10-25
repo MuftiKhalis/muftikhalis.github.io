@@ -2826,3 +2826,12 @@ textarea.notepad {
   break-inside: avoid;
   margin-bottom: var(--s-4);
 }
+
+/* map: keyless tiles, dark mode via filter; wider search box */
+:root[data-mode="dark"] .leaflet-layer.tiles-themed {
+  filter: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.92);
+}
+
+.map-ui {
+  width: min(30rem, calc(100% - 1.5rem));
+}

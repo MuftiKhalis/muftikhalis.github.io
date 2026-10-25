@@ -18,21 +18,16 @@
   var map = L.map(mapEl, { zoomControl: false }).setView([5.5483, 95.3238], 12);
   L.control.zoom({ position: "bottomright" }).addTo(map);
 
-  function baseUrl() {
-    var dark = document.documentElement.getAttribute("data-mode") === "dark";
-    return "https://{s}.basemaps.cartocdn.com/" + (dark ? "dark_all" : "light_all") + "/{z}/{x}/{y}{r}.png";
-  }
-  var base = L.tileLayer(baseUrl(), {
-    subdomains: "abcd",
-    maxZoom: 20,
-    attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
-  });
-  document.addEventListener("themechange", function () {
-    base.setUrl(baseUrl());
-  });
-  var street = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  /* OpenStreetMap needs no API key. In dark mode its tiles are inverted with CSS (class "tiles-themed"). */
+  var base = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
+    className: "tiles-themed",
     attribution: "&copy; OpenStreetMap contributors",
+  });
+  var terrain = L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
+    subdomains: "abc",
+    maxZoom: 17,
+    attribution: 'Map data &copy; OpenStreetMap contributors, SRTM | Style &copy; <a href="https://opentopomap.org" target="_blank" rel="noopener noreferrer">OpenTopoMap</a> (CC-BY-SA)',
   });
   var satellite = L.tileLayer(
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
@@ -41,7 +36,7 @@
   base.addTo(map);
   var layers = {};
   layers[t("map.layer.map")] = base;
-  layers[t("map.layer.street")] = street;
+  layers[t("map.layer.terrain")] = terrain;
   layers[t("map.layer.satellite")] = satellite;
   L.control.layers(layers, null, { position: "topright" }).addTo(map);
   L.control.scale({ imperial: false, position: "bottomleft" }).addTo(map);

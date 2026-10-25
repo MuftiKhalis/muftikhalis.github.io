@@ -137,7 +137,7 @@ def map_page(L):
         <div class="map-ui" id="map-ui">
           <form class="map-search" id="map-form" role="search">
             <label class="sr" for="map-q">{T('Place name or coordinates', 'Nama tempat atau koordinat')}</label>
-            <input class="input" id="map-q" type="search" placeholder="{T('Place, or 5.5483, 95.3238', 'Tempat, atau 5.5483, 95.3238')}" autocomplete="off">
+            <input class="input" id="map-q" type="search" placeholder="{T('Place or coordinates', 'Tempat atau koordinat')}" autocomplete="off">
             <button class="btn" type="submit">{T('Search', 'Cari')}</button>
             <button class="icon-btn" id="map-locate" type="button" aria-label="{T('Use my location', 'Gunakan lokasiku')}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></button>
             <button class="icon-btn" id="map-measure-btn" type="button" aria-pressed="false" aria-label="{T('Measure distance and area', 'Ukur jarak dan luas')}" title="{T('Measure distance and area', 'Ukur jarak dan luas')}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17L17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/></svg></button>

@@ -85,7 +85,7 @@ S = {
     "md.confirm": ("Clear the editor? Download first if you want to keep this text.", "Kosongkan editor? Unduh dulu kalau ingin menyimpan tulisan ini."),
     # map
     "map.layer.map": ("Map", "Peta"),
-    "map.layer.street": ("Street", "Jalan"),
+    "map.layer.terrain": ("Terrain", "Medan"),
     "map.layer.satellite": ("Satellite", "Satelit"),
     "map.copy": ("Copy coordinates", "Salin koordinat"),
     "map.copied": ("Copied", "Tersalin"),
