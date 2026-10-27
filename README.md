@@ -5,13 +5,13 @@ Situs pribadi Mufti Khalis dalam dua bahasa: Inggris (alamat utama) dan Indonesi
 ## Isi
 
 - **Peta dan lokasi:** peta (cari tempat atau koordinat, ukur jarak dan luas), konverter koordinat (desimal, DMS, UTM), konverter satuan.
-- **Sehari-hari:** kalkulator, kalender, jam, Pomodoro, catatan dan tugas.
-- **Berkas dan teks:** konverter PDF (gabung, ambil halaman, gambar ke PDF, Word ke PDF), kompres gambar, editor Markdown, kode QR, pembuat kata sandi.
+- **Sehari-hari:** kalkulator (persen, kurung, pangkat, akar, memori, riwayat tersimpan), kalender, jam, Pomodoro, catatan dan tugas.
+- **Berkas dan teks:** konverter PDF (gabung, ambil halaman, gambar ke PDF, Word ke PDF), kompres gambar, editor Markdown (bisa unduh .md, HTML, DOCX), **Ke Markdown** (PDF, Word, Excel, CSV jadi Markdown lalu Word), foto ke ASCII (hitam putih atau berwarna), kode QR (buat dan pindai lewat kamera atau gambar), pembuat kata sandi.
 - **Belajar:** tautan English dan kuis grammar/kosakata.
 - **Permainan:** Tic Tac Toe, 2048, Minesweeper, Tebak kata.
 - Tekan **Ctrl+K** untuk mencari halaman atau alat. Tema (palet dan mode terang/gelap) ada di menu.
 
-Semua alat jalan di browser. Tidak ada file atau data yang dikirim ke server.
+Semua alat jalan di browser. Tidak ada file atau data yang dikirim ke server. Library pihak ketiga (PDF.js, mammoth, SheetJS, jsQR, dan lain-lain) disimpan di `assets/vendor/` beserta lisensinya.
 
 ## Menulis blog
 

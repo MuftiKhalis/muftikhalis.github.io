@@ -451,6 +451,9 @@ def write_sw():
             if relp.endswith(".html") or relp.startswith("assets/") or relp in ("manifest.webmanifest", "favicon.ico"):
                 if relp.endswith((".LICENSE", ".md")):
                     continue
+                # big libraries are cached the first time they are used instead of being pre-cached
+                if relp.startswith("assets/vendor/") and os.path.getsize(os.path.join(dirpath, fn)) > 200 * 1024:
+                    continue
                 files.append(relp)
     files.sort()
     h = hashlib.sha1()

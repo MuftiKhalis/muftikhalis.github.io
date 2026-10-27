@@ -177,6 +177,46 @@ S = {
     "cc.copy": ("Copy all", "Salin semua"),
     "cc.copied": ("Copied", "Tersalin"),
     "cc.copyfail": ("Copy failed", "Gagal menyalin"),
+
+    # calculator history
+    "calc.hist.empty": ("No calculations yet. They are saved here, even after you clear the screen.", "Belum ada perhitungan. Hasilnya disimpan di sini, juga setelah layar dibersihkan."),
+    "calc.hist.use": ("Insert {r}", "Masukkan {r}"),
+    "calc.hist.load": ("Load {e}", "Muat {e}"),
+    # QR scan
+    "qr.cam.start": ("Start camera", "Nyalakan kamera"),
+    "qr.cam.stop": ("Stop camera", "Matikan kamera"),
+    "qr.cam.denied": ("Camera access was blocked. Allow it in the browser settings and try again.", "Akses kamera diblokir. Izinkan di pengaturan browser lalu coba lagi."),
+    "qr.cam.none": ("No camera was found on this device.", "Kamera tidak ditemukan di perangkat ini."),
+    "qr.cam.unsupported": ("This browser cannot open the camera. You can scan from an image instead.", "Browser ini tidak bisa membuka kamera. Kamu bisa memindai dari gambar."),
+    "qr.cam.insecure": ("The camera only works on a secure (https) page.", "Kamera hanya jalan di halaman aman (https)."),
+    "qr.cam.scanning": ("Point the camera at a QR code\u2026", "Arahkan kamera ke kode QR\u2026"),
+    "qr.found": ("QR code found.", "Kode QR ditemukan."),
+    "qr.notfound": ("No QR code found in that image.", "Tidak ada kode QR di gambar itu."),
+    "qr.reading": ("Reading image\u2026", "Membaca gambar\u2026"),
+    "qr.copy": ("Copy", "Salin"),
+    "qr.copied": ("Copied", "Tersalin"),
+    "qr.copyfail": ("Copy failed", "Gagal menyalin"),
+    # document to markdown
+    "tm.nolib": ("A required library did not load. Check your connection and reload the page.", "Library yang dibutuhkan gagal dimuat. Periksa koneksi lalu muat ulang halaman."),
+    "tm.scanned": ("No text found. This looks like a scanned PDF (pictures of pages), which needs OCR and is not supported.", "Tidak ada teks. PDF ini tampaknya hasil pindai (gambar halaman), yang butuh OCR dan belum didukung."),
+    "tm.unsupported": ("Unsupported file. Use PDF, DOCX, XLSX, XLS or CSV.", "File tidak didukung. Pakai PDF, DOCX, XLSX, XLS, atau CSV."),
+    "tm.reading": ("Converting\u2026", "Mengonversi\u2026"),
+    "tm.done": ("Done. {n} characters of Markdown. You can edit it below.", "Selesai. {n} karakter Markdown. Kamu bisa mengeditnya di bawah."),
+    "tm.fail": ("Could not convert this file.", "File ini tidak bisa dikonversi."),
+    "tm.copy": ("Copy", "Salin"),
+    "tm.copied": ("Copied", "Tersalin"),
+    "tm.copyfail": ("Copy failed", "Gagal menyalin"),
+    "tm.imgomitted": ("[image omitted]", "[gambar dilewati]"),
+    "tm.truncated": ("Only the first {n} rows of this sheet are shown.", "Hanya {n} baris pertama dari lembar ini yang ditampilkan."),
+    "tm.emptysheet": ("This sheet is empty.", "Lembar ini kosong."),
+    "md.docxfail": ("Could not create the Word file.", "File Word tidak bisa dibuat."),
+    # photo to ascii
+    "as.size": ("{c} \u00d7 {r} characters", "{c} \u00d7 {r} karakter"),
+    "as.loading": ("Reading photo\u2026", "Membaca foto\u2026"),
+    "as.failed": ("Could not read this image.", "Gambar ini tidak bisa dibaca."),
+    "as.copy": ("Copy text", "Salin teks"),
+    "as.copied": ("Copied", "Tersalin"),
+    "as.copyfail": ("Copy failed", "Gagal menyalin"),
 }
 
 # keys built at runtime (checked by build.py as well)

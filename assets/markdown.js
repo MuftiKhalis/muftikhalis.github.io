@@ -123,7 +123,7 @@
   function safeName(name, ext) {
     var n = String(name || "").replace(/[\\/:*?"<>|]+/g, "-").trim() || "untitled";
     if (ext === "md") return /\.(md|markdown|txt)$/i.test(n) ? n : n + ".md";
-    return n.replace(/\.(md|markdown|txt|html?)$/i, "") + ".html";
+    return n.replace(/\.(md|markdown|txt|html?|docx)$/i, "") + "." + ext;
   }
 
   function count(text) {
@@ -307,6 +307,14 @@
       preview.innerHTML +
       "\n</body>\n</html>\n";
     download(safeName(nameEl.value, "html"), doc, "text/html;charset=utf-8");
+  });
+
+  document.getElementById("md-docx").addEventListener("click", function () {
+    try {
+      download(safeName(nameEl.value, "docx"), window.Md2Docx.build(ta.value), "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+    } catch (e) {
+      metaEl.textContent = t("md.docxfail");
+    }
   });
 
   document.getElementById("md-print").addEventListener("click", function () {

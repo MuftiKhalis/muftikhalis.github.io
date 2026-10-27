@@ -43,25 +43,46 @@ def calculator(L):
         return f'<button class="{c}" type="button" data-key="{escape(k)}" aria-label="{aria}">{lab}</button>'
 
     keys = [
+        key("MC", "MC", T("Clear memory", "Hapus memori"), "key-mem"), key("MR", "MR", T("Recall memory", "Panggil memori"), "key-mem"),
+        key("M+", "M+", T("Add to memory", "Tambah ke memori"), "key-mem"), key("M-", "M&minus;", T("Subtract from memory", "Kurangi dari memori"), "key-mem"),
+        key("(", "(", T("Open bracket", "Kurung buka"), "key-fn"), key(")", ")", T("Close bracket", "Kurung tutup"), "key-fn"),
+        key("\u221a", "&radic;", T("Square root", "Akar kuadrat"), "key-fn"), key("^", "x<sup>y</sup>", T("Power", "Pangkat"), "key-fn"),
         key("C", "C", T("Clear", "Bersihkan"), "key-clear"), key("DEL", "DEL", T("Delete last", "Hapus terakhir"), "key-clear"),
-        key("/", "&divide;", T("Divide", "Bagi"), "key-op"), key("*", "&times;", T("Multiply", "Kali"), "key-op"),
-        key("7", "7", "7"), key("8", "8", "8"), key("9", "9", "9"), key("-", "&minus;", T("Subtract", "Kurang"), "key-op"),
-        key("4", "4", "4"), key("5", "5", "5"), key("6", "6", "6"), key("+", "+", T("Add", "Tambah"), "key-op"),
-        key("1", "1", "1"), key("2", "2", "2"), key("3", "3", "3"), key("=", "=", T("Equals", "Sama dengan"), "key-eq"),
-        key("0", "0", "0", "key-zero"), key(".", T(".", ","), T("Decimal point", "Koma desimal")),
+        key("%", "%", T("Percent", "Persen"), "key-fn"), key("/", "&divide;", T("Divide", "Bagi"), "key-op"),
+        key("7", "7", "7"), key("8", "8", "8"), key("9", "9", "9"), key("*", "&times;", T("Multiply", "Kali"), "key-op"),
+        key("4", "4", "4"), key("5", "5", "5"), key("6", "6", "6"), key("-", "&minus;", T("Subtract", "Kurang"), "key-op"),
+        key("1", "1", "1"), key("2", "2", "2"), key("3", "3", "3"), key("+", "+", T("Add", "Tambah"), "key-op"),
+        key("+/-", "&plusmn;", T("Change sign", "Ubah tanda"), "key-fn"), key("0", "0", "0"),
+        key(".", T(".", ","), T("Decimal point", "Koma desimal")), key("=", "=", T("Equals", "Sama dengan"), "key-eq"),
     ]
-    panel = f"""        <div class="panel">
+    keys_html = "\n            ".join(keys)
+    lead = T(f"Percent, brackets, powers, square roots and memory. Keyboard works too: digits, <span style='white-space: nowrap'>+ &minus; * / ^ % ( )</span>, Enter and Backspace. Your recent calculations stay saved, even after you clear the screen.",
+             f"Persen, kurung, pangkat, akar kuadrat, dan memori. Keyboard juga bisa: angka, <span style='white-space: nowrap'>+ &minus; * / ^ % ( )</span>, Enter, dan Backspace. Perhitungan terakhirmu tetap tersimpan, juga setelah layar dibersihkan.")
+    main = f"""      <div class="tool calc-layout">
+        <div class="calc-left">
+          <div class="page-head">
+            <h1>{label(L, "calculator")}</h1>
+            <p>{lead}</p>
+          </div>
+          <div class="panel hist">
+            <div class="hist-head">
+              <h2>{T('History', 'Riwayat')}</h2>
+              <button class="btn btn-quiet" id="calc-history-clear" type="button">{T('Clear history', 'Hapus riwayat')}</button>
+            </div>
+            <ol class="hist-list" id="calc-history"></ol>
+          </div>
+        </div>
+        <div class="panel calc-panel">
           <div class="calc-screen">
+            <span class="calc-mem" id="calc-mem" aria-hidden="true"></span>
             <div class="calc-expr" id="calc-expr"></div>
             <output class="calc-result" id="calc-result" aria-live="polite">0</output>
           </div>
           <div class="keys">
-            {chr(10).join("            " + k for k in keys).strip()}
+            {keys_html}
           </div>
-        </div>"""
-    nw = "<span style='white-space: nowrap'>+ &minus; * /</span>"
-    main = tool(label(L, "calculator"), T(f"Four operations. The keyboard works too: digits, {nw}, Enter and Backspace.",
-                                            f"Empat operasi hitung. Keyboard juga bisa: angka, {nw}, Enter, dan Backspace."), panel)
+        </div>
+      </div>"""
     return mk(L, "calculator", main, ("calculator.js",))
 
 
@@ -276,7 +297,7 @@ def converter(L):
 {word}"""
     return mk(L, "converter", main, ("converter.js",),
               libs=("https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js",
-                    "https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"))
+                    "vendor/mammoth.browser.min.js"))
 
 
 # ----------------------------------------------------------------- Images
@@ -329,6 +350,7 @@ def markdown(L):
           <label class="btn btn-quiet md-open">{T('Open', 'Buka')}<input class="sr" id="md-open" type="file" accept=".md,.markdown,.txt,text/markdown,text/plain"></label>
           <button class="btn" id="md-download" type="button">{T('Download .md', 'Unduh .md')}</button>
           <button class="btn btn-quiet" id="md-html" type="button">{T('Download HTML', 'Unduh HTML')}</button>
+          <button class="btn btn-quiet" id="md-docx" type="button">{T('Download DOCX', 'Unduh DOCX')}</button>
           <button class="btn btn-quiet" id="md-print" type="button">{T('Print or PDF', 'Cetak atau PDF')}</button>
         </div>
 
@@ -346,31 +368,56 @@ def markdown(L):
         </div>
         <p class="md-meta" id="md-meta"></p>
       </div>"""
-    return mk(L, "markdown", main, ("markdown.js",), libs=("vendor/marked.min.js", "vendor/purify.min.js"))
+    return mk(L, "markdown", main, ("markdown.js",), libs=("vendor/marked.min.js", "vendor/purify.min.js", "vendor/fflate.js", "md2docx.js"))
 
 
 # ---------------------------------------------------------------------- QR
 def qr(L):
     T = D(L)
     panel = f"""        <div class="panel tool-card stack">
-          <div class="field"><label for="qr-text">{T('Text or link', 'Teks atau tautan')}</label>
-            <textarea class="input" id="qr-text" rows="3" spellcheck="false">https://muftikhalis.github.io</textarea></div>
-          <div class="row2">
-            <div class="field"><label for="qr-ecl">{T('Error correction', 'Koreksi kesalahan')}</label>
-              <select class="select" id="qr-ecl"><option value="L">{T('Low (7%)', 'Rendah (7%)')}</option><option value="M" selected>{T('Medium (15%)', 'Sedang (15%)')}</option><option value="Q">{T('Quartile (25%)', 'Kuartil (25%)')}</option><option value="H">{T('High (30%)', 'Tinggi (30%)')}</option></select></div>
-            <div class="field"><label for="qr-size">{T('PNG size', 'Ukuran PNG')}</label>
-              <select class="select" id="qr-size"><option value="256">256 px</option><option value="512" selected>512 px</option><option value="1024">1024 px</option></select></div>
+          <div class="filters" role="group" aria-label="{T('Mode', 'Mode')}" style="margin-bottom: 0;">
+            <button class="filter" type="button" data-qrtab="make" aria-pressed="true">{T('Create', 'Buat')}</button>
+            <button class="filter" type="button" data-qrtab="scan" aria-pressed="false">{T('Scan', 'Pindai')}</button>
           </div>
-          <div class="qr-stage" id="qr-stage"></div>
-          <p class="note" id="qr-status" role="status"></p>
-          <div class="conv-actions">
-            <button class="btn" id="qr-png" type="button" disabled>{T('Download PNG', 'Unduh PNG')}</button>
-            <button class="btn btn-quiet" id="qr-svg" type="button" disabled>{T('Download SVG', 'Unduh SVG')}</button>
+
+          <div id="qr-make" class="stack">
+            <div class="field"><label for="qr-text">{T('Text or link', 'Teks atau tautan')}</label>
+              <textarea class="input" id="qr-text" rows="3" spellcheck="false">https://muftikhalis.github.io</textarea></div>
+            <div class="row2">
+              <div class="field"><label for="qr-ecl">{T('Error correction', 'Koreksi kesalahan')}</label>
+                <select class="select" id="qr-ecl"><option value="L">{T('Low (7%)', 'Rendah (7%)')}</option><option value="M" selected>{T('Medium (15%)', 'Sedang (15%)')}</option><option value="Q">{T('Quartile (25%)', 'Kuartil (25%)')}</option><option value="H">{T('High (30%)', 'Tinggi (30%)')}</option></select></div>
+              <div class="field"><label for="qr-size">{T('PNG size', 'Ukuran PNG')}</label>
+                <select class="select" id="qr-size"><option value="256">256 px</option><option value="512" selected>512 px</option><option value="1024">1024 px</option></select></div>
+            </div>
+            <div class="qr-stage" id="qr-stage"></div>
+            <p class="note" id="qr-status" role="status"></p>
+            <div class="conv-actions">
+              <button class="btn" id="qr-png" type="button" disabled>{T('Download PNG', 'Unduh PNG')}</button>
+              <button class="btn btn-quiet" id="qr-svg" type="button" disabled>{T('Download SVG', 'Unduh SVG')}</button>
+            </div>
+          </div>
+
+          <div id="qr-scan" class="stack" hidden>
+            <video id="qr-video" class="qr-video" playsinline muted hidden></video>
+            <div class="conv-actions" style="margin-top: 0;">
+              <button class="btn" id="qr-cam" type="button">{T('Start camera', 'Nyalakan kamera')}</button>
+              <label class="btn btn-quiet qr-file">{T('Scan from image', 'Pindai dari gambar')}<input class="sr" id="qr-file" type="file" accept="image/*"></label>
+            </div>
+            <p class="note" id="qr-scan-status" role="status"></p>
+            <div class="qr-found" id="qr-found" hidden>
+              <p class="note" style="margin-bottom: 0.35rem;">{T('Result', 'Hasil')}</p>
+              <pre class="qr-found-text" id="qr-found-text"></pre>
+              <div class="conv-actions">
+                <button class="btn btn-quiet" id="qr-found-copy" type="button">{T('Copy', 'Salin')}</button>
+                <a class="btn" id="qr-found-open" target="_blank" rel="noopener noreferrer" hidden>{T('Open link', 'Buka tautan')}</a>
+              </div>
+            </div>
+            <p class="note">{T('The camera image stays on your device. Nothing is uploaded. Only open links you trust.', 'Gambar kamera tetap di perangkatmu. Tidak ada yang diunggah. Buka tautan hanya jika kamu percaya.')}</p>
           </div>
         </div>"""
-    main = tool(label(L, "qr"), T("Turn any text or link into a QR code you can download. It is made in your browser.",
-                                    "Ubah teks atau tautan apa saja jadi kode QR yang bisa diunduh. Dibuat di browsermu."), panel)
-    return mk(L, "qr", main, ("qr.js",), libs=("vendor/qrcode.js",))
+    main = tool(label(L, "qr"), T("Make a QR code from any text or link and download it, or scan one with your camera or from an image.",
+                                    "Buat kode QR dari teks atau tautan lalu unduh, atau pindai kode QR lewat kamera atau dari gambar."), panel)
+    return mk(L, "qr", main, ("qr.js",), libs=("vendor/qrcode.js", "vendor/jsQR.js"))
 
 
 # --------------------------------------------------------------- Password
@@ -540,5 +587,71 @@ def quiz(L):
     return mk(L, "quiz", main, ("quiz.js",), libs=("quiz-data.js",))
 
 
-PAGES_B = [calendar, calculator, clock, tic_tac_toe, map_page, coordinates, units, converter, images, markdown, qr, password,
+def tomd(L):
+    T = D(L)
+    panel = f"""        <div class="panel tool-card stack">
+          <div class="field"><label for="tm-input">{T('File (PDF, Word, Excel or CSV)', 'File (PDF, Word, Excel, atau CSV)')}</label>
+            <input class="input" id="tm-input" type="file" accept=".pdf,.docx,.xlsx,.xls,.csv,application/pdf"></div>
+          <div class="conv-actions"><button class="btn" id="tm-run" type="button" disabled>{T('Convert', 'Konversi')}</button></div>
+          <p class="note" id="tm-status" role="status"></p>
+          <div class="field"><label for="tm-out">Markdown</label>
+            <textarea class="input tm-out" id="tm-out" rows="14" spellcheck="false"></textarea></div>
+          <div class="conv-actions" id="tm-actions" hidden>
+            <button class="btn" id="tm-md" type="button">{T('Download .md', 'Unduh .md')}</button>
+            <button class="btn" id="tm-docx" type="button">{T('Download .docx', 'Unduh .docx')}</button>
+            <button class="btn btn-quiet" id="tm-copy" type="button">{T('Copy', 'Salin')}</button>
+            <button class="btn btn-quiet" id="tm-editor" type="button" data-href="markdown.html">{T('Open in editor', 'Buka di editor')}</button>
+          </div>
+          <ul class="facts">
+            <li>{T('<strong>PDF:</strong> works for PDFs that contain text. Headings are guessed from font size. Scanned PDFs (pictures of pages) need OCR and are not supported; tables and multi-column pages come out as plain text.', '<strong>PDF:</strong> bisa untuk PDF yang berisi teks. Judul ditebak dari ukuran huruf. PDF hasil pindai (gambar halaman) butuh OCR dan belum didukung; tabel dan halaman berkolom jadi teks biasa.')}</li>
+            <li>{T('<strong>Word (.docx):</strong> headings, lists, tables, bold and italic are kept. Images are skipped.', '<strong>Word (.docx):</strong> judul, daftar, tabel, tebal, dan miring dipertahankan. Gambar dilewati.')}</li>
+            <li>{T('<strong>Excel and CSV:</strong> every sheet becomes a table (first 2,000 rows).', '<strong>Excel dan CSV:</strong> tiap lembar menjadi tabel (2.000 baris pertama).')}</li>
+          </ul>
+          <p class="note">{T('Files stay on your device. Nothing is uploaded. Check the result: automatic conversion is never perfect.', 'File tetap di perangkatmu. Tidak ada yang diunggah. Periksa hasilnya: konversi otomatis tidak pernah sempurna.')}</p>
+        </div>"""
+    main = tool(label(L, "tomd"), T("Turn a PDF, Word, Excel or CSV file into Markdown, edit it, then download it as .md or as a Word file.",
+                                      "Ubah file PDF, Word, Excel, atau CSV jadi Markdown, edit, lalu unduh sebagai .md atau file Word."), panel)
+    return mk(L, "tomd", main, ("mdconvert.js",),
+              libs=("vendor/pdf.min.js", "vendor/mammoth.browser.min.js", "vendor/turndown.js", "vendor/turndown-plugin-gfm.js",
+                    "vendor/xlsx.mini.min.js", "vendor/marked.min.js", "vendor/fflate.js", "md2docx.js"))
+
+
+def ascii_page(L):
+    T = D(L)
+    main = head(label(L, "ascii"), T("Turn a photo into text. Choose black and white or colour, the characters, and the size. Download it as text or as a picture.",
+                                      "Ubah foto jadi teks. Pilih hitam putih atau berwarna, karakter, dan ukuran. Unduh sebagai teks atau gambar.")) + f"""
+      <div class="ascii-app">
+        <div class="panel stack ascii-controls">
+          <div class="field"><label for="as-input">{T('Photo', 'Foto')}</label><input class="input" id="as-input" type="file" accept="image/*"></div>
+          <div class="field"><label for="as-mode">{T('Style', 'Gaya')}</label>
+            <select class="select" id="as-mode"><option value="bw">{T('Black and white', 'Hitam putih')}</option><option value="color">{T('Colour', 'Berwarna')}</option></select></div>
+          <div class="field"><label for="as-bg">{T('Background', 'Latar')}</label>
+            <select class="select" id="as-bg"><option value="dark">{T('Dark', 'Gelap')}</option><option value="light">{T('Light', 'Terang')}</option></select></div>
+          <div class="field"><label for="as-ramp">{T('Characters', 'Karakter')}</label>
+            <select class="select" id="as-ramp"><option value="standard">{T('Standard', 'Standar')}</option><option value="detailed">{T('Detailed', 'Detail')}</option><option value="blocks">{T('Blocks', 'Blok')}</option><option value="simple">{T('Simple', 'Sederhana')}</option></select></div>
+          <div class="field"><label for="as-cols">{T('Width', 'Lebar')}: <output id="as-cols-out">100</output> {T('characters', 'karakter')}</label>
+            <input id="as-cols" type="range" min="20" max="240" step="1" value="100"></div>
+          <div class="field"><label for="as-contrast">{T('Contrast', 'Kontras')}</label>
+            <input id="as-contrast" type="range" min="0.5" max="2.5" step="0.1" value="1.2"></div>
+          <div class="field"><label for="as-bright">{T('Brightness', 'Kecerahan')}</label>
+            <input id="as-bright" type="range" min="-0.4" max="0.4" step="0.05" value="0"></div>
+          <label class="check"><input id="as-invert" type="checkbox"> {T('Invert', 'Balik')}</label>
+          <p class="note" id="as-status" role="status"></p>
+          <div class="conv-actions" style="margin-top: 0;">
+            <button class="btn" id="as-png" type="button" disabled>{T('Download PNG', 'Unduh PNG')}</button>
+            <button class="btn btn-quiet" id="as-txt" type="button" disabled>{T('Download .txt', 'Unduh .txt')}</button>
+            <button class="btn btn-quiet" id="as-copy" type="button" disabled>{T('Copy text', 'Salin teks')}</button>
+          </div>
+          <p class="note">{T('The photo stays on your device. Nothing is uploaded.', 'Foto tetap di perangkatmu. Tidak ada yang diunggah.')}</p>
+        </div>
+        <div class="ascii-stage dark" id="as-stage">
+          <p class="ascii-empty" id="as-empty">{T('Choose a photo to begin.', 'Pilih foto untuk memulai.')}</p>
+          <pre id="as-pre" hidden></pre>
+          <canvas id="as-canvas" hidden aria-label="{T('ASCII art', 'Seni ASCII')}"></canvas>
+        </div>
+      </div>"""
+    return mk(L, "ascii", main, ("asciiart.js",))
+
+
+PAGES_B = [calendar, calculator, clock, tic_tac_toe, map_page, coordinates, units, converter, images, markdown, tomd, ascii_page, qr, password,
            pomodoro, notes, game2048, minesweeper, wordle, quiz]
