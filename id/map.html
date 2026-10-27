@@ -24,13 +24,13 @@
   <meta name="theme-color" content="#0c1622" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="../manifest.webmanifest">
   <link rel="apple-touch-icon" href="../assets/icon-192.png">
-  <script src="../assets/theme.js"></script>
+  <script src="../assets/theme.js?v=a7e98436"></script>
   <link rel="icon" href="../favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400..700&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="stylesheet" href="../assets/style.css?v=a7e98436">
 </head>
 <body>
   <a class="skip" href="#main">Lewati ke konten</a>
@@ -83,7 +83,7 @@
           </ul>
           <h2>Sehari-hari</h2>
           <ul class="cols">
-            <li><a href="calculator.html" data-desc="Empat operasi hitung, bisa lewat keyboard." data-k="calculator kalkulator hitung">Kalkulator</a></li>
+            <li><a href="calculator.html" data-desc="Persen, kurung, pangkat, memori, dan riwayat tersimpan." data-k="calculator kalkulator hitung persen riwayat memori">Kalkulator</a></li>
             <li><a href="calendar.html" data-desc="Hitung selisih hari dari hari ini ke tanggal mana pun." data-k="calendar kalender tanggal hari">Kalender</a></li>
             <li><a href="clock.html" data-desc="Jam lokal langsung, tanggal, hari, dan UTC." data-k="clock jam waktu utc">Jam</a></li>
             <li><a href="pomodoro.html" data-desc="Timer fokus dengan istirahat singkat dan panjang." data-k="pomodoro timer fokus belajar">Pomodoro</a></li>
@@ -94,7 +94,9 @@
             <li><a href="converter.html" data-desc="Gabung, pisah, dan konversi PDF, gambar, dan Word di browser." data-k="pdf word docx merge split gabung pisah konversi">Konverter PDF</a></li>
             <li><a href="images.html" data-desc="Kecilkan dan ubah ukuran foto tanpa mengunggah." data-k="image gambar foto compress kompres resize jpg png webp">Kompres gambar</a></li>
             <li><a href="markdown.html" data-desc="Tulis dengan toolbar, pratinjau langsung, unduh sebagai .md." data-k="markdown md editor tulis">Editor Markdown</a></li>
-            <li><a href="qr.html" data-desc="Buat kode QR dari teks atau tautan apa saja." data-k="qr code kode barcode tautan link">Kode QR</a></li>
+            <li><a href="tomd.html" data-desc="Ubah file PDF, Word, dan Excel jadi Markdown, dan Markdown jadi Word." data-k="pdf docx xlsx excel word csv markdown konversi docx">Ke Markdown</a></li>
+            <li><a href="ascii.html" data-desc="Ubah foto jadi seni ASCII, hitam putih atau berwarna." data-k="ascii art foto gambar teks warna seni">Foto ke ASCII</a></li>
+            <li><a href="qr.html" data-desc="Buat kode QR, atau pindai lewat kamera atau dari gambar." data-k="qr code kode barcode tautan link scan pindai kamera">Kode QR</a></li>
             <li><a href="password.html" data-desc="Kata sandi acak dengan perkiraan kekuatan." data-k="password sandi generator acak kuat">Pembuat kata sandi</a></li>
           </ul>
           <h2>Permainan</h2>
@@ -122,7 +124,7 @@
         <div class="map-ui" id="map-ui">
           <form class="map-search" id="map-form" role="search">
             <label class="sr" for="map-q">Nama tempat atau koordinat</label>
-            <input class="input" id="map-q" type="search" placeholder="Tempat, atau 5.5483, 95.3238" autocomplete="off">
+            <input class="input" id="map-q" type="search" placeholder="Tempat atau koordinat" autocomplete="off">
             <button class="btn" type="submit">Cari</button>
             <button class="icon-btn" id="map-locate" type="button" aria-label="Gunakan lokasiku"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></button>
             <button class="icon-btn" id="map-measure-btn" type="button" aria-pressed="false" aria-label="Ukur jarak dan luas" title="Ukur jarak dan luas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17L17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/></svg></button>
@@ -143,9 +145,9 @@
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
-  <script src="../assets/i18n.js" defer></script>
-  <script src="../assets/geo.js" defer></script>
-  <script src="../assets/site.js" defer></script>
-  <script src="../assets/map.js" defer></script>
+  <script src="../assets/i18n.js?v=a7e98436" defer></script>
+  <script src="../assets/geo.js?v=a7e98436" defer></script>
+  <script src="../assets/site.js?v=a7e98436" defer></script>
+  <script src="../assets/map.js?v=a7e98436" defer></script>
 </body>
 </html>

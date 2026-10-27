@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kode QR - Mufti Khalis</title>
-  <meta name="description" content="Buat kode QR dari teks atau tautan apa saja.">
+  <meta name="description" content="Buat kode QR, atau pindai lewat kamera atau dari gambar.">
   <link rel="canonical" href="https://muftikhalis.github.io/id/qr.html">
   <link rel="alternate" hreflang="en" href="https://muftikhalis.github.io/qr.html">
   <link rel="alternate" hreflang="id" href="https://muftikhalis.github.io/id/qr.html">
@@ -12,7 +12,7 @@
   <meta property="og:site_name" content="Mufti Khalis">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Kode QR - Mufti Khalis">
-  <meta property="og:description" content="Buat kode QR dari teks atau tautan apa saja.">
+  <meta property="og:description" content="Buat kode QR, atau pindai lewat kamera atau dari gambar.">
   <meta property="og:url" content="https://muftikhalis.github.io/id/qr.html">
   <meta property="og:locale" content="id_ID">
   <meta property="og:locale:alternate" content="en_US">
@@ -24,12 +24,12 @@
   <meta name="theme-color" content="#0c1622" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="../manifest.webmanifest">
   <link rel="apple-touch-icon" href="../assets/icon-192.png">
-  <script src="../assets/theme.js"></script>
+  <script src="../assets/theme.js?v=a7e98436"></script>
   <link rel="icon" href="../favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400..700&display=swap">
-  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="stylesheet" href="../assets/style.css?v=a7e98436">
 </head>
 <body>
   <a class="skip" href="#main">Lewati ke konten</a>
@@ -82,7 +82,7 @@
           </ul>
           <h2>Sehari-hari</h2>
           <ul class="cols">
-            <li><a href="calculator.html" data-desc="Empat operasi hitung, bisa lewat keyboard." data-k="calculator kalkulator hitung">Kalkulator</a></li>
+            <li><a href="calculator.html" data-desc="Persen, kurung, pangkat, memori, dan riwayat tersimpan." data-k="calculator kalkulator hitung persen riwayat memori">Kalkulator</a></li>
             <li><a href="calendar.html" data-desc="Hitung selisih hari dari hari ini ke tanggal mana pun." data-k="calendar kalender tanggal hari">Kalender</a></li>
             <li><a href="clock.html" data-desc="Jam lokal langsung, tanggal, hari, dan UTC." data-k="clock jam waktu utc">Jam</a></li>
             <li><a href="pomodoro.html" data-desc="Timer fokus dengan istirahat singkat dan panjang." data-k="pomodoro timer fokus belajar">Pomodoro</a></li>
@@ -93,7 +93,9 @@
             <li><a href="converter.html" data-desc="Gabung, pisah, dan konversi PDF, gambar, dan Word di browser." data-k="pdf word docx merge split gabung pisah konversi">Konverter PDF</a></li>
             <li><a href="images.html" data-desc="Kecilkan dan ubah ukuran foto tanpa mengunggah." data-k="image gambar foto compress kompres resize jpg png webp">Kompres gambar</a></li>
             <li><a href="markdown.html" data-desc="Tulis dengan toolbar, pratinjau langsung, unduh sebagai .md." data-k="markdown md editor tulis">Editor Markdown</a></li>
-            <li><a href="qr.html" aria-current="page" data-desc="Buat kode QR dari teks atau tautan apa saja." data-k="qr code kode barcode tautan link">Kode QR</a></li>
+            <li><a href="tomd.html" data-desc="Ubah file PDF, Word, dan Excel jadi Markdown, dan Markdown jadi Word." data-k="pdf docx xlsx excel word csv markdown konversi docx">Ke Markdown</a></li>
+            <li><a href="ascii.html" data-desc="Ubah foto jadi seni ASCII, hitam putih atau berwarna." data-k="ascii art foto gambar teks warna seni">Foto ke ASCII</a></li>
+            <li><a href="qr.html" aria-current="page" data-desc="Buat kode QR, atau pindai lewat kamera atau dari gambar." data-k="qr code kode barcode tautan link scan pindai kamera">Kode QR</a></li>
             <li><a href="password.html" data-desc="Kata sandi acak dengan perkiraan kekuatan." data-k="password sandi generator acak kuat">Pembuat kata sandi</a></li>
           </ul>
           <h2>Permainan</h2>
@@ -115,22 +117,47 @@
       <div class="tool">
         <div class="page-head">
           <h1>Kode QR</h1>
-          <p>Ubah teks atau tautan apa saja jadi kode QR yang bisa diunduh. Dibuat di browsermu.</p>
+          <p>Buat kode QR dari teks atau tautan lalu unduh, atau pindai kode QR lewat kamera atau dari gambar.</p>
         </div>
         <div class="panel tool-card stack">
-          <div class="field"><label for="qr-text">Teks atau tautan</label>
-            <textarea class="input" id="qr-text" rows="3" spellcheck="false">https://muftikhalis.github.io</textarea></div>
-          <div class="row2">
-            <div class="field"><label for="qr-ecl">Koreksi kesalahan</label>
-              <select class="select" id="qr-ecl"><option value="L">Rendah (7%)</option><option value="M" selected>Sedang (15%)</option><option value="Q">Kuartil (25%)</option><option value="H">Tinggi (30%)</option></select></div>
-            <div class="field"><label for="qr-size">Ukuran PNG</label>
-              <select class="select" id="qr-size"><option value="256">256 px</option><option value="512" selected>512 px</option><option value="1024">1024 px</option></select></div>
+          <div class="filters" role="group" aria-label="Mode" style="margin-bottom: 0;">
+            <button class="filter" type="button" data-qrtab="make" aria-pressed="true">Buat</button>
+            <button class="filter" type="button" data-qrtab="scan" aria-pressed="false">Pindai</button>
           </div>
-          <div class="qr-stage" id="qr-stage"></div>
-          <p class="note" id="qr-status" role="status"></p>
-          <div class="conv-actions">
-            <button class="btn" id="qr-png" type="button" disabled>Unduh PNG</button>
-            <button class="btn btn-quiet" id="qr-svg" type="button" disabled>Unduh SVG</button>
+
+          <div id="qr-make" class="stack">
+            <div class="field"><label for="qr-text">Teks atau tautan</label>
+              <textarea class="input" id="qr-text" rows="3" spellcheck="false">https://muftikhalis.github.io</textarea></div>
+            <div class="row2">
+              <div class="field"><label for="qr-ecl">Koreksi kesalahan</label>
+                <select class="select" id="qr-ecl"><option value="L">Rendah (7%)</option><option value="M" selected>Sedang (15%)</option><option value="Q">Kuartil (25%)</option><option value="H">Tinggi (30%)</option></select></div>
+              <div class="field"><label for="qr-size">Ukuran PNG</label>
+                <select class="select" id="qr-size"><option value="256">256 px</option><option value="512" selected>512 px</option><option value="1024">1024 px</option></select></div>
+            </div>
+            <div class="qr-stage" id="qr-stage"></div>
+            <p class="note" id="qr-status" role="status"></p>
+            <div class="conv-actions">
+              <button class="btn" id="qr-png" type="button" disabled>Unduh PNG</button>
+              <button class="btn btn-quiet" id="qr-svg" type="button" disabled>Unduh SVG</button>
+            </div>
+          </div>
+
+          <div id="qr-scan" class="stack" hidden>
+            <video id="qr-video" class="qr-video" playsinline muted hidden></video>
+            <div class="conv-actions" style="margin-top: 0;">
+              <button class="btn" id="qr-cam" type="button">Nyalakan kamera</button>
+              <label class="btn btn-quiet qr-file">Pindai dari gambar<input class="sr" id="qr-file" type="file" accept="image/*"></label>
+            </div>
+            <p class="note" id="qr-scan-status" role="status"></p>
+            <div class="qr-found" id="qr-found" hidden>
+              <p class="note" style="margin-bottom: 0.35rem;">Hasil</p>
+              <pre class="qr-found-text" id="qr-found-text"></pre>
+              <div class="conv-actions">
+                <button class="btn btn-quiet" id="qr-found-copy" type="button">Salin</button>
+                <a class="btn" id="qr-found-open" target="_blank" rel="noopener noreferrer" hidden>Buka tautan</a>
+              </div>
+            </div>
+            <p class="note">Gambar kamera tetap di perangkatmu. Tidak ada yang diunggah. Buka tautan hanya jika kamu percaya.</p>
           </div>
         </div>
       </div>
@@ -141,9 +168,10 @@
     <div class="wrap">&copy; 2024–2026 Mufti Khalis</div>
   </footer>
 
-  <script src="../assets/i18n.js" defer></script>
-  <script src="../assets/vendor/qrcode.js" defer></script>
-  <script src="../assets/site.js" defer></script>
-  <script src="../assets/qr.js" defer></script>
+  <script src="../assets/i18n.js?v=a7e98436" defer></script>
+  <script src="../assets/vendor/qrcode.js?v=a7e98436" defer></script>
+  <script src="../assets/vendor/jsQR.js?v=a7e98436" defer></script>
+  <script src="../assets/site.js?v=a7e98436" defer></script>
+  <script src="../assets/qr.js?v=a7e98436" defer></script>
 </body>
 </html>
