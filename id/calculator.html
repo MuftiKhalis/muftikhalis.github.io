@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kalkulator - Mufti Khalis</title>
-  <meta name="description" content="Empat operasi hitung, bisa lewat keyboard.">
+  <meta name="description" content="Persen, kurung, pangkat, memori, dan riwayat tersimpan.">
   <link rel="canonical" href="https://muftikhalis.github.io/id/calculator.html">
   <link rel="alternate" hreflang="en" href="https://muftikhalis.github.io/calculator.html">
   <link rel="alternate" hreflang="id" href="https://muftikhalis.github.io/id/calculator.html">
@@ -12,7 +12,7 @@
   <meta property="og:site_name" content="Mufti Khalis">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Kalkulator - Mufti Khalis">
-  <meta property="og:description" content="Empat operasi hitung, bisa lewat keyboard.">
+  <meta property="og:description" content="Persen, kurung, pangkat, memori, dan riwayat tersimpan.">
   <meta property="og:url" content="https://muftikhalis.github.io/id/calculator.html">
   <meta property="og:locale" content="id_ID">
   <meta property="og:locale:alternate" content="en_US">
@@ -24,12 +24,12 @@
   <meta name="theme-color" content="#0c1622" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="../manifest.webmanifest">
   <link rel="apple-touch-icon" href="../assets/icon-192.png">
-  <script src="../assets/theme.js"></script>
+  <script src="../assets/theme.js?v=a7e98436"></script>
   <link rel="icon" href="../favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400..700&display=swap">
-  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="stylesheet" href="../assets/style.css?v=a7e98436">
 </head>
 <body>
   <a class="skip" href="#main">Lewati ke konten</a>
@@ -82,7 +82,7 @@
           </ul>
           <h2>Sehari-hari</h2>
           <ul class="cols">
-            <li><a href="calculator.html" aria-current="page" data-desc="Empat operasi hitung, bisa lewat keyboard." data-k="calculator kalkulator hitung">Kalkulator</a></li>
+            <li><a href="calculator.html" aria-current="page" data-desc="Persen, kurung, pangkat, memori, dan riwayat tersimpan." data-k="calculator kalkulator hitung persen riwayat memori">Kalkulator</a></li>
             <li><a href="calendar.html" data-desc="Hitung selisih hari dari hari ini ke tanggal mana pun." data-k="calendar kalender tanggal hari">Kalender</a></li>
             <li><a href="clock.html" data-desc="Jam lokal langsung, tanggal, hari, dan UTC." data-k="clock jam waktu utc">Jam</a></li>
             <li><a href="pomodoro.html" data-desc="Timer fokus dengan istirahat singkat dan panjang." data-k="pomodoro timer fokus belajar">Pomodoro</a></li>
@@ -93,7 +93,9 @@
             <li><a href="converter.html" data-desc="Gabung, pisah, dan konversi PDF, gambar, dan Word di browser." data-k="pdf word docx merge split gabung pisah konversi">Konverter PDF</a></li>
             <li><a href="images.html" data-desc="Kecilkan dan ubah ukuran foto tanpa mengunggah." data-k="image gambar foto compress kompres resize jpg png webp">Kompres gambar</a></li>
             <li><a href="markdown.html" data-desc="Tulis dengan toolbar, pratinjau langsung, unduh sebagai .md." data-k="markdown md editor tulis">Editor Markdown</a></li>
-            <li><a href="qr.html" data-desc="Buat kode QR dari teks atau tautan apa saja." data-k="qr code kode barcode tautan link">Kode QR</a></li>
+            <li><a href="tomd.html" data-desc="Ubah file PDF, Word, dan Excel jadi Markdown, dan Markdown jadi Word." data-k="pdf docx xlsx excel word csv markdown konversi docx">Ke Markdown</a></li>
+            <li><a href="ascii.html" data-desc="Ubah foto jadi seni ASCII, hitam putih atau berwarna." data-k="ascii art foto gambar teks warna seni">Foto ke ASCII</a></li>
+            <li><a href="qr.html" data-desc="Buat kode QR, atau pindai lewat kamera atau dari gambar." data-k="qr code kode barcode tautan link scan pindai kamera">Kode QR</a></li>
             <li><a href="password.html" data-desc="Kata sandi acak dengan perkiraan kekuatan." data-k="password sandi generator acak kuat">Pembuat kata sandi</a></li>
           </ul>
           <h2>Permainan</h2>
@@ -112,35 +114,55 @@
 
   <main id="main">
     <div class="wrap">
-      <div class="tool">
-        <div class="page-head">
-          <h1>Kalkulator</h1>
-          <p>Empat operasi hitung. Keyboard juga bisa: angka, <span style='white-space: nowrap'>+ &minus; * /</span>, Enter, dan Backspace.</p>
+      <div class="tool calc-layout">
+        <div class="calc-left">
+          <div class="page-head">
+            <h1>Kalkulator</h1>
+            <p>Persen, kurung, pangkat, akar kuadrat, dan memori. Keyboard juga bisa: angka, <span style='white-space: nowrap'>+ &minus; * / ^ % ( )</span>, Enter, dan Backspace. Perhitungan terakhirmu tetap tersimpan, juga setelah layar dibersihkan.</p>
+          </div>
+          <div class="panel hist">
+            <div class="hist-head">
+              <h2>Riwayat</h2>
+              <button class="btn btn-quiet" id="calc-history-clear" type="button">Hapus riwayat</button>
+            </div>
+            <ol class="hist-list" id="calc-history"></ol>
+          </div>
         </div>
-        <div class="panel">
+        <div class="panel calc-panel">
           <div class="calc-screen">
+            <span class="calc-mem" id="calc-mem" aria-hidden="true"></span>
             <div class="calc-expr" id="calc-expr"></div>
             <output class="calc-result" id="calc-result" aria-live="polite">0</output>
           </div>
           <div class="keys">
+            <button class="key key-mem" type="button" data-key="MC" aria-label="Hapus memori">MC</button>
+            <button class="key key-mem" type="button" data-key="MR" aria-label="Panggil memori">MR</button>
+            <button class="key key-mem" type="button" data-key="M+" aria-label="Tambah ke memori">M+</button>
+            <button class="key key-mem" type="button" data-key="M-" aria-label="Kurangi dari memori">M&minus;</button>
+            <button class="key key-fn" type="button" data-key="(" aria-label="Kurung buka">(</button>
+            <button class="key key-fn" type="button" data-key=")" aria-label="Kurung tutup">)</button>
+            <button class="key key-fn" type="button" data-key="√" aria-label="Akar kuadrat">&radic;</button>
+            <button class="key key-fn" type="button" data-key="^" aria-label="Pangkat">x<sup>y</sup></button>
             <button class="key key-clear" type="button" data-key="C" aria-label="Bersihkan">C</button>
             <button class="key key-clear" type="button" data-key="DEL" aria-label="Hapus terakhir">DEL</button>
+            <button class="key key-fn" type="button" data-key="%" aria-label="Persen">%</button>
             <button class="key key-op" type="button" data-key="/" aria-label="Bagi">&divide;</button>
-            <button class="key key-op" type="button" data-key="*" aria-label="Kali">&times;</button>
             <button class="key" type="button" data-key="7" aria-label="7">7</button>
             <button class="key" type="button" data-key="8" aria-label="8">8</button>
             <button class="key" type="button" data-key="9" aria-label="9">9</button>
-            <button class="key key-op" type="button" data-key="-" aria-label="Kurang">&minus;</button>
+            <button class="key key-op" type="button" data-key="*" aria-label="Kali">&times;</button>
             <button class="key" type="button" data-key="4" aria-label="4">4</button>
             <button class="key" type="button" data-key="5" aria-label="5">5</button>
             <button class="key" type="button" data-key="6" aria-label="6">6</button>
-            <button class="key key-op" type="button" data-key="+" aria-label="Tambah">+</button>
+            <button class="key key-op" type="button" data-key="-" aria-label="Kurang">&minus;</button>
             <button class="key" type="button" data-key="1" aria-label="1">1</button>
             <button class="key" type="button" data-key="2" aria-label="2">2</button>
             <button class="key" type="button" data-key="3" aria-label="3">3</button>
+            <button class="key key-op" type="button" data-key="+" aria-label="Tambah">+</button>
+            <button class="key key-fn" type="button" data-key="+/-" aria-label="Ubah tanda">&plusmn;</button>
+            <button class="key" type="button" data-key="0" aria-label="0">0</button>
+            <button class="key" type="button" data-key="." aria-label="Koma desimal">,</button>
             <button class="key key-eq" type="button" data-key="=" aria-label="Sama dengan">=</button>
-            <button class="key key-zero" type="button" data-key="0" aria-label="0">0</button>
-            <button class="key" type="button" data-key="." aria-label="Titik desimal">.</button>
           </div>
         </div>
       </div>
@@ -151,8 +173,8 @@
     <div class="wrap">&copy; 2024–2026 Mufti Khalis</div>
   </footer>
 
-  <script src="../assets/i18n.js" defer></script>
-  <script src="../assets/site.js" defer></script>
-  <script src="../assets/calculator.js" defer></script>
+  <script src="../assets/i18n.js?v=a7e98436" defer></script>
+  <script src="../assets/site.js?v=a7e98436" defer></script>
+  <script src="../assets/calculator.js?v=a7e98436" defer></script>
 </body>
 </html>

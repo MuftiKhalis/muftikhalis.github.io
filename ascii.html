@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Photo to ASCII - Mufti Khalis</title>
+  <meta name="description" content="Turn a photo into ASCII art, black and white or in colour.">
+  <link rel="canonical" href="https://muftikhalis.github.io/ascii.html">
+  <link rel="alternate" hreflang="en" href="https://muftikhalis.github.io/ascii.html">
+  <link rel="alternate" hreflang="id" href="https://muftikhalis.github.io/id/ascii.html">
+  <link rel="alternate" hreflang="x-default" href="https://muftikhalis.github.io/ascii.html">
+  <meta property="og:site_name" content="Mufti Khalis">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Photo to ASCII - Mufti Khalis">
+  <meta property="og:description" content="Turn a photo into ASCII art, black and white or in colour.">
+  <meta property="og:url" content="https://muftikhalis.github.io/ascii.html">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="id_ID">
+  <meta property="og:image" content="https://muftikhalis.github.io/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#f0f4f8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0c1622" media="(prefers-color-scheme: dark)">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <script src="assets/theme.js?v=a7e98436"></script>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400..700&display=swap">
+  <link rel="stylesheet" href="assets/style.css?v=a7e98436">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html">
+        <span class="mark" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>
+        Mufti Khalis
+      </a>
+      <div class="header-end">
+        <nav aria-label="Primary">
+          <ul class="nav-inline">
+          <li><a href="about.html">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="english.html">English</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <a class="lang-switch" href="id/ascii.html" hreflang="id" lang="id" title="Bahasa Indonesia" aria-label="Bahasa Indonesia">ID</a>
+        <button class="icon-btn" id="search-btn" type="button" aria-label="Search pages and tools (Ctrl+K)" title="Search (Ctrl+K)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></button>
+        <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="menu-panel">Menu</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="scrim" id="scrim"></div>
+  <nav class="drawer" id="menu-panel" aria-label="All pages">
+    <div class="drawer-top">
+      <button class="btn btn-quiet" id="install-btn" type="button" hidden>Install app</button>
+      <button class="btn btn-quiet" id="menu-close" type="button">Close</button>
+    </div>
+    <h2>Pages</h2>
+          <ul class="cols big">
+            <li><a href="index.html" data-desc="Back to the start page." data-k="home beranda start">Home</a></li>
+            <li><a href="about.html" data-desc="Who I am and what I am learning." data-k="about tentang profil">About</a></li>
+            <li><a href="blog.html" data-desc="Notes and write-ups." data-k="blog posts tulisan artikel">Blog</a></li>
+            <li><a href="contact.html" data-desc="Send me a message." data-k="contact kontak pesan email">Contact</a></li>
+          </ul>
+          <h2>Learn</h2>
+          <ul class="cols">
+            <li><a href="english.html" data-desc="Grammar, TOEFL and IELTS practice, scholarship and eBook links." data-k="toefl ielts grammar belajar inggris beasiswa ebook">English</a></li>
+            <li><a href="quiz.html" data-desc="Ten-question grammar and vocabulary rounds with explanations." data-k="quiz kuis soal grammar vocabulary kosakata latihan">English quiz</a></li>
+          </ul>
+          <h2>Maps</h2>
+          <ul class="cols">
+            <li><a href="map.html" data-desc="Search places or coordinates, measure distance and area." data-k="map peta lokasi jarak luas ukur gis">Map</a></li>
+            <li><a href="coordinates.html" data-desc="Convert between decimal, degrees-minutes-seconds and UTM." data-k="utm dms lat long koordinat gps konversi">Coordinates</a></li>
+            <li><a href="units.html" data-desc="Length, area, mass, volume, speed, data and temperature." data-k="unit satuan konversi convert hektar acre">Units</a></li>
+          </ul>
+          <h2>Everyday</h2>
+          <ul class="cols">
+            <li><a href="calculator.html" data-desc="Percent, brackets, powers, memory and a saved history." data-k="calculator kalkulator hitung persen riwayat memori">Calculator</a></li>
+            <li><a href="calendar.html" data-desc="Count the days from today to any date." data-k="calendar kalender tanggal hari">Calendar</a></li>
+            <li><a href="clock.html" data-desc="Live local time, date, weekday and UTC." data-k="clock jam waktu utc">Clock</a></li>
+            <li><a href="pomodoro.html" data-desc="Focus timer with short and long breaks." data-k="pomodoro timer fokus belajar">Pomodoro</a></li>
+            <li><a href="notes.html" data-desc="Quick notes and a to-do list, saved in your browser." data-k="notes catatan todo tugas checklist">Notes and tasks</a></li>
+          </ul>
+          <h2>Files and text</h2>
+          <ul class="cols">
+            <li><a href="converter.html" data-desc="Merge, split and convert PDF, image and Word files in your browser." data-k="pdf word docx merge split gabung pisah konversi">PDF converter</a></li>
+            <li><a href="images.html" data-desc="Shrink and resize photos without uploading them." data-k="image gambar foto compress kompres resize jpg png webp">Image compressor</a></li>
+            <li><a href="markdown.html" data-desc="Write with a toolbar, preview live, download as .md." data-k="markdown md editor tulis">Markdown editor</a></li>
+            <li><a href="tomd.html" data-desc="Turn PDF, Word and Excel files into Markdown, and Markdown into Word." data-k="pdf docx xlsx excel word csv markdown konversi docx">To Markdown</a></li>
+            <li><a href="ascii.html" aria-current="page" data-desc="Turn a photo into ASCII art, black and white or in colour." data-k="ascii art foto gambar teks warna seni">Photo to ASCII</a></li>
+            <li><a href="qr.html" data-desc="Make QR codes, or scan them with the camera or from an image." data-k="qr code kode barcode tautan link scan pindai kamera">QR code</a></li>
+            <li><a href="password.html" data-desc="Random passwords with a strength estimate." data-k="password sandi generator acak kuat">Password generator</a></li>
+          </ul>
+          <h2>Games</h2>
+          <ul class="cols">
+            <li><a href="tic_tac_toe.html" data-desc="Play the computer at five levels, or a friend." data-k="tic tac toe xo game permainan">Tic Tac Toe</a></li>
+            <li><a href="2048.html" data-desc="Slide and merge tiles to reach 2048." data-k="2048 game puzzle angka">2048</a></li>
+            <li><a href="minesweeper.html" data-desc="Clear the board without hitting a mine." data-k="minesweeper ranjau game">Minesweeper</a></li>
+            <li><a href="wordle.html" data-desc="Guess the 5-letter word in six tries." data-k="wordle tebak kata word game">Word guess</a></li>
+          </ul>
+          <h2>Appearance</h2>
+          <div class="theme-picker">
+            <div class="swatches" role="group" aria-label="Color palette"><button class="swatch" type="button" data-palette-btn="ocean" aria-pressed="false" aria-label="Ocean palette"><span class="swatch-chip" style="--a:#1d4e89;--b:#d6e4f2"></span>Ocean</button><button class="swatch" type="button" data-palette-btn="forest" aria-pressed="false" aria-label="Forest palette"><span class="swatch-chip" style="--a:#1f5c3a;--b:#d5e3cf"></span>Forest</button><button class="swatch" type="button" data-palette-btn="stone" aria-pressed="false" aria-label="Stone palette"><span class="swatch-chip" style="--a:#2a2a2e;--b:#dddde0"></span>Stone</button><button class="swatch" type="button" data-palette-btn="plum" aria-pressed="false" aria-label="Plum palette"><span class="swatch-chip" style="--a:#6b2d7c;--b:#e6d3ea"></span>Plum</button></div>
+            <div class="seg" role="group" aria-label="Light or dark mode"><button type="button" data-mode-btn="auto" aria-pressed="false">Auto</button><button type="button" data-mode-btn="light" aria-pressed="false">Light</button><button type="button" data-mode-btn="dark" aria-pressed="false">Dark</button></div>
+          </div>
+  </nav>
+
+  <main id="main">
+    <div class="wrap">
+      <div class="page-head">
+        <h1>Photo to ASCII</h1>
+        <p>Turn a photo into text. Choose black and white or colour, the characters, and the size. Download it as text or as a picture.</p>
+      </div>
+
+      <div class="ascii-app">
+        <div class="panel stack ascii-controls">
+          <div class="field"><label for="as-input">Photo</label><input class="input" id="as-input" type="file" accept="image/*"></div>
+          <div class="field"><label for="as-mode">Style</label>
+            <select class="select" id="as-mode"><option value="bw">Black and white</option><option value="color">Colour</option></select></div>
+          <div class="field"><label for="as-bg">Background</label>
+            <select class="select" id="as-bg"><option value="dark">Dark</option><option value="light">Light</option></select></div>
+          <div class="field"><label for="as-ramp">Characters</label>
+            <select class="select" id="as-ramp"><option value="standard">Standard</option><option value="detailed">Detailed</option><option value="blocks">Blocks</option><option value="simple">Simple</option></select></div>
+          <div class="field"><label for="as-cols">Width: <output id="as-cols-out">100</output> characters</label>
+            <input id="as-cols" type="range" min="20" max="240" step="1" value="100"></div>
+          <div class="field"><label for="as-contrast">Contrast</label>
+            <input id="as-contrast" type="range" min="0.5" max="2.5" step="0.1" value="1.2"></div>
+          <div class="field"><label for="as-bright">Brightness</label>
+            <input id="as-bright" type="range" min="-0.4" max="0.4" step="0.05" value="0"></div>
+          <label class="check"><input id="as-invert" type="checkbox"> Invert</label>
+          <p class="note" id="as-status" role="status"></p>
+          <div class="conv-actions" style="margin-top: 0;">
+            <button class="btn" id="as-png" type="button" disabled>Download PNG</button>
+            <button class="btn btn-quiet" id="as-txt" type="button" disabled>Download .txt</button>
+            <button class="btn btn-quiet" id="as-copy" type="button" disabled>Copy text</button>
+          </div>
+          <p class="note">The photo stays on your device. Nothing is uploaded.</p>
+        </div>
+        <div class="ascii-stage dark" id="as-stage">
+          <p class="ascii-empty" id="as-empty">Choose a photo to begin.</p>
+          <pre id="as-pre" hidden></pre>
+          <canvas id="as-canvas" hidden aria-label="ASCII art"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">&copy; 2024–2026 Mufti Khalis</div>
+  </footer>
+
+  <script src="assets/i18n.js?v=a7e98436" defer></script>
+  <script src="assets/site.js?v=a7e98436" defer></script>
+  <script src="assets/asciiart.js?v=a7e98436" defer></script>
+</body>
+</html>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Calculator - Mufti Khalis</title>
-  <meta name="description" content="Four operations, with keyboard input.">
+  <meta name="description" content="Percent, brackets, powers, memory and a saved history.">
   <link rel="canonical" href="https://muftikhalis.github.io/calculator.html">
   <link rel="alternate" hreflang="en" href="https://muftikhalis.github.io/calculator.html">
   <link rel="alternate" hreflang="id" href="https://muftikhalis.github.io/id/calculator.html">
@@ -12,7 +12,7 @@
   <meta property="og:site_name" content="Mufti Khalis">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Calculator - Mufti Khalis">
-  <meta property="og:description" content="Four operations, with keyboard input.">
+  <meta property="og:description" content="Percent, brackets, powers, memory and a saved history.">
   <meta property="og:url" content="https://muftikhalis.github.io/calculator.html">
   <meta property="og:locale" content="en_US">
   <meta property="og:locale:alternate" content="id_ID">
@@ -24,12 +24,12 @@
   <meta name="theme-color" content="#0c1622" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="assets/icon-192.png">
-  <script src="assets/theme.js"></script>
+  <script src="assets/theme.js?v=a7e98436"></script>
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400..700&display=swap">
-  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/style.css?v=a7e98436">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -82,7 +82,7 @@
           </ul>
           <h2>Everyday</h2>
           <ul class="cols">
-            <li><a href="calculator.html" aria-current="page" data-desc="Four operations, with keyboard input." data-k="calculator kalkulator hitung">Calculator</a></li>
+            <li><a href="calculator.html" aria-current="page" data-desc="Percent, brackets, powers, memory and a saved history." data-k="calculator kalkulator hitung persen riwayat memori">Calculator</a></li>
             <li><a href="calendar.html" data-desc="Count the days from today to any date." data-k="calendar kalender tanggal hari">Calendar</a></li>
             <li><a href="clock.html" data-desc="Live local time, date, weekday and UTC." data-k="clock jam waktu utc">Clock</a></li>
             <li><a href="pomodoro.html" data-desc="Focus timer with short and long breaks." data-k="pomodoro timer fokus belajar">Pomodoro</a></li>
@@ -93,7 +93,9 @@
             <li><a href="converter.html" data-desc="Merge, split and convert PDF, image and Word files in your browser." data-k="pdf word docx merge split gabung pisah konversi">PDF converter</a></li>
             <li><a href="images.html" data-desc="Shrink and resize photos without uploading them." data-k="image gambar foto compress kompres resize jpg png webp">Image compressor</a></li>
             <li><a href="markdown.html" data-desc="Write with a toolbar, preview live, download as .md." data-k="markdown md editor tulis">Markdown editor</a></li>
-            <li><a href="qr.html" data-desc="Make a QR code from any text or link." data-k="qr code kode barcode tautan link">QR code</a></li>
+            <li><a href="tomd.html" data-desc="Turn PDF, Word and Excel files into Markdown, and Markdown into Word." data-k="pdf docx xlsx excel word csv markdown konversi docx">To Markdown</a></li>
+            <li><a href="ascii.html" data-desc="Turn a photo into ASCII art, black and white or in colour." data-k="ascii art foto gambar teks warna seni">Photo to ASCII</a></li>
+            <li><a href="qr.html" data-desc="Make QR codes, or scan them with the camera or from an image." data-k="qr code kode barcode tautan link scan pindai kamera">QR code</a></li>
             <li><a href="password.html" data-desc="Random passwords with a strength estimate." data-k="password sandi generator acak kuat">Password generator</a></li>
           </ul>
           <h2>Games</h2>
@@ -112,35 +114,55 @@
 
   <main id="main">
     <div class="wrap">
-      <div class="tool">
-        <div class="page-head">
-          <h1>Calculator</h1>
-          <p>Four operations. The keyboard works too: digits, <span style='white-space: nowrap'>+ &minus; * /</span>, Enter and Backspace.</p>
+      <div class="tool calc-layout">
+        <div class="calc-left">
+          <div class="page-head">
+            <h1>Calculator</h1>
+            <p>Percent, brackets, powers, square roots and memory. Keyboard works too: digits, <span style='white-space: nowrap'>+ &minus; * / ^ % ( )</span>, Enter and Backspace. Your recent calculations stay saved, even after you clear the screen.</p>
+          </div>
+          <div class="panel hist">
+            <div class="hist-head">
+              <h2>History</h2>
+              <button class="btn btn-quiet" id="calc-history-clear" type="button">Clear history</button>
+            </div>
+            <ol class="hist-list" id="calc-history"></ol>
+          </div>
         </div>
-        <div class="panel">
+        <div class="panel calc-panel">
           <div class="calc-screen">
+            <span class="calc-mem" id="calc-mem" aria-hidden="true"></span>
             <div class="calc-expr" id="calc-expr"></div>
             <output class="calc-result" id="calc-result" aria-live="polite">0</output>
           </div>
           <div class="keys">
+            <button class="key key-mem" type="button" data-key="MC" aria-label="Clear memory">MC</button>
+            <button class="key key-mem" type="button" data-key="MR" aria-label="Recall memory">MR</button>
+            <button class="key key-mem" type="button" data-key="M+" aria-label="Add to memory">M+</button>
+            <button class="key key-mem" type="button" data-key="M-" aria-label="Subtract from memory">M&minus;</button>
+            <button class="key key-fn" type="button" data-key="(" aria-label="Open bracket">(</button>
+            <button class="key key-fn" type="button" data-key=")" aria-label="Close bracket">)</button>
+            <button class="key key-fn" type="button" data-key="√" aria-label="Square root">&radic;</button>
+            <button class="key key-fn" type="button" data-key="^" aria-label="Power">x<sup>y</sup></button>
             <button class="key key-clear" type="button" data-key="C" aria-label="Clear">C</button>
             <button class="key key-clear" type="button" data-key="DEL" aria-label="Delete last">DEL</button>
+            <button class="key key-fn" type="button" data-key="%" aria-label="Percent">%</button>
             <button class="key key-op" type="button" data-key="/" aria-label="Divide">&divide;</button>
-            <button class="key key-op" type="button" data-key="*" aria-label="Multiply">&times;</button>
             <button class="key" type="button" data-key="7" aria-label="7">7</button>
             <button class="key" type="button" data-key="8" aria-label="8">8</button>
             <button class="key" type="button" data-key="9" aria-label="9">9</button>
-            <button class="key key-op" type="button" data-key="-" aria-label="Subtract">&minus;</button>
+            <button class="key key-op" type="button" data-key="*" aria-label="Multiply">&times;</button>
             <button class="key" type="button" data-key="4" aria-label="4">4</button>
             <button class="key" type="button" data-key="5" aria-label="5">5</button>
             <button class="key" type="button" data-key="6" aria-label="6">6</button>
-            <button class="key key-op" type="button" data-key="+" aria-label="Add">+</button>
+            <button class="key key-op" type="button" data-key="-" aria-label="Subtract">&minus;</button>
             <button class="key" type="button" data-key="1" aria-label="1">1</button>
             <button class="key" type="button" data-key="2" aria-label="2">2</button>
             <button class="key" type="button" data-key="3" aria-label="3">3</button>
-            <button class="key key-eq" type="button" data-key="=" aria-label="Equals">=</button>
-            <button class="key key-zero" type="button" data-key="0" aria-label="0">0</button>
+            <button class="key key-op" type="button" data-key="+" aria-label="Add">+</button>
+            <button class="key key-fn" type="button" data-key="+/-" aria-label="Change sign">&plusmn;</button>
+            <button class="key" type="button" data-key="0" aria-label="0">0</button>
             <button class="key" type="button" data-key="." aria-label="Decimal point">.</button>
+            <button class="key key-eq" type="button" data-key="=" aria-label="Equals">=</button>
           </div>
         </div>
       </div>
@@ -151,8 +173,8 @@
     <div class="wrap">&copy; 2024–2026 Mufti Khalis</div>
   </footer>
 
-  <script src="assets/i18n.js" defer></script>
-  <script src="assets/site.js" defer></script>
-  <script src="assets/calculator.js" defer></script>
+  <script src="assets/i18n.js?v=a7e98436" defer></script>
+  <script src="assets/site.js?v=a7e98436" defer></script>
+  <script src="assets/calculator.js?v=a7e98436" defer></script>
 </body>
 </html>
