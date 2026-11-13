@@ -31,13 +31,6 @@ S = {
     "contact.sending": ("Sending\u2026", "Mengirim\u2026"),
     "contact.sent": ("Message sent. Thank you.", "Pesan terkirim. Terima kasih."),
     "contact.failed": ("Message not sent. Check your connection and try again.", "Pesan gagal terkirim. Periksa koneksi lalu coba lagi."),
-    # home raster
-    "raster.prompt": ("Point at a pixel to read its NDVI.", "Arahkan ke sebuah piksel untuk melihat nilai NDVI-nya."),
-    "raster.water": ("Water", "Air"),
-    "raster.bare": ("Bare ground or built-up", "Lahan terbuka atau terbangun"),
-    "raster.sparse": ("Sparse vegetation", "Vegetasi jarang"),
-    "raster.moderate": ("Moderate vegetation", "Vegetasi sedang"),
-    "raster.dense": ("Dense vegetation", "Vegetasi rapat"),
     # converter
     "conv.err.empty": ("Enter the pages to keep, for example 1-3, 5.", "Isi halaman yang dipertahankan, misalnya 1-3, 5."),
     "conv.err.read": ("Cannot read \u201c{p}\u201d. Use numbers like 2, 3-5 or 8-.", "Tidak bisa membaca \u201c{p}\u201d. Pakai angka seperti 2, 3-5 atau 8-."),

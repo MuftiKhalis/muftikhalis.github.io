@@ -1,0 +1,5 @@
+Fonts hosted with this site (SIL Open Font License 1.1, https://openfontlicense.org):
+- Bricolage Grotesque, Copyright 2022 The Bricolage Grotesque Project Authors
+- Instrument Sans, Copyright 2022 The Instrument Sans Project Authors
+- JetBrains Mono, Copyright 2020 The JetBrains Mono Project Authors
+Distributed through the Fontsource project (https://fontsource.org).

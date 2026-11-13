@@ -48,7 +48,8 @@
   var items = [];
   if (drawer) {
     drawer.querySelectorAll("a[data-desc]").forEach(function (a) {
-      items.push({ label: a.textContent.trim(), href: a.getAttribute("href"), desc: a.getAttribute("data-desc"), key: (a.getAttribute("data-k") || "").toLowerCase() });
+      var g = a.querySelector(".gl");
+      items.push({ label: a.textContent.trim(), href: a.getAttribute("href"), desc: a.getAttribute("data-desc"), key: (a.getAttribute("data-k") || "").toLowerCase(), glyph: g ? g.outerHTML : "" });
     });
   }
 
@@ -106,12 +107,16 @@
       li.setAttribute("aria-selected", String(i === palSel));
       var a = document.createElement("a");
       a.href = it.href;
+      var wrap = document.createElement("span");
+      wrap.className = "pal-t";
       var n = document.createElement("strong");
       n.textContent = it.label;
       var d = document.createElement("span");
       d.textContent = it.desc;
-      a.appendChild(n);
-      a.appendChild(d);
+      wrap.appendChild(n);
+      wrap.appendChild(d);
+      if (it.glyph) a.insertAdjacentHTML("beforeend", it.glyph);
+      a.appendChild(wrap);
       li.appendChild(a);
       palList.appendChild(li);
     });
@@ -138,6 +143,7 @@
   }
 
   if (searchBtn) searchBtn.addEventListener("click", openPalette);
+  document.querySelectorAll("[data-open-search]").forEach(function (b) { b.addEventListener("click", openPalette); });
   document.addEventListener("keydown", function (e) {
     if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === "k") {
       var tag = e.target && e.target.tagName;

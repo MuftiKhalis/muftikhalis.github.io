@@ -2,6 +2,8 @@
 from html import escape
 from urllib.parse import urlparse
 
+from glyphs import gl
+
 LANGS = ("en", "id")
 
 GROUP_LABELS = {
@@ -78,74 +80,66 @@ def tool(h1, lead, panel):
 
 
 # ----------------------------------------------------------------- Home
+TASKS = [
+    # group, glyph slug, (en title, id title), (en sub, id sub), tool slugs
+    ("files", "converter", ("Convert files", "Ubah file"), ("PDF, Word, Excel, images", "PDF, Word, Excel, gambar"), ("converter", "tomd", "images", "ascii")),
+    ("everyday", "calculator", ("Calculate", "Hitung"), ("Numbers, units, dates", "Angka, satuan, tanggal"), ("calculator", "units", "calendar", "coordinates")),
+    ("maps", "map", ("Find places", "Cari lokasi"), ("Maps and coordinates", "Peta dan koordinat"), ("map", "coordinates", "units")),
+    ("everyday", "clock", ("Manage time", "Atur waktu"), ("Focus and notes", "Fokus dan catatan"), ("pomodoro", "clock", "calendar", "notes")),
+    ("files", "qr", ("Make something", "Buat sesuatu"), ("Codes, passwords, writing", "Kode, sandi, tulisan"), ("qr", "password", "markdown", "ascii")),
+    ("games", "2048", ("Learn and play", "Belajar dan main"), ("English and games", "English dan permainan"), ("quiz", "english", "wordle", "2048", "minesweeper", "tic_tac_toe")),
+]
+SEARCH_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>'
+
+
 def home(L):
     T = lambda e, i: tr(L, e, i)
-    tool_groups = []
-    for g in ("learn", "maps", "everyday", "files", "games"):
-        rows = "\n".join(
-            f'            <li><a href="{n[1]}.html"><span class="name">{escape(n[2] if L == "en" else n[3])}</span><span class="what">{escape(n[4] if L == "en" else n[5])}</span></a></li>'
-            for n in NAV if n[0] == g
-        )
-        tool_groups.append(f"""          <div>
-            <h3>{GROUP_LABELS[g][0 if L == "en" else 1]}</h3>
-            <ul class="index">
-{rows}
-            </ul>
-          </div>""")
-    main = f"""      <section class="hero">
-        <div class="hero-text">
-          <h1>{T('Reading vegetation from space, one <span style="white-space: nowrap">10-metre</span> pixel at a time.', 'Membaca vegetasi dari luar angkasa, satu piksel <span style="white-space: nowrap">10 meter</span> sekali lihat.')}</h1>
-          <p>{T('I&rsquo;m Mufti Khalis, a biology graduate from Universitas Syiah Kuala in Banda Aceh. This is my small corner of the web: a few handy tools, a plain-language look at remote sensing, and English study links.', 'Aku Mufti Khalis, lulusan biologi Universitas Syiah Kuala di Banda Aceh. Ini pojok kecilku di web: beberapa alat yang berguna, penjelasan remote sensing yang mudah dipahami, dan tautan belajar bahasa Inggris.')}</p>
-        </div>
+    k = 0 if L == "en" else 1
 
-        <figure class="raster">
-          <div class="raster-stage" id="raster-stage">
-            <canvas id="raster-canvas" role="img" aria-label="{T('Illustrative NDVI raster showing a river, patches of dense vegetation and a built-up area.', 'Raster NDVI ilustrasi yang menampilkan sungai, petak vegetasi rapat, dan kawasan terbangun.')}"></canvas>
-            <div class="raster-cursor" id="raster-cursor"></div>
-          </div>
-          <div class="raster-readout" aria-hidden="true">
-            <strong id="raster-val">NDVI</strong>
-            <span id="raster-class">{T('Point at a pixel to read its NDVI.', 'Arahkan ke sebuah piksel untuk melihat nilai NDVI-nya.')}</span>
-          </div>
-          <div class="raster-legend"></div>
-          <div class="raster-scale"><span>&minus;0.2</span><span>0.9</span></div>
-          <figcaption>{T('Illustrative raster generated in your browser, not real imagery. Each square stands for one 10&nbsp;m Sentinel-2 pixel.', 'Raster ilustrasi yang dibuat di browsermu, bukan citra asli. Tiap kotak mewakili satu piksel Sentinel-2 berukuran 10&nbsp;m.')}</figcaption>
-        </figure>
+    def pill(slug):
+        n = INFO[slug]
+        return f'<a class="grp-{n[0]}" href="{slug}.html">{gl(slug, n[0], "sm")}{escape(label(L, slug))}</a>'
+
+    cards = "\n".join(
+        f"""        <div class="tcard grp-{g}">
+          <div class="tcard-h">{gl(gs, g, "lg")}<div><h2>{title[k]}</h2><p>{sub[k]}</p></div></div>
+          <div class="pills">{"".join(pill(s) for s in slugs)}</div>
+        </div>"""
+        for g, gs, title, sub, slugs in TASKS
+    )
+    tool_navs = [n for n in NAV if n[0] != "pages"]
+    tiles = "\n".join(
+        f"""          <a class="tool-tile grp-{n[0]}" data-group="{n[0]}" href="{n[1]}.html">{gl(n[1], n[0])}<h3>{escape(n[2] if L == "en" else n[3])}</h3><p>{escape(n[4] if L == "en" else n[5])}</p></a>"""
+        for n in tool_navs
+    )
+    counts = {}
+    for n in tool_navs:
+        counts[n[0]] = counts.get(n[0], 0) + 1
+    chips = [f'<button class="chip" type="button" data-filter="all" aria-pressed="true">{T("All", "Semua")} <small>{len(tool_navs)}</small></button>']
+    for g in ("maps", "everyday", "files", "learn", "games"):
+        chips.append(f'<button class="chip" type="button" data-filter="{g}" aria-pressed="false" style="--g:var(--g-{g})"><i></i>{GROUP_LABELS[g][k]} <small>{counts[g]}</small></button>')
+    main = f"""      <section class="home-hero">
+        <h1>{T("Pick what you want to do.", "Pilih apa yang mau kamu lakukan.")}</h1>
+        <p class="lead">{T("Small tools grouped by task, not by name. Free, no account, and your files never leave your device.", "Alat kecil dikelompokkan berdasarkan tugas, bukan nama. Gratis, tanpa akun, dan file tidak keluar dari perangkatmu.")}</p>
+        <button class="home-search" type="button" data-open-search>{SEARCH_SVG}<span>{T("Search all tools", "Cari semua alat")}</span><span class="kbd">Ctrl K</span></button>
       </section>
 
-      <section class="section" aria-labelledby="ndvi-h">
-        <div class="finding">
-          <div>
-            <h2 id="ndvi-h">{T('NDVI, explained simply', 'NDVI, dijelaskan sederhana')}</h2>
-            <p>{T('Healthy plants absorb red light for photosynthesis and reflect a lot of near-infrared light (NIR). NDVI compares the two, so a satellite can tell green, growing vegetation from bare ground or water.', 'Tumbuhan sehat menyerap cahaya merah untuk fotosintesis dan memantulkan banyak cahaya inframerah dekat (NIR). NDVI membandingkan keduanya, sehingga satelit bisa membedakan vegetasi hijau yang tumbuh dari lahan terbuka atau air.')}</p>
-            <p>{T('The result runs from &minus;1 to 1. Roughly: water is below 0, bare ground and buildings sit close to 0, and dense, healthy vegetation is high, often above 0.5. Exact cut-offs depend on the sensor and the place.', 'Hasilnya berkisar dari &minus;1 sampai 1. Kira-kira: air di bawah 0, lahan terbuka dan bangunan mendekati 0, dan vegetasi rapat yang sehat bernilai tinggi, sering di atas 0,5. Batas pastinya bergantung pada sensor dan lokasi.')}</p>
-          </div>
-          <div>
-            <p class="formula">NDVI = (NIR &minus; Red) / (NIR + Red)</p>
-            <ul class="scale">
-              <li><span class="chip" style="background: var(--water)"></span><span>{T('Water', 'Air')}</span><span class="range">{T('below 0', 'di bawah 0')}</span></li>
-              <li><span class="chip" style="background: var(--bare)"></span><span>{T('Bare ground, built-up', 'Lahan terbuka, terbangun')}</span><span class="range">{T('0 to 0.1', '0 sampai 0,1')}</span></li>
-              <li><span class="chip" style="background: var(--sparse)"></span><span>{T('Sparse vegetation', 'Vegetasi jarang')}</span><span class="range">{T('0.1 to 0.3', '0,1 sampai 0,3')}</span></li>
-              <li><span class="chip" style="background: var(--mid)"></span><span>{T('Moderate vegetation', 'Vegetasi sedang')}</span><span class="range">{T('0.3 to 0.5', '0,3 sampai 0,5')}</span></li>
-              <li><span class="chip" style="background: var(--dense)"></span><span>{T('Dense vegetation', 'Vegetasi rapat')}</span><span class="range">{T('above 0.5', 'di atas 0,5')}</span></li>
-            </ul>
-          </div>
-        </div>
+      <section class="task-cards" aria-label="{T("Tasks", "Tugas")}">
+{cards}
       </section>
 
-      <section class="section" aria-labelledby="tools-h">
-        <h2 id="tools-h">{T('Small tools', 'Alat-alat kecil')}</h2>
-        <p class="note" style="margin-bottom: var(--s-3);">{T('Press Ctrl+K (or the search button) to jump to any tool.', 'Tekan Ctrl+K (atau tombol cari) untuk loncat ke alat mana pun.')}</p>
-        <div class="tool-groups">
-{chr(10).join(tool_groups)}
+      <section class="all-tools" aria-labelledby="all-h">
+        <div class="rowh"><h2 id="all-h">{T("Or see everything", "Atau lihat semuanya")}</h2><div class="chips" role="group" aria-label="{T("Filter by group", "Saring menurut kelompok")}">{"".join(chips)}</div></div>
+        <div class="tile-grid">
+{tiles}
         </div>
       </section>"""
     return dict(
         slug="index",
         title=T("Home", "Beranda"),
-        desc=T("Mufti Khalis, biology graduate in Banda Aceh. Small web tools, a plain-language NDVI explainer and English study links.",
-               "Mufti Khalis, lulusan biologi di Banda Aceh. Alat web kecil, penjelasan NDVI yang mudah dipahami, dan tautan belajar bahasa Inggris."),
-        main=main, scripts=("raster.js",), jsonld="home",
+        desc=T("Free small web tools for files, numbers, maps, time and learning. No account, and nothing is uploaded.",
+               "Alat web kecil gratis untuk file, angka, peta, waktu, dan belajar. Tanpa akun, dan tidak ada yang diunggah."),
+        main=main, scripts=("home.js",), jsonld="home",
     )
 
 

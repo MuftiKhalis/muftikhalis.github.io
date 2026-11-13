@@ -1,6 +1,6 @@
 # muftikhalis.github.io
 
-Situs pribadi Mufti Khalis dalam dua bahasa: Inggris (alamat utama) dan Indonesia (`/id/`). Isinya penjelasan NDVI yang mudah dipahami, banyak alat kecil, permainan, dan tautan belajar bahasa Inggris. Statis, gratis, jalan di GitHub Pages, dan bisa di-install seperti aplikasi (PWA).
+Situs pribadi Mufti Khalis dalam dua bahasa: Inggris (alamat utama) dan Indonesia (`/id/`). Isinya banyak alat kecil yang dikelompokkan berdasarkan tugas, permainan, dan tautan belajar bahasa Inggris. Statis, gratis, jalan di GitHub Pages, dan bisa di-install seperti aplikasi (PWA).
 
 ## Isi
 
@@ -11,12 +11,16 @@ Situs pribadi Mufti Khalis dalam dua bahasa: Inggris (alamat utama) dan Indonesi
 - **Permainan:** Tic Tac Toe, 2048, Minesweeper, Tebak kata.
 - Tekan **Ctrl+K** untuk mencari halaman atau alat. Tema (palet dan mode terang/gelap) ada di menu.
 
-Semua alat jalan di browser. Tidak ada file atau data yang dikirim ke server. Library pihak ketiga (PDF.js, mammoth, SheetJS, jsQR, dan lain-lain) disimpan di `assets/vendor/` beserta lisensinya.
+Semua alat jalan di browser. Tidak ada file atau data yang dikirim ke server. Library pihak ketiga (PDF.js, mammoth, SheetJS, jsQR, dan lain-lain) disimpan di `assets/vendor/`, dan font di `assets/fonts/`, beserta lisensinya.
+
+## Tampilan
+
+Beranda berisi enam kartu tugas dan daftar semua alat yang bisa disaring per kelompok. Tiap alat punya ikon piksel 7×7 (`tools/glyphs.py`) dan warna kelompok (`--g-maps`, `--g-everyday`, `--g-files`, `--g-learn`, `--g-games` di `assets/style.css`).
 
 ## Menulis blog
 
 1. Tulisan Inggris: buat file di folder `posts/`. Tulisan Indonesia: folder `posts/id/`.
-2. Beri nama, misalnya `hitung-ndvi.md`. Nama file jadi alamat tulisan.
+2. Beri nama, misalnya `catatan-pertama.md`. Nama file jadi alamat tulisan.
 3. Isi seperti `posts/_template.md`: blok `---` di atas (title, date, summary) lalu isi dengan Markdown.
 4. Commit. Sekitar 1 menit kemudian tulisan muncul di halaman Blog.
 

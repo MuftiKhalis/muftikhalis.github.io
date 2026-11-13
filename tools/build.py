@@ -19,7 +19,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
 from js_strings import S as JS_STRINGS, DYNAMIC as JS_DYNAMIC  # noqa: E402
-from pages_a import (NAV, GROUP_LABELS, INLINE_SLUGS, PAGES_A, LANGS, tr, label, desc as nav_desc)  # noqa: E402
+from pages_a import (NAV, GROUP_LABELS, INFO, INLINE_SLUGS, PAGES_A, LANGS, tr, label, desc as nav_desc)  # noqa: E402
+from glyphs import gl  # noqa: E402
 from pages_b import PAGES_B  # noqa: E402
 
 ROOT = os.path.dirname(HERE)
@@ -107,7 +108,7 @@ def shell(L, path, page, alt=None):
                 continue
             slug = n[1]
             cur = ' aria-current="page"' if slug == cur_slug else ""
-            lis.append(f'<li><a href="{rel(path, lpath(L, slug))}"{cur} data-desc="{escape(nav_desc(L, slug), quote=True)}" data-k="{escape(n[6], quote=True)}">{escape(label(L, slug))}</a></li>')
+            lis.append(f'<li><a href="{rel(path, lpath(L, slug))}"{cur} data-desc="{escape(nav_desc(L, slug), quote=True)}" data-k="{escape(n[6], quote=True)}">{gl(slug, g, "sm")}<span>{escape(label(L, slug))}</span></a></li>')
         cls = ' class="cols big"' if g == "pages" else ' class="cols"'
         groups.append(f'<h2>{GROUP_LABELS[g][0 if L == "en" else 1]}</h2>\n          <ul{cls}>\n            ' + "\n            ".join(lis) + "\n          </ul>")
     swatches = "".join(
@@ -149,11 +150,17 @@ def shell(L, path, page, alt=None):
     if jl == "home":
         jl = {"@context": "https://schema.org", "@graph": [
             {"@type": "WebSite", "name": "Mufti Khalis", "url": canon(lpath(L, "index")), "inLanguage": L},
-            {"@type": "Person", "name": "Mufti Khalis", "url": canon("index.html"),
-             "alumniOf": {"@type": "CollegeOrUniversity", "name": "Universitas Syiah Kuala"}}]}
+            {"@type": "Person", "name": "Mufti Khalis", "url": canon("index.html")}]}
     if jl:
         ld = '  <script type="application/ld+json">' + json.dumps(jl, ensure_ascii=False).replace("</", "<\\/") + "</script>\n"
     locale, loc_alt = ("en_US", "id_ID") if L == "en" else ("id_ID", "en_US")
+
+    crumb = ""
+    info = INFO.get(cur_slug)
+    if info and info[0] != "pages" and not page.get("nocrumb"):
+        grp = GROUP_LABELS[info[0]][0 if L == "en" else 1]
+        crumb = (f'      <nav class="crumbs" aria-label="{T("Breadcrumb", "Jejak halaman")}">{gl(cur_slug, info[0], "sm")}'
+                 f'<a href="{rel(path, lpath(L, "index"))}#all-h">{grp}</a><span aria-hidden="true">/</span><b>{escape(label(L, cur_slug))}</b></nav>\n')
 
     return f"""<!DOCTYPE html>
 <html lang="{L}">
@@ -180,9 +187,8 @@ def shell(L, path, page, alt=None):
   <link rel="apple-touch-icon" href="{A("icon-192.png")}">
   <script src="{A("theme.js")}"></script>
   <link rel="icon" href="{rel(path, "favicon.ico")}" type="image/x-icon">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="{FONTS}">
+  <link rel="preload" href="{A("fonts/bricolage.woff2")}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{A("fonts/instrument.woff2")}" as="font" type="font/woff2" crossorigin>
 {css_tags}  <link rel="stylesheet" href="{A("style.css")}">
 {ld}</head>
 <body>
@@ -218,12 +224,12 @@ def shell(L, path, page, alt=None):
 
   <main id="main">
     <div class="wrap">
-{page["main"]}
+{crumb}{page["main"]}
     </div>
   </main>
 
   <footer class="site-footer">
-    <div class="wrap">&copy; {YEAR_RANGE} Mufti Khalis</div>
+    <div class="wrap"><span>&copy; {YEAR_RANGE} Mufti Khalis</span><span>{T("Free &middot; No account &middot; Files stay on your device &middot; Works offline", "Gratis &middot; Tanpa akun &middot; File tetap di perangkatmu &middot; Jalan offline")}</span></div>
   </footer>
 
 {script_tags}
@@ -391,7 +397,7 @@ def main():
             write(ppath, shell(L, ppath, pg, alt=alt))
             count += 1
 
-    nf = dict(slug="404", title="Page not found / Halaman tidak ditemukan", full_title=True, desc="This page does not exist.", noindex=True,
+    nf = dict(slug="404", nocrumb=True, title="Page not found / Halaman tidak ditemukan", full_title=True, desc="This page does not exist.", noindex=True,
               main="""      <div class="page-head">
         <h1>Page not found</h1>
         <p>The page you tried to open does not exist or has moved.</p>
@@ -428,7 +434,7 @@ def write_sitemap(all_pages, posts):
 
 def write_manifest():
     m = {
-        "name": "Mufti Khalis", "short_name": "Mufti", "description": "Small web tools, remote sensing basics and English study links.",
+        "name": "Mufti Khalis", "short_name": "Mufti", "description": "Free small web tools for files, numbers, maps, time and learning.",
         "start_url": "./index.html", "scope": "./", "display": "standalone", "background_color": "#f0f4f8", "theme_color": "#1d4e89",
         "icons": [
             {"src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png"},
