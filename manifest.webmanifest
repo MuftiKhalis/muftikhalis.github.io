@@ -1,7 +1,7 @@
 {
   "name": "Mufti Khalis",
   "short_name": "Mufti",
-  "description": "Small web tools, remote sensing basics and English study links.",
+  "description": "Free small web tools for files, numbers, maps, time and learning.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
